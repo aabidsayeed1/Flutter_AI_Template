@@ -1,0 +1,29 @@
+import '../../../core/base/export.dart';
+import '../../authentication/presentation/cubit/auth_cubit.dart';
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(context.locale.profile)),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FilledButton(
+            onPressed: () {
+              getIt<AuthCubit>().logout();
+            },
+            child: Text(context.locale.logout),
+          ),
+        ),
+      ),
+    );
+  }
+}
