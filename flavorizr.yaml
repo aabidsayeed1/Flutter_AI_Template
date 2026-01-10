@@ -1,0 +1,46 @@
+flavors:
+  dev:
+    app:
+      name: "Flutter Template Dev"
+    android:
+      applicationId: "com.fluttertemplate2025.dev"
+      firebase:
+        config: ".firebase/dev/google-services.json"
+    ios:
+      bundleId: "com.fluttertemplate2025.dev"
+      firebase:
+        config: ".firebase/dev/GoogleService-Info.plist"
+  qa:
+    app:
+      name: "Flutter Template QA"
+    android:
+      applicationId: "com.fluttertemplate2025.qa"
+      firebase:
+        config: ".firebase/qa/google-services.json"
+    ios:
+      bundleId: "com.fluttertemplate2025.qa"
+      firebase:
+        config: ".firebase/qa/GoogleService-Info.plist"
+  uat:
+    app:
+      name: "Flutter Template UAT"
+    android:
+      applicationId: "com.fluttertemplate2025.uat"
+      firebase:
+        config: ".firebase/uat/google-services.json"
+    ios:
+      bundleId: "com.fluttertemplate2025.uat"
+      firebase:
+        config: ".firebase/uat/GoogleService-Info.plist"
+  prod:
+    app:
+      name: "Flutter Template"
+    android:
+      applicationId: "com.fluttertemplate2025"
+      firebase:
+        config: ".firebase/prod/google-services.json"
+    ios:
+      bundleId: "com.fluttertemplate2025"
+      firebase:
+        config: ".firebase/prod/GoogleService-Info.plist"
+

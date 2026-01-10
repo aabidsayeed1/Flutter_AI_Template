@@ -43,3 +43,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase configuration files (contains sensitive information)
+.firebase/**/*.json
+.firebase/**/*.plist
+# Keep README files in .firebase directories
+!.firebase/**/README.md

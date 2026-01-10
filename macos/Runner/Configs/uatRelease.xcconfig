@@ -1,0 +1,6 @@
+#include "../../Flutter/uatRelease.xcconfig"
+#include "Warnings.xcconfig"
+
+ASSET_PREFIX=uat
+BUNDLE_NAME=Flutter Template UAT
+BUNDLE_DISPLAY_NAME=Flutter Template UAT
