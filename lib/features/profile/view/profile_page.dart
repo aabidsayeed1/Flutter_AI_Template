@@ -1,3 +1,5 @@
+import 'package:gap/gap.dart';
+
 import '../../../core/base/export.dart';
 import '../../authentication/presentation/cubit/auth_cubit.dart';
 
@@ -16,11 +18,19 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: FilledButton(
-            onPressed: () {
-              getIt<AuthCubit>().logout();
-            },
-            child: Text(context.locale.logout),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(getIt<AuthCubit>().state.user?.name ?? ''),
+              Text(getIt<AuthCubit>().state.user?.email ?? ''),
+              Gap(20),
+              FilledButton(
+                onPressed: () {
+                  getIt<AuthCubit>().logout();
+                },
+                child: Text(context.locale.logout),
+              ),
+            ],
           ),
         ),
       ),

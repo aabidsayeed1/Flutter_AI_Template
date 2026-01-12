@@ -53,7 +53,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i450.LocaleCubit>(() => _i450.LocaleCubit());
     gh.lazySingleton<_i507.ThemeCubit>(() => _i507.ThemeCubit());
     gh.lazySingleton<_i220.AuthRemoteDataSource>(
-      () => _i888.FirebaseAuthRemoteDataSource(),
+      () => _i888.FirebaseAuthRemoteDataSource(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i337.AuthRepository>(
       () => _i72.AuthRepositoryImpl(gh<_i220.AuthRemoteDataSource>()),
@@ -72,9 +72,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i1052.AuthCubit>(
       () => _i1052.AuthCubit(
-        gh<_i460.SharedPreferences>(),
         gh<_i789.ObserveAuthStateUseCase>(),
         gh<_i900.LogoutUseCase>(),
+        gh<_i685.LoginUseCase>(),
       ),
     );
     gh.singleton<_i583.GoRouter>(

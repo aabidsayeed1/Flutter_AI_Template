@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 
+import '../entities/user.dart';
 import '../repositories/auth_repository.dart';
 
 @injectable
@@ -8,7 +9,7 @@ class LoginUseCase {
 
   LoginUseCase(this.repository);
 
-  Future<void> call({required String email, required String password}) {
+  Future<User?> call({required String email, required String password}) {
     return repository.login(email, password);
   }
 }

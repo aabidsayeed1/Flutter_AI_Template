@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth_remote_data_source.dart';
 import '../models/user_model.dart';
@@ -6,6 +7,9 @@ import '../models/user_model.dart';
 @LazySingleton(as: AuthRemoteDataSource)
 class FirebaseAuthRemoteDataSource implements AuthRemoteDataSource {
   UserModel? _cachedUser;
+  final SharedPreferences prefs;
+  static const _keyUser = 'logged_user';
+  FirebaseAuthRemoteDataSource(this.prefs);
 
   @override
   Future<UserModel?> login(String email, String password) async {
@@ -17,12 +21,13 @@ class FirebaseAuthRemoteDataSource implements AuthRemoteDataSource {
       email: email,
       name: 'Firebase User',
     );
-
+    prefs.setString(_keyUser, _cachedUser!.toJson());
     return _cachedUser;
   }
 
   @override
   Future<void> logout() async {
+    prefs.setString(_keyUser, '');
     _cachedUser = null;
   }
 
@@ -33,6 +38,10 @@ class FirebaseAuthRemoteDataSource implements AuthRemoteDataSource {
 
   @override
   Stream<UserModel?> authStateChanges() async* {
+    if (prefs.getString(_keyUser) != null &&
+        prefs.getString(_keyUser)!.isNotEmpty) {
+      _cachedUser = UserModel.fromJson(prefs.getString(_keyUser)!);
+    }
     yield _cachedUser;
   }
 }
