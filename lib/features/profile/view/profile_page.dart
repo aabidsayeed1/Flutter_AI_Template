@@ -2,6 +2,7 @@ import 'package:gap/gap.dart';
 
 import '../../../core/base/export.dart';
 import '../../authentication/presentation/cubit/auth_cubit.dart';
+import 'instagram_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -29,6 +30,18 @@ class _ProfilePageState extends State<ProfilePage> {
                   getIt<AuthCubit>().logout();
                 },
                 child: Text(context.locale.logout),
+              ),
+              Gap(20),
+              FilledButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const InstagramProfilePage(),
+                    ),
+                  );
+                },
+                child: Text('Instagram Profile Page'),
               ),
             ],
           ),
