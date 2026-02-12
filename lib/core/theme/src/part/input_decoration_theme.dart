@@ -5,7 +5,9 @@ class _InputDecorationLightTheme with ThemeExtensions {
 
   InputDecorationTheme call() {
     return InputDecorationTheme(
-      hintStyle: textStyle.bodyLarge.copyWith(color: lightColor.text.secondary),
+      hintStyle: lightTextStyle.bodyLarge.copyWith(
+        color: lightColor.text.secondary,
+      ),
       contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       border: OutlineInputBorder(borderRadius: _borderRadius),
       enabledBorder: OutlineInputBorder(
@@ -23,7 +25,9 @@ class _InputDecorationDarkTheme with ThemeExtensions {
 
   InputDecorationTheme call() {
     return InputDecorationTheme(
-      hintStyle: textStyle.bodyLarge.copyWith(color: darkColor.text.secondary),
+      hintStyle: darkTextStyle.bodyLarge.copyWith(
+        color: darkColor.text.secondary,
+      ),
       contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       border: OutlineInputBorder(borderRadius: _borderRadius),
       enabledBorder: OutlineInputBorder(

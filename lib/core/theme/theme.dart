@@ -21,11 +21,12 @@ extension BuildContextExtension on BuildContext {
   }
 
   TextStyleExtension get textStyle {
-    final ext = _theme.extension<TextStyleExtension>();
-
+    final ext = _theme.brightness == Brightness.light
+        ? _theme.extension<LightTextStyleExtension>()
+        : _theme.extension<DarkTextStyleExtension>();
     assert(
       ext != null,
-      'Ensure TextStyleExtension is added to ThemeData.extensions in src/theme_data.dart.',
+      'Ensure LightTextStyleExtension/DarkTextStyleExtension is added to ThemeData.extensions in src/theme_data.dart.',
     );
 
     return ext!;

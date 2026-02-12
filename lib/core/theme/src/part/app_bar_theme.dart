@@ -7,7 +7,7 @@ class _AppBarLightTheme with ThemeExtensions {
       centerTitle: false,
       backgroundColor: lightColor.appBar.background,
       surfaceTintColor: lightColor.appBar.surfaceTint,
-      titleTextStyle: textStyle.titleMedium.copyWith(
+      titleTextStyle: lightTextStyle.titleMedium.copyWith(
         color: lightColor.appBar.title,
         fontWeight: FontWeight.w600,
       ),
@@ -23,7 +23,7 @@ class _AppBarDarkTheme with ThemeExtensions {
       centerTitle: false,
       backgroundColor: darkColor.appBar.background,
       surfaceTintColor: darkColor.appBar.surfaceTint,
-      titleTextStyle: textStyle.titleMedium.copyWith(
+      titleTextStyle: darkTextStyle.titleMedium.copyWith(
         color: darkColor.appBar.title,
         fontWeight: FontWeight.w600,
       ),
