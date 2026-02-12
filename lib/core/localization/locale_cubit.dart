@@ -5,14 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
 class LocaleCubit extends Cubit<Locale> {
+  final SharedPreferences prefs;
   static const _localeKey = 'selected_locale';
-
-  LocaleCubit() : super(const Locale('en')) {
+  LocaleCubit(this.prefs) : super(const Locale('en')) {
     _loadLocale();
   }
 
   Future<void> _loadLocale() async {
-    final prefs = await SharedPreferences.getInstance();
     final code = prefs.getString(_localeKey);
     if (code != null) emit(Locale(code));
   }
@@ -22,8 +21,6 @@ class LocaleCubit extends Cubit<Locale> {
         ? const Locale('ar')
         : const Locale('en');
     emit(newLocale);
-
-    final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_localeKey, newLocale.languageCode);
   }
 }

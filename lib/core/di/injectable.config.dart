@@ -50,8 +50,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
-    gh.lazySingleton<_i450.LocaleCubit>(() => _i450.LocaleCubit());
     gh.lazySingleton<_i507.ThemeCubit>(() => _i507.ThemeCubit());
+    gh.lazySingleton<_i450.LocaleCubit>(
+      () => _i450.LocaleCubit(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i220.AuthRemoteDataSource>(
       () => _i888.FirebaseAuthRemoteDataSource(gh<_i460.SharedPreferences>()),
     );
