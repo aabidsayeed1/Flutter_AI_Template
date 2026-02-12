@@ -1,7 +1,8 @@
-import 'extensions.dart';
+import 'colors/colors.dart';
+import 'text_styles/text_styles.dart';
 
-export 'src/colors/colors.dart';
-export 'src/text_styles/text_styles.dart';
+export 'colors/colors.dart';
+export 'text_styles/text_styles.dart';
 
 mixin ThemeExtensions {
   final LightColorExtension lightColor = const LightColorExtension();

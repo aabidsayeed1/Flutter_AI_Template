@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'theme_extensions/extensions.dart';
+import '../extensions/extensions.dart';
 
 part 'part/app_bar_theme.dart';
 part 'part/bottom_navigation_bar_theme_data.dart';

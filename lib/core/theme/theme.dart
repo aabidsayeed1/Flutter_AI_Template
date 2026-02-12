@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'src/theme_data.dart';
-import 'src/theme_extensions/extensions.dart';
+import 'extensions/extensions.dart';
 
 export 'src/theme_data.dart';
 
