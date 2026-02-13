@@ -4,19 +4,18 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import '../../features/authentication/presentation/cubit/auth_cubit.dart';
-import '../../features/authentication/presentation/forgot_password/view/create_new_password_page.dart';
-import '../../features/authentication/presentation/forgot_password/view/email_verification_page.dart';
-import '../../features/authentication/presentation/forgot_password/view/reset_password_page.dart';
-import '../../features/authentication/presentation/forgot_password/view/reset_password_success_page.dart';
-import '../../features/authentication/presentation/login/view/login_page.dart';
-import '../../features/authentication/presentation/registration/view/registration_page.dart';
-import '../../features/home/view/home_page.dart';
-import '../../features/onboarding/view/onboarding_page.dart';
-import '../../features/profile/view/profile_page.dart';
-import '../../features/splash/view/splash_page.dart';
-import '../../widgets/app_startup/startup_widget.dart';
-import '../../widgets/navigation_shell.dart' show NavigationShell;
-import '../logger/log.dart';
+import '../../features/authentication/presentation/forgot_password/pages/create_new_password_page.dart';
+import '../../features/authentication/presentation/forgot_password/pages/email_verification_page.dart';
+import '../../features/authentication/presentation/forgot_password/pages/reset_password_page.dart';
+import '../../features/authentication/presentation/forgot_password/pages/reset_password_success_page.dart';
+import '../../features/authentication/presentation/login/page/login_page.dart';
+import '../../features/authentication/presentation/registration/pages/registration_page.dart';
+import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/onboarding/presentation/pages/onboarding_page.dart';
+import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../core/widgets/splash/splash_page.dart';
+import '../../core/widgets/app_startup/app_startup_widget.dart';
+import '../../core/widgets/navigation_shell.dart' show NavigationShell;
 import 'routes.dart';
 
 part 'parts/authentication_routes.dart';
@@ -71,8 +70,8 @@ abstract class RouterModule {
         final loggedIn = auth.isLoggedIn;
         final isUnknown = auth.isUnknown;
         final error = auth.error != null;
-        final onboarded = true; // from SharedPrefs
-        final splashDone = true; // splash completed
+        final onboarded = _isOnboarded(); // from SharedPrefs
+        final splashDone = _isSplashDone(); // splash completed
 
         final goingTo = state.uri.path;
         if (isUnknown || error) {
@@ -126,5 +125,15 @@ abstract class RouterModule {
         _shellRoutes(),
       ],
     );
+  }
+
+  bool _isOnboarded() {
+    // TODO: Replace with SharedPrefs or storage read
+    return true;
+  }
+
+  bool _isSplashDone() {
+    // TODO: Replace with splash completion flag
+    return true;
   }
 }

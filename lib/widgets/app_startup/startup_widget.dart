@@ -1,6 +1,6 @@
 import 'package:flutter_template_2025/features/authentication/presentation/cubit/auth_cubit.dart';
 import '../../core/base/export.dart';
-import '../../features/splash/view/splash_page.dart';
+import '../../core/widgets/splash/splash_page.dart';
 import 'startup_error_widget.dart';
 
 class AppStartupWidget extends StatelessWidget {

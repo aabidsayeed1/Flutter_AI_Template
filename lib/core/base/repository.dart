@@ -1,5 +1,5 @@
-import 'failure.dart';
-import 'result.dart';
+import 'models/failure.dart';
+import 'models/result.dart';
 
 abstract base class Repository<T> {
   Future<Result<T, Failure>> asyncGuard(Future<T> Function() operation) async {

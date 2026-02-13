@@ -1,4 +1,4 @@
-part of '../view/login_page.dart';
+part of '../page/login_page.dart';
 
 class _FormFooter extends StatelessWidget {
   const _FormFooter({required this.shouldRemember});

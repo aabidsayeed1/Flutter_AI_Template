@@ -1,8 +1,8 @@
 export 'package:flutter/material.dart';
 export '../theme/theme.dart';
 export '../localization/locale_cubit.dart';
-export '../extensions/context_extensions.dart';
-export '../extensions/object_extensions.dart';
+export '../context_extensions/context_extensions.dart';
+export '../context_extensions/object_extensions.dart';
 export '../localization/l10n/app_localizations.dart';
 export 'package:go_router/go_router.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';

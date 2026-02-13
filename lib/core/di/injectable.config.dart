@@ -32,6 +32,30 @@ import 'package:flutter_template_2025/features/authentication/domain/use_cases/o
     as _i789;
 import 'package:flutter_template_2025/features/authentication/presentation/cubit/auth_cubit.dart'
     as _i1052;
+import 'package:flutter_template_2025/features/home/data/datasources/home_remote_data_source.dart'
+    as _i800;
+import 'package:flutter_template_2025/features/home/data/datasources/home_remote_data_source_impl.dart'
+    as _i379;
+import 'package:flutter_template_2025/features/home/data/repositories/home_repository_impl.dart'
+    as _i337;
+import 'package:flutter_template_2025/features/home/domain/repositories/home_repository.dart'
+    as _i61;
+import 'package:flutter_template_2025/features/home/domain/use_cases/get_home_items_usecase.dart'
+    as _i968;
+import 'package:flutter_template_2025/features/home/presentation/bloc/home_bloc.dart'
+    as _i731;
+import 'package:flutter_template_2025/features/profile/data/datasources/profile_remote_data_source.dart'
+    as _i491;
+import 'package:flutter_template_2025/features/profile/data/datasources/profile_remote_data_source_impl.dart'
+    as _i273;
+import 'package:flutter_template_2025/features/profile/data/repositories/profile_repository_impl.dart'
+    as _i606;
+import 'package:flutter_template_2025/features/profile/domain/repositories/profile_repository.dart'
+    as _i276;
+import 'package:flutter_template_2025/features/profile/domain/use_cases/get_profile_usecase.dart'
+    as _i530;
+import 'package:flutter_template_2025/features/profile/presentation/cubit/profile_cubit.dart'
+    as _i117;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:go_router/go_router.dart' as _i583;
 import 'package:injectable/injectable.dart' as _i526;
@@ -57,8 +81,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i220.AuthRemoteDataSource>(
       () => _i888.FirebaseAuthRemoteDataSource(gh<_i460.SharedPreferences>()),
     );
+    gh.lazySingleton<_i800.HomeRemoteDataSource>(
+      () => _i379.HomeRemoteDataSourceImpl(),
+    );
+    gh.lazySingleton<_i491.ProfileRemoteDataSource>(
+      () => _i273.ProfileRemoteDataSourceImpl(),
+    );
+    gh.lazySingleton<_i276.ProfileRepository>(
+      () => _i606.ProfileRepositoryImpl(gh<_i491.ProfileRemoteDataSource>()),
+    );
     gh.lazySingleton<_i337.AuthRepository>(
       () => _i72.AuthRepositoryImpl(gh<_i220.AuthRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i61.HomeRepository>(
+      () => _i337.HomeRepositoryImpl(gh<_i800.HomeRemoteDataSource>()),
+    );
+    gh.factory<_i968.GetHomeItemsUseCase>(
+      () => _i968.GetHomeItemsUseCase(gh<_i61.HomeRepository>()),
+    );
+    gh.factory<_i530.GetProfileUseCase>(
+      () => _i530.GetProfileUseCase(gh<_i276.ProfileRepository>()),
     );
     gh.factory<_i310.GetAuthStatusUseCase>(
       () => _i310.GetAuthStatusUseCase(gh<_i337.AuthRepository>()),
@@ -72,12 +114,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i789.ObserveAuthStateUseCase>(
       () => _i789.ObserveAuthStateUseCase(gh<_i337.AuthRepository>()),
     );
+    gh.factory<_i731.HomeBloc>(
+      () => _i731.HomeBloc(gh<_i968.GetHomeItemsUseCase>()),
+    );
     gh.lazySingleton<_i1052.AuthCubit>(
       () => _i1052.AuthCubit(
         gh<_i789.ObserveAuthStateUseCase>(),
         gh<_i900.LogoutUseCase>(),
         gh<_i685.LoginUseCase>(),
       ),
+    );
+    gh.lazySingleton<_i117.ProfileCubit>(
+      () => _i117.ProfileCubit(gh<_i530.GetProfileUseCase>()),
     );
     gh.singleton<_i583.GoRouter>(
       () => routerModule.provideRouter(gh<_i1052.AuthCubit>()),

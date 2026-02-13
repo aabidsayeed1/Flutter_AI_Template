@@ -1,4 +1,4 @@
-part of '../view/login_page.dart';
+part of '../page/login_page.dart';
 
 class _LoginForm extends StatefulWidget {
   const _LoginForm({

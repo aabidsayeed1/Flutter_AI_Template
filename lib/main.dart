@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'core/base/export.dart';
+import 'core/config/flavor.dart';
 import 'core/theme/theme_cubit.dart';
-import 'flavors.dart';
 
 // This variable is automatically set by Flutter when running with --flavor
 // If not set, it defaults to 'dev'
