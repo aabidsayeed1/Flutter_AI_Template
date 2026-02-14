@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'core/config/flavor.dart';
 import 'core/di/injectable.dart';
 import 'core/services/navigation_service.dart';
-import 'pages/my_home_page.dart';
+import 'features/home/presentation/pages/home_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       navigatorKey: getIt<NavigationService>().navigatorKey,
       home: _flavorBanner(
-        child: MyHomePage(),
+        child: HomePage(),
         show:
             kDebugMode &&
             F.isNonProd, // Only show banner in non-prod debug mode
