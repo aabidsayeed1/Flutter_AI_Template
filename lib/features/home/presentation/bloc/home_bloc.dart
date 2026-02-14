@@ -13,16 +13,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetHomeItemsUseCase getHomeItemsUseCase;
 
   HomeBloc(this.getHomeItemsUseCase) : super(const HomeState()) {
-    // on<_LoadHome>(_onLoadHome);
+    on<_LoadHome>(_onLoadHome);
   }
 
-  // Future<void> _onLoadHome(LoadHome event, Emitter<HomeState> emit) async {
-  //   emit(state.copyWith(isLoading: true, errorMessage: null));
-  //   try {
-  //     final items = await getHomeItemsUseCase();
-  //     emit(state.copyWith(isLoading: false, items: items));
-  //   } catch (e) {
-  //     emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
-  //   }
-  // }
+  Future<void> _onLoadHome(_LoadHome event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(isLoading: true, errorMessage: null));
+    try {
+      final items = await getHomeItemsUseCase();
+      emit(state.copyWith(isLoading: false, items: items));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+    }
+  }
 }

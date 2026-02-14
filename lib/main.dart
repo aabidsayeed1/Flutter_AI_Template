@@ -50,39 +50,46 @@ class MyApp extends StatelessWidget {
           return BlocBuilder<LocaleCubit, Locale>(
             bloc: getIt<LocaleCubit>(),
             builder: (context, locale) {
-              return MaterialApp.router(
-                title: F.title,
-                debugShowCheckedModeBanner: false,
-                theme: context.lightTheme,
-                darkTheme: context.darkTheme,
-                themeMode: themeMode,
-                locale: locale,
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: AppLocalizations.supportedLocales,
-                routerConfig: getIt<GoRouter>(),
+              return ScreenUtilInit(
+                designSize: const Size(375, 812),
+                minTextAdapt: true,
+                splitScreenMode: true,
                 builder: (context, child) {
-                  // Show flavor banner in debug mode
-                  if (kDebugMode) {
-                    return Banner(
-                      location: BannerLocation.topStart,
-                      message: F.name.toUpperCase(),
-                      color: _getFlavorColor(),
-                      textStyle: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12.0,
-                        letterSpacing: 1.0,
-                        color: Colors.white,
-                      ),
-                      textDirection: TextDirection.ltr,
-                      child: child ?? const SizedBox(),
-                    );
-                  }
-                  return child ?? const SizedBox();
+                  return MaterialApp.router(
+                    title: F.title,
+                    debugShowCheckedModeBanner: false,
+                    theme: context.lightTheme,
+                    darkTheme: context.darkTheme,
+                    themeMode: themeMode,
+                    locale: locale,
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: AppLocalizations.supportedLocales,
+                    routerConfig: getIt<GoRouter>(),
+                    builder: (context, child) {
+                      // Show flavor banner in debug mode
+                      if (kDebugMode) {
+                        return Banner(
+                          location: BannerLocation.topStart,
+                          message: F.name.toUpperCase(),
+                          color: _getFlavorColor(),
+                          textStyle: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                            letterSpacing: 1.0,
+                            color: Colors.white,
+                          ),
+                          textDirection: TextDirection.ltr,
+                          child: child ?? const SizedBox(),
+                        );
+                      }
+                      return child ?? const SizedBox();
+                    },
+                  );
                 },
               );
             },

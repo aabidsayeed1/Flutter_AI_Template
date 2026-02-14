@@ -2,6 +2,8 @@
   "@@locale": "en",
   "appTitle": "Flutter Template 2025",
   "home": "Home",
+  "featured": "Featured",
+  "search": "Search",
   "profile": "Profile",
   "login": "Login",
   "createNewPassword": "Create New password",

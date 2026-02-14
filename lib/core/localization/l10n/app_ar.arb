@@ -2,6 +2,8 @@
   "@@locale": "ar",
   "appTitle": "Flutter Template 2025",
   "home": "الرئيسية",
+  "featured": "المميز",
+  "search": "بحث",
   "profile": "الملف الشخصي",
   "login": "تسجيل الدخول",
   "createNewPassword": "إنشاء كلمة مرور جديدة",

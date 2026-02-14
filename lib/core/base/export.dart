@@ -8,3 +8,5 @@ export 'package:go_router/go_router.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export '../di/injectable.dart';
+export 'package:flutter_screenutil/flutter_screenutil.dart';
+export 'package:gap/gap.dart';
