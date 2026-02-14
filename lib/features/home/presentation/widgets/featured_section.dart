@@ -1,6 +1,7 @@
 import 'package:flutter_template_2025/core/base/export.dart';
 
 /// Individual featured card widget with gradient and animation.
+/// Uses [flutter_animate] for fadeIn + slideY entrance animation.
 class FeaturedCard extends StatelessWidget {
   final int index;
   final Color primaryColor;
@@ -20,75 +21,77 @@ class FeaturedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0.0, end: 1.0),
-        duration: Duration(milliseconds: 400 + (index * 100)),
-        curve: Curves.easeOut,
-        builder: (context, value, child) {
-          return Transform.translate(
-            offset: Offset(0, (1 - value) * 30),
-            child: Opacity(opacity: value, child: child),
-          );
-        },
-        child: Container(
-          width: 160.w,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [primaryColor, secondaryColor],
-            ),
-            borderRadius: BorderRadius.circular(20.r),
-            boxShadow: [
-              BoxShadow(
-                color: primaryColor.withValues(alpha: 0.3),
-                blurRadius: 20.r,
-                offset: Offset(0, 8.h),
+          onTap: onTap,
+          child: Container(
+            width: 160.w,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [primaryColor, secondaryColor],
               ),
-            ],
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10.w),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  child: Icon(icon, color: Colors.white, size: 28.sp),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Feature ${index + 1}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Gap(4.h),
-                    Text(
-                      'Discover more',
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                  ],
+              borderRadius: BorderRadius.circular(20.r),
+              boxShadow: [
+                BoxShadow(
+                  color: primaryColor.withValues(alpha: 0.3),
+                  blurRadius: 20.r,
+                  offset: Offset(0, 8.h),
                 ),
               ],
             ),
+            child: Padding(
+              padding: EdgeInsets.all(20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10.w),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Icon(icon, color: Colors.white, size: 28.sp),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Feature ${index + 1}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Gap(4.h),
+                      Text(
+                        'Discover more',
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        )
+        .animate()
+        .fadeIn(
+          delay: Duration(milliseconds: index * 100),
+          duration: 400.ms,
+          curve: Curves.easeOut,
+        )
+        .slideY(
+          begin: 0.3,
+          end: 0,
+          delay: Duration(milliseconds: index * 100),
+          duration: 400.ms,
+          curve: Curves.easeOut,
+        );
   }
 }
 
@@ -122,11 +125,14 @@ class FeaturedSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            context.locale.featured,
-            style: context.textStyle.headlineMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+                context.locale.featured,
+                style: context.textStyle.headlineMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+              .animate()
+              .fadeIn(duration: 300.ms)
+              .slideX(begin: -0.1, end: 0, duration: 300.ms),
           Gap(12.h),
           SizedBox(
             height: 180.h,

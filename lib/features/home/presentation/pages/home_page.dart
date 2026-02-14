@@ -14,6 +14,16 @@ class HomePage extends StatelessWidget {
           _buildSliverAppBar(context),
           SliverList.list(
             children: [
+              // Carousel Banner
+              Padding(
+                padding: EdgeInsets.only(top: 16.h, bottom: 8.h),
+                child: CarouselBanner(
+                  onBannerTap: (index) {
+                    // Handle banner tap
+                  },
+                ),
+              ),
+
               // Featured Section
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.h),

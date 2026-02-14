@@ -1,6 +1,7 @@
 import 'package:flutter_template_2025/core/base/export.dart';
 
 /// Individual category chip widget.
+/// Uses [flutter_animate] for scale entrance animation.
 class CategoryChip extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -18,66 +19,70 @@ class CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0.0, end: 1.0),
-        duration: Duration(milliseconds: 500 + (index * 80)),
-        curve: Curves.easeOut,
-        builder: (context, value, child) {
-          return Transform.scale(scale: value, child: child);
-        },
-        child: Container(
-          width: 100.w,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                context.color.primary.withValues(alpha: 0.1),
-                context.color.secondary.withValues(alpha: 0.1),
+          onTap: onTap,
+          child: Container(
+            width: 100.w,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  context.color.primary.withValues(alpha: 0.1),
+                  context.color.secondary.withValues(alpha: 0.1),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(20.r),
+              border: Border.all(
+                color: context.color.primary.withValues(alpha: 0.2),
+                width: 1.5.w,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: context.color.primary.withValues(alpha: 0.1),
+                  blurRadius: 10.r,
+                  offset: Offset(0, 4.h),
+                ),
               ],
             ),
-            borderRadius: BorderRadius.circular(20.r),
-            border: Border.all(
-              color: context.color.primary.withValues(alpha: 0.2),
-              width: 1.5.w,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(16.w),
+                  decoration: BoxDecoration(
+                    color: context.color.primary.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: context.color.primary, size: 32.sp),
+                ),
+                Gap(8.h),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: context.color.text.primary,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
-            boxShadow: [
-              BoxShadow(
-                color: context.color.primary.withValues(alpha: 0.1),
-                blurRadius: 10.r,
-                offset: Offset(0, 4.h),
-              ),
-            ],
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: context.color.primary.withValues(alpha: 0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(icon, color: context.color.primary, size: 32.sp),
-              ),
-              Gap(8.h),
-              Text(
-                label,
-                style: TextStyle(
-                  color: context.color.text.primary,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+        )
+        .animate()
+        .scaleXY(
+          begin: 0.0,
+          end: 1.0,
+          delay: Duration(milliseconds: index * 80),
+          duration: 500.ms,
+          curve: Curves.easeOut,
+        )
+        .fadeIn(
+          delay: Duration(milliseconds: index * 80),
+          duration: 400.ms,
+        );
   }
 }
 
@@ -105,11 +110,14 @@ class CategoriesSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Categories',
-            style: context.textStyle.headlineMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+                'Categories',
+                style: context.textStyle.headlineMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+              .animate()
+              .fadeIn(duration: 300.ms)
+              .slideX(begin: -0.1, end: 0, duration: 300.ms),
           Gap(12.h),
           SizedBox(
             height: 120.h,
