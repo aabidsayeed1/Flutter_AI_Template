@@ -2,45 +2,57 @@ flavors:
   dev:
     app:
       name: "Flutter Template Dev"
+      icon: "assets/icons/dev_1024.png"
     android:
       applicationId: "com.fluttertemplate2025.dev"
+      icon: "assets/icons/dev_1024.png"
       firebase:
         config: ".firebase/dev/google-services.json"
     ios:
       bundleId: "com.fluttertemplate2025.dev"
+      icon: "assets/icons/dev_1024.png"
       firebase:
         config: ".firebase/dev/GoogleService-Info.plist"
   qa:
     app:
       name: "Flutter Template QA"
+      icon: "assets/icons/qa_1024.png"
     android:
       applicationId: "com.fluttertemplate2025.qa"
+      icon: "assets/icons/qa_1024.png"
       firebase:
         config: ".firebase/qa/google-services.json"
     ios:
       bundleId: "com.fluttertemplate2025.qa"
+      icon: "assets/icons/qa_1024.png"
       firebase:
         config: ".firebase/qa/GoogleService-Info.plist"
   uat:
     app:
       name: "Flutter Template UAT"
+      icon: "assets/icons/uat_1024.png"
     android:
       applicationId: "com.fluttertemplate2025.uat"
+      icon: "assets/icons/uat_1024.png"
       firebase:
         config: ".firebase/uat/google-services.json"
     ios:
       bundleId: "com.fluttertemplate2025.uat"
+      icon: "assets/icons/uat_1024.png"
       firebase:
         config: ".firebase/uat/GoogleService-Info.plist"
   prod:
     app:
       name: "Flutter Template"
+      icon: "assets/icons/prod_1024.png"
     android:
       applicationId: "com.fluttertemplate2025"
+      icon: "assets/icons/prod_1024.png"
       firebase:
         config: ".firebase/prod/google-services.json"
     ios:
       bundleId: "com.fluttertemplate2025"
+      icon: "assets/icons/prod_1024.png"
       firebase:
         config: ".firebase/prod/GoogleService-Info.plist"
 
