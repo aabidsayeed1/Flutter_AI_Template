@@ -56,3 +56,46 @@ flavors:
       firebase:
         config: ".firebase/prod/GoogleService-Info.plist"
 
+# Flavorizr processors run in order.
+# Tip: remove any processor you do NOT want to execute (e.g. flutter:app, flutter:main).
+# Current setup lists ALL default processors for reference.
+instructions:
+  # Assets bundle (used by dummy/icon generators)
+  - assets:download
+  - assets:extract
+  # Android setup
+  - android:androidManifest
+  - android:flavorizrGradle
+  - android:buildGradle
+  - android:dummyAssets
+  - android:icons
+  # Flutter entrypoints (remove to avoid overwriting app.dart/main_<flavor>.dart)
+  - flutter:flavors
+  - flutter:app
+  - flutter:pages
+  - flutter:main
+  # iOS setup
+  - ios:podfile
+  - ios:xcconfig
+  - ios:buildTargets
+  - ios:schema
+  - ios:dummyAssets
+  - ios:icons
+  - ios:plist
+  - ios:launchScreen
+  # macOS setup
+  - macos:podfile
+  - macos:xcconfig
+  - macos:configs
+  - macos:buildTargets
+  - macos:schema
+  - macos:dummyAssets
+  - macos:icons
+  - macos:plist
+  # Third-party services
+  - google:firebase
+  - huawei:agconnect
+  # Cleanup + IDE configs
+  - assets:clean
+  - ide:config
+
