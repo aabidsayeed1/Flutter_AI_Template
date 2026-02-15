@@ -38,14 +38,15 @@ class GoRouterRefreshStream extends ChangeNotifier {
   }
 }
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'Root');
+/// Global navigator key accessible for Dio interceptors (e.g. [TokenManager]).
+final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'Root');
 
 @module
 abstract class RouterModule {
   @singleton
   GoRouter provideRouter(AuthCubit authCubit) {
     return GoRouter(
-      navigatorKey: _rootNavigatorKey,
+      navigatorKey: rootNavigatorKey,
       refreshListenable: GoRouterRefreshStream(authCubit.stream.distinct()),
       debugLogDiagnostics: true,
       initialLocation: Routes.initial,

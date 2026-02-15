@@ -26,7 +26,7 @@ class F {
   static String get baseUrl {
     switch (appFlavor) {
       case Flavor.dev:
-        return 'https://dev-api.example.com';
+        return 'https://dummyjson.com';
       case Flavor.qa:
         return 'https://qa-api.example.com';
       case Flavor.uat:

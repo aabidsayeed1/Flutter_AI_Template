@@ -185,6 +185,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  dart_mappable:
+    dependency: "direct main"
+    description:
+      name: dart_mappable
+      sha256: "0e219930c9f7b9e0f14ae7c1de931c401875110fd5c67975b6b9492a6d3a531b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.1"
+  dart_mappable_builder:
+    dependency: "direct dev"
+    description:
+      name: dart_mappable_builder
+      sha256: "27e8f109eb8fbff03eeeae61f8868a244ad28c8da5a8e429938aa039ae4ee32e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.4"
   dart_style:
     dependency: transitive
     description:
@@ -629,6 +645,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.3"
+  pretty_dio_logger:
+    dependency: "direct main"
+    description:
+      name: pretty_dio_logger
+      sha256: "36f2101299786d567869493e2f5731de61ce130faa14679473b26905a92b6407"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
+      sha256: "75ec242d22e950bdcc79ee38dd520ce4ee0bc491d7fadc4ea47694604d22bf06"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
   provider:
     dependency: transitive
     description:
@@ -661,6 +693,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  retrofit:
+    dependency: "direct main"
+    description:
+      name: retrofit
+      sha256: "0f629ed26b2c48c66fe54bd548313c6fdf7955be18bff37e08a46dd3f97f8eaf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.9.2"
+  retrofit_generator:
+    dependency: "direct dev"
+    description:
+      name: retrofit_generator
+      sha256: "2381d86c7291b55bf1d3b30d12054a74c417ba97321afbd73cb25be0e6fa401f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.2.3"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -810,6 +858,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.9"
+  type_plus:
+    dependency: transitive
+    description:
+      name: type_plus
+      sha256: d5d1019471f0d38b91603adb9b5fd4ce7ab903c879d2fbf1a3f80a630a03fcc9
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   typed_data:
     dependency: transitive
     description:
