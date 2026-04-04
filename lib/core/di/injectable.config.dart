@@ -134,7 +134,10 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.singleton<_i583.GoRouter>(
-      () => routerModule.provideRouter(gh<_i1052.AuthCubit>()),
+      () => routerModule.provideRouter(
+        gh<_i1052.AuthCubit>(),
+        gh<_i37.CacheService>(),
+      ),
     );
     gh.lazySingleton<_i117.ProfileCubit>(
       () => _i117.ProfileCubit(gh<_i530.GetProfileUseCase>()),

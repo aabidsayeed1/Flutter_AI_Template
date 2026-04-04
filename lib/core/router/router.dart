@@ -16,6 +16,7 @@ import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../core/widgets/splash/splash_page.dart';
 import '../../core/widgets/app_startup/app_startup_widget.dart';
 import '../../core/widgets/navigation_shell.dart' show NavigationShell;
+import '../services/cache/cache_service.dart';
 import 'routes.dart';
 
 part 'parts/authentication_routes.dart';
@@ -44,51 +45,35 @@ final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'Root');
 @module
 abstract class RouterModule {
   @singleton
-  GoRouter provideRouter(AuthCubit authCubit) {
+  GoRouter provideRouter(AuthCubit authCubit, CacheService cacheService) {
     return GoRouter(
       navigatorKey: rootNavigatorKey,
       refreshListenable: GoRouterRefreshStream(authCubit.stream.distinct()),
       debugLogDiagnostics: true,
       initialLocation: Routes.initial,
       redirect: (context, state) {
-        //  redirect: (context, state) {
-        //   final auth = authCubit.state;
-
-        //   // WAIT until auth state is ready
-        //   if (auth.isUnknown) return null;
-
-        //   final loggedIn = auth.isLoggedIn;
-        // final goingToLogin = state.matchedLocation == Routes.login;
-
-        //   if (!loggedIn && !goingToLogin) return Routes.login;
-        //   if (loggedIn && goingToLogin) return Routes.home;
-
-        //   return null;
-        // },
-
-        // Log.info('Redirecting to ${state.uri}');
         final auth = authCubit.state;
-        final loggedIn = auth.status == AuthStatus.authenticated;
-        final isUnknown = auth.status == AuthStatus.unknown;
-        final error = auth.error != null;
-        final onboarded = _isOnboarded(); // from SharedPrefs
-        final splashDone = _isSplashDone(); // splash completed
-
         final goingTo = state.uri.path;
-        if (isUnknown || error) {
+
+        // ⏳ Wait for auth to settle — splash (AppStartupWidget) stays
+        // visible at "/" until auth emits authenticated/unauthenticated.
+        if (auth.status == AuthStatus.unknown ||
+            auth.status == AuthStatus.loading) {
           return null;
         }
-        // ✅ 1. While splash not done, always stay on splash
-        if (!splashDone && goingTo != Routes.splash) {
-          return Routes.splash;
+
+        final loggedIn = auth.status == AuthStatus.authenticated;
+        final onboarded =
+            cacheService.get<bool>(CacheKey.isOnBoardingCompleted) ?? false;
+
+        // ✅ 1. Not onboarded → must complete onboarding first
+        if (!onboarded) {
+          return goingTo == Routes.onboarding ? null : Routes.onboarding;
         }
 
-        // ✅ 2. On first install → force onboarding
-        if (splashDone && !onboarded && goingTo != Routes.onboarding) {
-          return Routes.onboarding;
-        }
+        // — Below: user IS onboarded —
 
-        // ✅ 3. If not logged in → only allow login + auth-related pages
+        // ✅ 2. Not logged in → only allow public (auth) pages
         if (!loggedIn) {
           final publicPages = {
             state.namedLocation(Routes.login),
@@ -103,15 +88,17 @@ abstract class RouterModule {
             return Routes.login;
           }
         }
-        // ✅ 4. If logged in → prevent going back to login or onboarding
+
+        // ✅ 3. Logged in → prevent going back to auth/setup pages
         if (loggedIn &&
             (goingTo == Routes.login ||
                 goingTo == Routes.onboarding ||
-                goingTo == Routes.initial)) {
+                goingTo == Routes.initial ||
+                goingTo == Routes.splash)) {
           return Routes.home;
         }
 
-        return null; // ✅
+        return null;
       },
       routes: [
         GoRoute(
@@ -126,15 +113,5 @@ abstract class RouterModule {
         _shellRoutes(),
       ],
     );
-  }
-
-  bool _isOnboarded() {
-    // TODO: Replace with SharedPrefs or storage read
-    return true;
-  }
-
-  bool _isSplashDone() {
-    // TODO: Replace with splash completion flag
-    return true;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_template_2025/core/base/export.dart';
 import 'package:flutter_template_2025/core/router/routes.dart';
+import 'package:flutter_template_2025/core/services/cache/cache_service.dart';
 
 part 'onboarding_model.dart';
 
@@ -67,8 +68,14 @@ class OnboardingPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: FilledButton(
-                    onPressed: () {
-                      context.goNamed(Routes.login);
+                    onPressed: () async {
+                      await getIt<CacheService>().save<bool>(
+                        CacheKey.isOnBoardingCompleted,
+                        true,
+                      );
+                      if (context.mounted) {
+                        context.goNamed(Routes.login);
+                      }
                     },
                     child: Text(context.locale.getStarted),
                   ),
