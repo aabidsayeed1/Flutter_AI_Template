@@ -1,65 +1,124 @@
-import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template_2025/features/authentication/domain/use_cases/login_usecase.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/logger/log.dart';
-import '../../domain/entities/user.dart';
+import '../../../../core/user/user_cubit.dart';
+import '../../domain/entities/login_entity.dart';
+import '../../domain/entities/remember_me_entity.dart';
+import '../../domain/entities/sign_up_entity.dart';
+import '../../domain/use_cases/login_usecase.dart';
 import '../../domain/use_cases/logout_usecase.dart';
-import '../../domain/use_cases/observe_auth_state_usecase.dart';
+import '../../domain/use_cases/remember_me_usecase.dart';
+import '../../domain/use_cases/sign_up_usecase.dart';
 
 part 'auth_state.dart';
+part 'auth_cubit.freezed.dart';
 
 @lazySingleton
 class AuthCubit extends Cubit<AuthState> {
-  final ObserveAuthStateUseCase observeAuthState;
   final LogoutUseCase logoutUseCase;
   final LoginUseCase loginUseCase;
-  AuthCubit(this.observeAuthState, this.logoutUseCase, this.loginUseCase)
-    : super(const AuthState.unknown()) {
-    _listenAuthState();
+  final SignUpUseCase signUpUseCase;
+  final UserCubit userCubit;
+  final RememberMeUseCase rememberMeUseCase;
+
+  AuthCubit(
+    this.logoutUseCase,
+    this.loginUseCase,
+    this.signUpUseCase,
+    this.userCubit,
+    this.rememberMeUseCase,
+  ) : super(const AuthState()) {
+    _checkAuthStatus();
   }
 
-  // ✅ LOGIN (persisted)
-  Future<void> login() async {
-    final user = await loginUseCase(
-      email: 'user@example.com',
-      password: 'password',
+  // ── LOGIN ──────────────────────────────────────────────────────────────
+  Future<void> login({
+    required String username,
+    required String password,
+    bool rememberMe = false,
+  }) async {
+    emit(state.copyWith(status: AuthStatus.loading, error: null));
+    final data = LoginRequestEntity(
+      username: username,
+      password: password,
+      shouldRemeber: rememberMe,
     );
-    if (user == null) {
-      emit(const AuthState.error('Login failed'));
+    final (response, failure) = await loginUseCase(data);
+    if (failure != null) {
+      Log.debug('Login Failed : ${failure.message}');
+      emit(state.copyWith(status: AuthStatus.error, error: failure.message));
       return;
     }
-    Log.debug('Logged in user: ${user.email}');
-    emit(AuthState.authenticated(user: user));
+    if (response != null) {
+      _setUserFromLoginResponse(response);
+    }
+
+    // Save remember me with credentials
+    await rememberMeUseCase.save(
+      RememberMeEntity(
+        enabled: rememberMe,
+        email: rememberMe ? username : null,
+        password: rememberMe ? password : null,
+      ),
+    );
+
+    Log.debug('Logged in — token: ${response?.accessToken}');
+    emit(state.copyWith(status: AuthStatus.authenticated, error: null));
   }
 
-  // ✅ LOGOUT (persisted)
+  // ── SIGN UP ────────────────────────────────────────────────────────────
+  Future<void> signUp({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+  }) async {
+    emit(state.copyWith(status: AuthStatus.loading, error: null));
+    final data = SignUpRequestEntity(
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+    );
+    final (response, failure) = await signUpUseCase(data);
+    if (failure != null) {
+      emit(state.copyWith(status: AuthStatus.error, error: failure.message));
+      return;
+    }
+    Log.debug('Signed up — token: ${response?.accessToken}');
+    emit(state.copyWith(status: AuthStatus.authenticated, error: null));
+  }
+
+  // ── LOGOUT ─────────────────────────────────────────────────────────────
   Future<void> logout() async {
     await logoutUseCase();
-    emit(const AuthState.unauthenticated());
+    userCubit.clearUser();
+    emit(state.copyWith(status: AuthStatus.unauthenticated, error: null));
   }
 
-  // ✅ RETRY
+  // ── RETRY ──────────────────────────────────────────────────────────────
   Future<void> retry() async {
-    emit(const AuthState.unknown());
-    _listenAuthState();
+    emit(state.copyWith(status: AuthStatus.unknown, error: null));
+    _checkAuthStatus();
   }
 
-  void _listenAuthState() async {
-    await Future.delayed(const Duration(seconds: 2)); // simulate splash delay
-    final bool error = Random().nextBool(); // simulate random error
-    if (error) {
-      emit(const AuthState.error('Failed to load auth state'));
-      return;
+  // ── CHECK AUTH STATUS ON START ─────────────────────────────────────────
+  void _checkAuthStatus() {
+    userCubit.loadFromCache();
+    if (userCubit.user != null) {
+      emit(state.copyWith(status: AuthStatus.authenticated));
+    } else {
+      emit(state.copyWith(status: AuthStatus.unauthenticated));
     }
-    observeAuthState().listen((user) {
-      Log.debug('listenAuthState: ${user?.email}');
-      if (user != null) {
-        emit(AuthState.authenticated(user: user));
-      } else {
-        emit(const AuthState.unauthenticated());
-      }
-    });
   }
+
+  // ── MAP LOGIN RESPONSE TO USER ─────────────────────────────────────────
+  void _setUserFromLoginResponse(LoginResponseEntity response) {
+    userCubit.setUser(response.toUser());
+  }
+
+  // ── REMEMBER ME ────────────────────────────────────────────────────────
+  Future<RememberMeEntity> getRememberMe() => rememberMeUseCase.get();
 }

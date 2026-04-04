@@ -18,4 +18,7 @@ abstract class AuthApi {
 
   @POST(AuthEndpoints.login)
   Future<HttpResponse> login(@Body() LoginRequestModel request);
+
+  @POST(AuthEndpoints.register)
+  Future<HttpResponse> register(@Body() Map<String, dynamic> body);
 }

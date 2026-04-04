@@ -1,16 +1,11 @@
 part of 'auth_cubit.dart';
 
-class AuthState {
-  final bool isLoggedIn;
-  final bool isUnknown;
-  final String? error;
-  final User? user;
+enum AuthStatus { unknown, loading, authenticated, unauthenticated, error }
 
-  const AuthState._(this.isLoggedIn, this.isUnknown, this.error, {this.user});
-
-  const AuthState.unknown() : this._(false, true, null);
-  const AuthState.authenticated({User? user})
-    : this._(true, false, null, user: user);
-  const AuthState.unauthenticated() : this._(false, false, null);
-  const AuthState.error(String error) : this._(false, false, error);
+@freezed
+abstract class AuthState with _$AuthState {
+  const factory AuthState({
+    @Default(AuthStatus.unknown) AuthStatus status,
+    @Default(null) String? error,
+  }) = _AuthState;
 }

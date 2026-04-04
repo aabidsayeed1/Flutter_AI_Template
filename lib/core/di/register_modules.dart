@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/authentication/data/services/network/auth_api.dart';
 import '../../features/authentication/data/services/network/auth_endpoints.dart';
+import '../../features/home/data/services/network/home_api.dart';
+import '../../features/profile/data/services/network/profile_api.dart';
 import '../config/flavor.dart';
 import '../router/router.dart';
 import '../services/cache/cache_service.dart';
@@ -78,4 +80,10 @@ abstract class RegisterModule {
 
   @lazySingleton
   AuthApi authApi(Dio dio) => AuthApi(dio);
+
+  @lazySingleton
+  HomeApi homeApi(Dio dio) => HomeApi(dio);
+
+  @lazySingleton
+  ProfileApi profileApi(Dio dio) => ProfileApi(dio);
 }

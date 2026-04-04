@@ -68,8 +68,8 @@ abstract class RouterModule {
 
         // Log.info('Redirecting to ${state.uri}');
         final auth = authCubit.state;
-        final loggedIn = auth.isLoggedIn;
-        final isUnknown = auth.isUnknown;
+        final loggedIn = auth.status == AuthStatus.authenticated;
+        final isUnknown = auth.status == AuthStatus.unknown;
         final error = auth.error != null;
         final onboarded = _isOnboarded(); // from SharedPrefs
         final splashDone = _isSplashDone(); // splash completed

@@ -2,17 +2,18 @@ import 'package:injectable/injectable.dart';
 
 import '../../domain/entities/profile_entity.dart';
 import '../../domain/repositories/profile_repository.dart';
-import '../datasources/profile_remote_data_source.dart';
+import '../models/profile_model.dart';
+import '../services/network/profile_api.dart';
 
 @LazySingleton(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {
-  final ProfileRemoteDataSource remote;
+  final ProfileApi api;
 
-  ProfileRepositoryImpl(this.remote);
+  ProfileRepositoryImpl(this.api);
 
   @override
   Future<ProfileEntity> getProfile() async {
-    final model = await remote.fetchProfile();
-    return model; // ProfileModel extends ProfileEntity
+    final response = await api.getProfile();
+    return ProfileModel.fromJson(response.data as Map<String, dynamic>);
   }
 }

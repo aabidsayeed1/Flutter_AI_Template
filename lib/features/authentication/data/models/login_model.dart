@@ -8,30 +8,21 @@ part 'login_model.mapper.dart';
 class LoginResponseModel extends LoginResponseEntity
     with LoginResponseModelMappable {
   LoginResponseModel({
-    required this.id,
-    required this.username,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.image,
+    required super.id,
+    required super.username,
+    required super.email,
+    required super.firstName,
+    required super.lastName,
+    required super.image,
     required super.accessToken,
-    required this.gender,
+    required super.gender,
     required this.refreshToken,
   });
 
-  final int id;
-  final String username;
-  final String email;
-  final String firstName;
-  final String lastName;
-  final String gender;
-  final String image;
   final String refreshToken;
 }
 
-@MappableClass(generateMethods: GenerateMethods.copy | GenerateMethods.encode)
-class LoginRequestModel extends LoginRequestEntity
-    with LoginRequestModelMappable {
+class LoginRequestModel extends LoginRequestEntity {
   LoginRequestModel({required super.username, required super.password});
 
   factory LoginRequestModel.fromEntity(LoginRequestEntity entity) {
@@ -40,4 +31,6 @@ class LoginRequestModel extends LoginRequestEntity
       password: entity.password,
     );
   }
+
+  Map<String, dynamic> toJson() => {'username': username, 'password': password};
 }

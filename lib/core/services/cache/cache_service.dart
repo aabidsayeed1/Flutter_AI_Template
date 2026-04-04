@@ -8,7 +8,10 @@ enum CacheKey {
   isOnBoardingCompleted,
   isLoggedIn,
   rememberMe,
+  rememberedEmail,
+  rememberedPassword,
   language,
+  user,
 }
 
 abstract class CacheService {

@@ -19,44 +19,37 @@ import 'package:flutter_template_2025/core/services/cache/cache_service.dart'
 import 'package:flutter_template_2025/core/services/navigation_service.dart'
     as _i725;
 import 'package:flutter_template_2025/core/theme/theme_cubit.dart' as _i507;
-import 'package:flutter_template_2025/features/authentication/data/datasources/auth_remote_data_source.dart'
-    as _i220;
-import 'package:flutter_template_2025/features/authentication/data/datasources/auth_remote_data_source_firebase.dart'
-    as _i888;
-import 'package:flutter_template_2025/features/authentication/data/repositories/auth_repository_impl.dart'
-    as _i72;
+import 'package:flutter_template_2025/core/user/user_cubit.dart' as _i267;
+import 'package:flutter_template_2025/features/authentication/data/repositories/auth_repository_api_impl.dart'
+    as _i553;
 import 'package:flutter_template_2025/features/authentication/data/services/network/auth_api.dart'
     as _i264;
 import 'package:flutter_template_2025/features/authentication/domain/repositories/auth_repository.dart'
     as _i337;
-import 'package:flutter_template_2025/features/authentication/domain/use_cases/get_auth_status_usecase.dart'
-    as _i310;
 import 'package:flutter_template_2025/features/authentication/domain/use_cases/login_usecase.dart'
     as _i685;
 import 'package:flutter_template_2025/features/authentication/domain/use_cases/logout_usecase.dart'
     as _i900;
-import 'package:flutter_template_2025/features/authentication/domain/use_cases/observe_auth_state_usecase.dart'
-    as _i789;
+import 'package:flutter_template_2025/features/authentication/domain/use_cases/remember_me_usecase.dart'
+    as _i681;
+import 'package:flutter_template_2025/features/authentication/domain/use_cases/sign_up_usecase.dart'
+    as _i579;
 import 'package:flutter_template_2025/features/authentication/presentation/cubit/auth_cubit.dart'
     as _i1052;
-import 'package:flutter_template_2025/features/home/data/datasources/home_remote_data_source.dart'
-    as _i800;
-import 'package:flutter_template_2025/features/home/data/datasources/home_remote_data_source_impl.dart'
-    as _i379;
 import 'package:flutter_template_2025/features/home/data/repositories/home_repository_impl.dart'
     as _i337;
+import 'package:flutter_template_2025/features/home/data/services/network/home_api.dart'
+    as _i761;
 import 'package:flutter_template_2025/features/home/domain/repositories/home_repository.dart'
     as _i61;
 import 'package:flutter_template_2025/features/home/domain/use_cases/get_home_items_usecase.dart'
     as _i968;
 import 'package:flutter_template_2025/features/home/presentation/bloc/home_bloc.dart'
     as _i731;
-import 'package:flutter_template_2025/features/profile/data/datasources/profile_remote_data_source.dart'
-    as _i491;
-import 'package:flutter_template_2025/features/profile/data/datasources/profile_remote_data_source_impl.dart'
-    as _i273;
 import 'package:flutter_template_2025/features/profile/data/repositories/profile_repository_impl.dart'
     as _i606;
+import 'package:flutter_template_2025/features/profile/data/services/network/profile_api.dart'
+    as _i148;
 import 'package:flutter_template_2025/features/profile/domain/repositories/profile_repository.dart'
     as _i276;
 import 'package:flutter_template_2025/features/profile/domain/use_cases/get_profile_usecase.dart'
@@ -83,41 +76,41 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i725.NavigationService>(() => _i725.NavigationService());
     gh.lazySingleton<_i507.ThemeCubit>(() => _i507.ThemeCubit());
-    gh.lazySingleton<_i800.HomeRemoteDataSource>(
-      () => _i379.HomeRemoteDataSourceImpl(),
-    );
-    gh.lazySingleton<_i491.ProfileRemoteDataSource>(
-      () => _i273.ProfileRemoteDataSourceImpl(),
-    );
-    gh.lazySingleton<_i220.AuthRemoteDataSource>(
-      () => _i888.FirebaseAuthRemoteDataSource(gh<_i460.SharedPreferences>()),
-    );
     gh.lazySingleton<_i37.CacheService>(
       () => registerModule.cacheService(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i450.LocaleCubit>(
       () => _i450.LocaleCubit(gh<_i460.SharedPreferences>()),
     );
-    gh.lazySingleton<_i61.HomeRepository>(
-      () => _i337.HomeRepositoryImpl(gh<_i800.HomeRemoteDataSource>()),
-    );
-    gh.factory<_i968.GetHomeItemsUseCase>(
-      () => _i968.GetHomeItemsUseCase(gh<_i61.HomeRepository>()),
-    );
     gh.lazySingleton<_i361.Dio>(
       () => registerModule.dio(gh<_i37.CacheService>()),
     );
-    gh.factory<_i731.HomeBloc>(
-      () => _i731.HomeBloc(gh<_i968.GetHomeItemsUseCase>()),
+    gh.lazySingleton<_i267.UserCubit>(
+      () => _i267.UserCubit(gh<_i37.CacheService>()),
+    );
+    gh.lazySingleton<_i264.AuthApi>(
+      () => registerModule.authApi(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i761.HomeApi>(
+      () => registerModule.homeApi(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i148.ProfileApi>(
+      () => registerModule.profileApi(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i337.AuthRepository>(
-      () => _i72.AuthRepositoryImpl(gh<_i220.AuthRemoteDataSource>()),
+      () => _i553.AuthRepositoryApiImpl(
+        gh<_i264.AuthApi>(),
+        gh<_i37.CacheService>(),
+      ),
     );
     gh.lazySingleton<_i276.ProfileRepository>(
-      () => _i606.ProfileRepositoryImpl(gh<_i491.ProfileRemoteDataSource>()),
+      () => _i606.ProfileRepositoryImpl(gh<_i148.ProfileApi>()),
     );
-    gh.factory<_i310.GetAuthStatusUseCase>(
-      () => _i310.GetAuthStatusUseCase(gh<_i337.AuthRepository>()),
+    gh.factory<_i530.GetProfileUseCase>(
+      () => _i530.GetProfileUseCase(gh<_i276.ProfileRepository>()),
+    );
+    gh.lazySingleton<_i61.HomeRepository>(
+      () => _i337.HomeRepositoryImpl(gh<_i761.HomeApi>()),
     );
     gh.factory<_i685.LoginUseCase>(
       () => _i685.LoginUseCase(gh<_i337.AuthRepository>()),
@@ -125,27 +118,32 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i900.LogoutUseCase>(
       () => _i900.LogoutUseCase(gh<_i337.AuthRepository>()),
     );
-    gh.factory<_i789.ObserveAuthStateUseCase>(
-      () => _i789.ObserveAuthStateUseCase(gh<_i337.AuthRepository>()),
+    gh.factory<_i681.RememberMeUseCase>(
+      () => _i681.RememberMeUseCase(gh<_i337.AuthRepository>()),
     );
-    gh.lazySingleton<_i264.AuthApi>(
-      () => registerModule.authApi(gh<_i361.Dio>()),
+    gh.factory<_i579.SignUpUseCase>(
+      () => _i579.SignUpUseCase(gh<_i337.AuthRepository>()),
     );
     gh.lazySingleton<_i1052.AuthCubit>(
       () => _i1052.AuthCubit(
-        gh<_i789.ObserveAuthStateUseCase>(),
         gh<_i900.LogoutUseCase>(),
         gh<_i685.LoginUseCase>(),
+        gh<_i579.SignUpUseCase>(),
+        gh<_i267.UserCubit>(),
+        gh<_i681.RememberMeUseCase>(),
       ),
     );
     gh.singleton<_i583.GoRouter>(
       () => routerModule.provideRouter(gh<_i1052.AuthCubit>()),
     );
-    gh.factory<_i530.GetProfileUseCase>(
-      () => _i530.GetProfileUseCase(gh<_i276.ProfileRepository>()),
-    );
     gh.lazySingleton<_i117.ProfileCubit>(
       () => _i117.ProfileCubit(gh<_i530.GetProfileUseCase>()),
+    );
+    gh.factory<_i968.GetHomeItemsUseCase>(
+      () => _i968.GetHomeItemsUseCase(gh<_i61.HomeRepository>()),
+    );
+    gh.factory<_i731.HomeBloc>(
+      () => _i731.HomeBloc(gh<_i968.GetHomeItemsUseCase>()),
     );
     return this;
   }

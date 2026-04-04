@@ -206,7 +206,7 @@ String toString() {
 /// @nodoc
 mixin _$HomeState {
 
- bool get isLoading; List<HomeEntity> get items; String? get errorMessage;
+ HomeStatus get status; List<HomeEntity> get items; String? get errorMessage;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -217,16 +217,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other.items, items)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.items, items)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,const DeepCollectionEquality().hash(items),errorMessage);
+int get hashCode => Object.hash(runtimeType,status,const DeepCollectionEquality().hash(items),errorMessage);
 
 @override
 String toString() {
-  return 'HomeState(isLoading: $isLoading, items: $items, errorMessage: $errorMessage)';
+  return 'HomeState(status: $status, items: $items, errorMessage: $errorMessage)';
 }
 
 
@@ -237,7 +237,7 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, List<HomeEntity> items, String? errorMessage
+ HomeStatus status, List<HomeEntity> items, String? errorMessage
 });
 
 
@@ -254,10 +254,10 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? items = null,Object? errorMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? items = null,Object? errorMessage = freezed,}) {
   return _then(_self.copyWith(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as HomeStatus,items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
 as List<HomeEntity>,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -344,10 +344,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  List<HomeEntity> items,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( HomeStatus status,  List<HomeEntity> items,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.isLoading,_that.items,_that.errorMessage);case _:
+return $default(_that.status,_that.items,_that.errorMessage);case _:
   return orElse();
 
 }
@@ -365,10 +365,10 @@ return $default(_that.isLoading,_that.items,_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  List<HomeEntity> items,  String? errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( HomeStatus status,  List<HomeEntity> items,  String? errorMessage)  $default,) {final _that = this;
 switch (_that) {
 case _HomeState():
-return $default(_that.isLoading,_that.items,_that.errorMessage);case _:
+return $default(_that.status,_that.items,_that.errorMessage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -385,10 +385,10 @@ return $default(_that.isLoading,_that.items,_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  List<HomeEntity> items,  String? errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( HomeStatus status,  List<HomeEntity> items,  String? errorMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.isLoading,_that.items,_that.errorMessage);case _:
+return $default(_that.status,_that.items,_that.errorMessage);case _:
   return null;
 
 }
@@ -400,10 +400,10 @@ return $default(_that.isLoading,_that.items,_that.errorMessage);case _:
 
 
 class _HomeState implements HomeState {
-  const _HomeState({this.isLoading = false, final  List<HomeEntity> items = const <HomeEntity>[], this.errorMessage = null}): _items = items;
+  const _HomeState({this.status = HomeStatus.initial, final  List<HomeEntity> items = const <HomeEntity>[], this.errorMessage = null}): _items = items;
   
 
-@override@JsonKey() final  bool isLoading;
+@override@JsonKey() final  HomeStatus status;
  final  List<HomeEntity> _items;
 @override@JsonKey() List<HomeEntity> get items {
   if (_items is EqualUnmodifiableListView) return _items;
@@ -423,16 +423,16 @@ _$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,const DeepCollectionEquality().hash(_items),errorMessage);
+int get hashCode => Object.hash(runtimeType,status,const DeepCollectionEquality().hash(_items),errorMessage);
 
 @override
 String toString() {
-  return 'HomeState(isLoading: $isLoading, items: $items, errorMessage: $errorMessage)';
+  return 'HomeState(status: $status, items: $items, errorMessage: $errorMessage)';
 }
 
 
@@ -443,7 +443,7 @@ abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Re
   factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, List<HomeEntity> items, String? errorMessage
+ HomeStatus status, List<HomeEntity> items, String? errorMessage
 });
 
 
@@ -460,10 +460,10 @@ class __$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? items = null,Object? errorMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? items = null,Object? errorMessage = freezed,}) {
   return _then(_HomeState(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as HomeStatus,items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
 as List<HomeEntity>,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

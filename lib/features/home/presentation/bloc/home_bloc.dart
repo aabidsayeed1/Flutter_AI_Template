@@ -17,12 +17,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _onLoadHome(_LoadHome event, Emitter<HomeState> emit) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null));
+    emit(state.copyWith(status: HomeStatus.loading, errorMessage: null));
     try {
       final items = await getHomeItemsUseCase();
-      emit(state.copyWith(isLoading: false, items: items));
+      emit(state.copyWith(status: HomeStatus.success, items: items));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+      emit(
+        state.copyWith(status: HomeStatus.failure, errorMessage: e.toString()),
+      );
     }
   }
 }

@@ -1,23 +1,12 @@
-import '../../domain/entities/profile_entity.dart';
+part of 'profile_cubit.dart';
 
-sealed class ProfileState {
-  const ProfileState();
-}
+enum ProfileStatus { initial, loading, loaded, error }
 
-class ProfileInitial extends ProfileState {
-  const ProfileInitial();
-}
-
-class ProfileLoading extends ProfileState {
-  const ProfileLoading();
-}
-
-class ProfileLoaded extends ProfileState {
-  final ProfileEntity profile;
-  const ProfileLoaded(this.profile);
-}
-
-class ProfileError extends ProfileState {
-  final String message;
-  const ProfileError(this.message);
+@freezed
+abstract class ProfileState with _$ProfileState {
+  const factory ProfileState({
+    @Default(ProfileStatus.initial) ProfileStatus status,
+    @Default(null) ProfileEntity? profile,
+    @Default(null) String? error,
+  }) = _ProfileState;
 }

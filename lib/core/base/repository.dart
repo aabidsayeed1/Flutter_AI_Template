@@ -1,22 +1,21 @@
 import 'models/failure.dart';
-import 'models/result.dart';
 
-abstract base class Repository<T> {
-  Future<Result<T, Failure>> asyncGuard(Future<T> Function() operation) async {
+abstract base class Repository {
+  Future<(T?, Failure?)> asyncGuard<T>(Future<T> Function() operation) async {
     try {
       final result = await operation();
-      return Success(result);
+      return (result, null);
     } on Exception catch (e) {
-      return Error(Failure.mapExceptionToFailure(e));
+      return (null, Failure.mapExceptionToFailure(e));
     }
   }
 
-  Result<T, Failure> guard(T Function() operation) {
+  (T?, Failure?) guard<T>(T Function() operation) {
     try {
       final result = operation();
-      return Success(result);
+      return (result, null);
     } on Exception catch (e) {
-      return Error(Failure.mapExceptionToFailure(e));
+      return (null, Failure.mapExceptionToFailure(e));
     }
   }
 }
