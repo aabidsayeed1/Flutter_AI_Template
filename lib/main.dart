@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:toastification/toastification.dart';
 
 import 'core/base/export.dart';
 import 'core/config/flavor.dart';
@@ -39,62 +40,64 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: getIt<LocaleCubit>()),
-        BlocProvider.value(value: getIt<ThemeCubit>()),
-      ],
-      child: BlocBuilder<ThemeCubit, ThemeMode>(
-        bloc: getIt<ThemeCubit>(),
-        builder: (context, themeMode) {
-          return BlocBuilder<LocaleCubit, Locale>(
-            bloc: getIt<LocaleCubit>(),
-            builder: (context, locale) {
-              return ScreenUtilInit(
-                designSize: const Size(375, 812),
-                minTextAdapt: true,
-                splitScreenMode: true,
-                builder: (context, child) {
-                  return MaterialApp.router(
-                    title: F.title,
-                    debugShowCheckedModeBanner: false,
-                    theme: context.lightTheme,
-                    darkTheme: context.darkTheme,
-                    themeMode: themeMode,
-                    locale: locale,
-                    localizationsDelegates: const [
-                      AppLocalizations.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    supportedLocales: AppLocalizations.supportedLocales,
-                    routerConfig: getIt<GoRouter>(),
-                    builder: (context, child) {
-                      // Show flavor banner in debug mode
-                      if (kDebugMode) {
-                        return Banner(
-                          location: BannerLocation.topStart,
-                          message: F.name.toUpperCase(),
-                          color: _getFlavorColor(),
-                          textStyle: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12.0,
-                            letterSpacing: 1.0,
-                            color: Colors.white,
-                          ),
-                          textDirection: TextDirection.ltr,
-                          child: child ?? const SizedBox(),
-                        );
-                      }
-                      return child ?? const SizedBox();
-                    },
-                  );
-                },
-              );
-            },
-          );
-        },
+    return ToastificationWrapper(
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: getIt<LocaleCubit>()),
+          BlocProvider.value(value: getIt<ThemeCubit>()),
+        ],
+        child: BlocBuilder<ThemeCubit, ThemeMode>(
+          bloc: getIt<ThemeCubit>(),
+          builder: (context, themeMode) {
+            return BlocBuilder<LocaleCubit, Locale>(
+              bloc: getIt<LocaleCubit>(),
+              builder: (context, locale) {
+                return ScreenUtilInit(
+                  designSize: const Size(375, 812),
+                  minTextAdapt: true,
+                  splitScreenMode: true,
+                  builder: (context, child) {
+                    return MaterialApp.router(
+                      title: F.title,
+                      debugShowCheckedModeBanner: false,
+                      theme: context.lightTheme,
+                      darkTheme: context.darkTheme,
+                      themeMode: themeMode,
+                      locale: locale,
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      supportedLocales: AppLocalizations.supportedLocales,
+                      routerConfig: getIt<GoRouter>(),
+                      builder: (context, child) {
+                        // Show flavor banner in debug mode
+                        if (kDebugMode) {
+                          return Banner(
+                            location: BannerLocation.topStart,
+                            message: F.name.toUpperCase(),
+                            color: _getFlavorColor(),
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.0,
+                              letterSpacing: 1.0,
+                              color: Colors.white,
+                            ),
+                            textDirection: TextDirection.ltr,
+                            child: child ?? const SizedBox(),
+                          );
+                        }
+                        return child ?? const SizedBox();
+                      },
+                    );
+                  },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

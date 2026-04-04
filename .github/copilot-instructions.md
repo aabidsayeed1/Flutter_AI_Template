@@ -138,6 +138,17 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - Use `Log.debug()`, `Log.info()`, `Log.warning()`, `Log.error()`, `Log.fatal()`.
 - Never use `print()` or `debugPrint()` for logging.
 
+## Toast Notifications
+
+- **toastification** package with `ToastificationWrapper` wrapping the app in `main.dart`.
+- Toast methods via **BuildContext extension** in `lib/core/utils/app_toast.dart`.
+- Usage: `context.showSuccess(title: 'Done', message: 'Saved successfully')`.
+- Available methods: `context.showSuccess()`, `context.showError()`, `context.showWarning()`, `context.showInfo()`, `context.dismissAllToasts()`.
+- Error toasts have 6s duration, warning 5s, others 4s by default.
+- Style: `ToastificationStyle.flatColored`, `Alignment.topCenter`, drag-to-close.
+- **Never use `ScaffoldMessenger.showSnackBar`** — use `context.showError()`, `context.showSuccess()`, etc.
+- Parameters: `title` (required), `message` (optional), `duration`, `alignment`, `showProgressBar`.
+
 ## Validators & Utils
 
 - Use `Validators.validateEmail()`, `Validators.validatePassword()`, etc. from `core/utils/validators.dart`.
@@ -155,6 +166,7 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - Don't use `setState` for business logic — use Cubit/Bloc.
 - Don't use `print()` — use `Log.*`.
 - Don't use `SizedBox` for spacing — use `Gap`.
+- Don't use `ScaffoldMessenger.showSnackBar` or raw `toastification.show()` — use `context.showSuccess()`, `context.showError()`, etc.
 - Don't create singleton instances manually — use `@lazySingleton` + `getIt<T>()`.
 - Don't edit `.g.dart`, `.freezed.dart`, `.mapper.dart`, `.config.dart` files — they are generated.
 - Don't add features without running `build_runner` after annotating files.

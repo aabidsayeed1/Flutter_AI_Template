@@ -17,6 +17,7 @@ A production-ready Flutter template with **BLoC/Cubit** state management, **Clea
 - [Theme System](#theme-system)
 - [Localization](#localization)
 - [Error Handling](#error-handling)
+- [Toast Notifications](#toast-notifications)
 - [Creating a New Feature](#creating-a-new-feature)
 - [Code Generation](#code-generation)
 - [Flavors](#flavors)
@@ -146,6 +147,7 @@ lib/
 │   │   └── object_extensions.dart     # .globalContext, .tr for non-widget localization
 │   │
 │   ├── utils/
+│   │   ├── app_toast.dart             # BuildContext extension: context.showSuccess(), showError(), etc.
 │   │   ├── validators.dart            # Validators.validateEmail, validatePassword, etc.
 │   │   ├── constants.dart             # AppConstants (timeouts, regex, page sizes)
 │   │   ├── formatters.dart            # Formatters.formatDate, formatCurrency, etc.
@@ -654,6 +656,69 @@ if (failure != null) {
 
 ---
 
+## Toast Notifications
+
+The project uses **toastification** with a `BuildContext` extension for consistent, styled toast messages.
+
+### Setup
+
+`ToastificationWrapper` wraps the entire app in `main.dart` — no additional setup needed.
+
+### Usage
+
+```dart
+// Import the extension
+import 'package:flutter_template_2025/core/utils/app_toast.dart';
+
+// Show toasts via context
+context.showSuccess(title: 'Done', message: 'Profile saved successfully');
+context.showError(title: 'Login Failed', message: state.error!);
+context.showWarning(title: 'Careful', message: 'Check your input');
+context.showInfo(title: 'Tip', message: 'Pull down to refresh');
+
+// Dismiss all active toasts
+context.dismissAllToasts();
+```
+
+### Available Methods
+
+| Method | Default Duration | Use Case |
+|--------|-----------------|----------|
+| `context.showSuccess()` | 4s | Successful operations |
+| `context.showError()` | 6s | Errors and failures |
+| `context.showWarning()` | 5s | Non-critical warnings |
+| `context.showInfo()` | 4s | Informational tips |
+| `context.dismissAllToasts()` | — | Clear all toasts |
+
+### Parameters
+
+All toast methods accept:
+- `title` (required) — bold heading text
+- `message` (optional) — description text below the title
+- `duration` — override the default auto-close duration
+- `alignment` — override position (default: `Alignment.topCenter`)
+- `showProgressBar` — show/hide the auto-close progress bar (default: `true`)
+
+### In BlocListener
+
+```dart
+BlocListener<AuthCubit, AuthState>(
+  listener: (context, state) {
+    if (state.status == AuthStatus.error && state.error != null) {
+      context.showError(
+        title: context.locale.login,
+        message: state.error!,
+      );
+    }
+  },
+  child: // ...
+)
+```
+
+> **Never use `ScaffoldMessenger.showSnackBar`** — always use `context.showSuccess()`, `context.showError()`, etc.
+
+---
+
 ## Creating a New Feature
 
 ### Step 1: Create the Folder Structure
@@ -1032,6 +1097,7 @@ flutter build ios --flavor prod --dart-define=flavor=prod
 - **Use `@injectable` / `@lazySingleton`** for DI — never manually instantiate singletons
 - **Run `build_runner`** after changing any annotated file
 - **Use `asyncGuard`** in repositories for all API calls — never try/catch in use cases or cubits
+- **Use `context.showError()`, `context.showSuccess()`** etc. for toast notifications — import `app_toast.dart`
 
 ### DON'T
 
@@ -1045,3 +1111,4 @@ flutter build ios --flavor prod --dart-define=flavor=prod
 - **Don't import internal theme files directly** — access via `context.color` / `context.textStyle`
 - **Don't use `Navigator.push`** — use GoRouter: `context.goNamed()`, `context.pushNamed()`
 - **Don't create `index.dart` inside features** — only in `core/` subfolders
+- **Don't use `ScaffoldMessenger.showSnackBar`** or raw `toastification.show()` — use `context.showSuccess()`, `context.showError()`, etc.

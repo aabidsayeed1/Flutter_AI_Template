@@ -1,4 +1,5 @@
 import 'package:flutter_template_2025/core/base/export.dart';
+import 'package:flutter_template_2025/core/utils/app_toast.dart';
 import 'package:flutter_template_2025/features/authentication/presentation/cubit/auth_cubit.dart';
 import '../../../../../core/router/routes.dart';
 import '../../../../../core/widgets/link_text.dart';
@@ -45,66 +46,92 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Align(
-              alignment: Directionality.of(context) == TextDirection.ltr
-                  ? Alignment.topRight
-                  : Alignment.topLeft,
-              child: const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: LanguageSwitcherWidget(),
+    return BlocListener<AuthCubit, AuthState>(
+      bloc: getIt<AuthCubit>(),
+      listener: (context, state) {
+        if (state.status == AuthStatus.error && state.error != null) {
+          context.showError(title: context.locale.login, message: state.error!);
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              Align(
+                alignment: Directionality.of(context) == TextDirection.ltr
+                    ? Alignment.topRight
+                    : Alignment.topLeft,
+                child: const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: LanguageSwitcherWidget(),
+                ),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height - 200,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const FlutterLogo(size: 200),
-                        const SizedBox(height: 80),
-                        Form(
-                          key: formKey,
-                          child: _LoginForm(
-                            emailController: emailController,
-                            passwordController: passwordController,
-                            shouldRemember: shouldRemember,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height - 200,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const FlutterLogo(size: 200),
+                          const SizedBox(height: 80),
+                          Form(
+                            key: formKey,
+                            child: _LoginForm(
+                              emailController: emailController,
+                              passwordController: passwordController,
+                              shouldRemember: shouldRemember,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 32),
-                        FilledButton(
-                          onPressed: () {
-                            getIt<AuthCubit>().login(
-                              username: emailController.text,
-                              password: passwordController.text,
-                              rememberMe: shouldRemember.value,
-                            );
-                            // context.pushReplacementNamed(Routes.home);
-                          },
-                          child: Text(context.locale.login),
-                        ),
-                        LinkText(
-                          text: context.locale.dontHaveAccount,
-                          linkText: context.locale.signUp,
-                          onTap: () {
-                            context.pushNamed(Routes.registration);
-                          },
-                        ),
-                      ],
+                          const SizedBox(height: 32),
+                          BlocBuilder<AuthCubit, AuthState>(
+                            bloc: getIt<AuthCubit>(),
+                            buildWhen: (prev, curr) =>
+                                prev.status != curr.status,
+                            builder: (context, state) {
+                              final isLoading =
+                                  state.status == AuthStatus.loading;
+                              return FilledButton(
+                                onPressed: isLoading
+                                    ? null
+                                    : () {
+                                        getIt<AuthCubit>().login(
+                                          username: emailController.text,
+                                          password: passwordController.text,
+                                          rememberMe: shouldRemember.value,
+                                        );
+                                      },
+                                child: isLoading
+                                    ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : Text(context.locale.login),
+                              );
+                            },
+                          ),
+                          LinkText(
+                            text: context.locale.dontHaveAccount,
+                            linkText: context.locale.signUp,
+                            onTap: () {
+                              context.pushNamed(Routes.registration);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
