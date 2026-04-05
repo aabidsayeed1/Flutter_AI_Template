@@ -20,16 +20,23 @@ class ScreenProtectionService {
 
   static final ScreenProtectionService instance = ScreenProtectionService._();
 
-  /// Routes where screen capture should be blocked.
+  /// Routes where screen capture should be blocked (exact match only).
   ///
-  /// Add full route paths (as they appear in GoRouter) to this set.
-  /// Supports exact matches and prefix matches for nested routes.
+  /// Only the exact path is protected. Child routes are NOT affected.
+  /// Example: adding `/login` blocks `/login` but NOT `/login/registration`.
   static final Set<String> _protectedRoutes = {
     // Examples — uncomment or add your own:
-    // '/payment',
-    // '/payment/confirm',
     // '/otp-verification',
     Routes.login,
+  };
+
+  /// Routes where screen capture is blocked for the route AND all children.
+  ///
+  /// Uses prefix matching. Example: adding `/payment` also blocks
+  /// `/payment/confirm`, `/payment/details`, etc.
+  static final Set<String> _protectedRoutePrefixes = {
+    // Examples — uncomment or add your own:
+    // '/payment',
   };
 
   bool _isCurrentlyBlocked = false;
@@ -64,10 +71,15 @@ class ScreenProtectionService {
     Log.info('Screen capture manually UNBLOCKED');
   }
 
-  /// Returns `true` if [route] matches any protected route (exact or prefix).
+  /// Returns `true` if [route] matches any protected route.
+  ///
+  /// Checks exact matches in [_protectedRoutes] and prefix matches
+  /// in [_protectedRoutePrefixes].
   bool _isProtectedRoute(String route) {
-    for (final protected in _protectedRoutes) {
-      if (route == protected || route.startsWith('$protected/')) {
+    if (_protectedRoutes.contains(route)) return true;
+
+    for (final prefix in _protectedRoutePrefixes) {
+      if (route == prefix || route.startsWith('$prefix/')) {
         return true;
       }
     }

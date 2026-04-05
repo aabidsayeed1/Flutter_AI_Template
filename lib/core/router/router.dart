@@ -47,8 +47,11 @@ final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'Root');
 abstract class RouterModule {
   @singleton
   GoRouter provideRouter(AuthCubit authCubit, CacheService cacheService) {
+    final screenProtectionObserver = ScreenProtectionObserver();
+
     final router = GoRouter(
       navigatorKey: rootNavigatorKey,
+      observers: [screenProtectionObserver],
       refreshListenable: GoRouterRefreshStream(authCubit.stream.distinct()),
       debugLogDiagnostics: true,
       initialLocation: Routes.initial,
@@ -115,7 +118,7 @@ abstract class RouterModule {
       ],
     );
 
-    ScreenProtectionObserver.attachTo(router);
+    screenProtectionObserver.attachRouter(router);
     return router;
   }
 }
