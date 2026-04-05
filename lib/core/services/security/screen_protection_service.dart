@@ -24,19 +24,24 @@ class ScreenProtectionService {
   ///
   /// Only the exact path is protected. Child routes are NOT affected.
   /// Example: adding `/login` blocks `/login` but NOT `/login/registration`.
+  ///
+  /// **Use full paths** (as shown in GoRouter's "Full paths for routes" log).
   static final Set<String> _protectedRoutes = {
     // Examples — uncomment or add your own:
     // '/otp-verification',
-    Routes.login,
+    Routes.profile,
   };
 
   /// Routes where screen capture is blocked for the route AND all children.
   ///
   /// Uses prefix matching. Example: adding `/payment` also blocks
   /// `/payment/confirm`, `/payment/details`, etc.
+  ///
+  /// **Use full paths** (as shown in GoRouter's "Full paths for routes" log).
   static final Set<String> _protectedRoutePrefixes = {
     // Examples — uncomment or add your own:
     // '/payment',
+    '${Routes.login}/${Routes.registration}',
   };
 
   bool _isCurrentlyBlocked = false;

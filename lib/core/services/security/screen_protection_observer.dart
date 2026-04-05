@@ -4,15 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../logger/log.dart';
 import 'screen_protection_service.dart';
 
-/// Observes ALL GoRouter navigation (go, redirect, push, pop) and
-/// blocks/unblocks screen capture for protected routes.
-///
-/// Uses two complementary listeners:
-/// - [NavigatorObserver] — fires on push/pop/replace (navigator-level events).
-/// - [GoRouterDelegate.addListener] — fires on go/redirect (router-level events).
-///
-/// Reads the actual location from [GoRouter.routeInformationProvider] which
-/// always reflects the current visible URL regardless of navigation method.
+/// Listens to GoRouter's [routerDelegate] to block/unblock screen capture
+/// for protected routes on every navigation event (go, push, pop, redirect).
 ///
 /// Usage in router module:
 /// ```dart
@@ -25,31 +18,12 @@ class ScreenProtectionObserver extends NavigatorObserver {
 
   GoRouter? _router;
 
-  /// Attach after GoRouter creation. Also starts listening to delegate changes.
+  /// Attach after GoRouter creation. Starts listening to delegate changes
+  /// and immediately checks the current route (catches the initial redirect).
   void attachRouter(GoRouter router) {
     _router = router;
     router.routerDelegate.addListener(_onRouteChange);
   }
-
-  // ── NavigatorObserver (push / pop / replace / remove) ──
-
-  @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) =>
-      _onRouteChange();
-
-  @override
-  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) =>
-      _onRouteChange();
-
-  @override
-  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) =>
-      _onRouteChange();
-
-  @override
-  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) =>
-      _onRouteChange();
-
-  // ── Shared handler ──
 
   void _onRouteChange() {
     final r = _router;

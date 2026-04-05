@@ -51,7 +51,6 @@ abstract class RouterModule {
 
     final router = GoRouter(
       navigatorKey: rootNavigatorKey,
-      observers: [screenProtectionObserver],
       refreshListenable: GoRouterRefreshStream(authCubit.stream.distinct()),
       debugLogDiagnostics: true,
       initialLocation: Routes.initial,
