@@ -173,11 +173,15 @@ These are the rules and conventions for this Flutter project. Follow them strict
 ## Screen Capture Protection
 
 - `ScreenProtectionService` singleton in `lib/core/services/security/screen_protection_service.dart` — blocks/unblocks screen capture per route.
-- `ScreenProtectionObserver` in `lib/core/services/security/screen_protection_observer.dart` — `NavigatorObserver` added to GoRouter `observers`.
-- Protected routes defined in `ScreenProtectionService._protectedRoutes` set. Add sensitive route paths there (e.g., `/payment`, `/otp`).
-- Supports exact match and prefix match: adding `/payment` also protects `/payment/confirm`.
+- `ScreenProtectionObserver` in `lib/core/services/security/screen_protection_observer.dart` — listens to GoRouter's `routerDelegate` and reads location from `routeInformationProvider`.
+- Observer is created in `router.dart`, then attached via `screenProtectionObserver.attachRouter(router)` after GoRouter construction.
+- Two route sets in `ScreenProtectionService`:
+  - `_protectedRoutes` — **exact match only**. `/profile` blocks `/profile` but NOT `/profile/edit`.
+  - `_protectedRoutePrefixes` — **prefix match**. `/payment` also blocks `/payment/confirm`, `/payment/details`, etc.
+- **Always use full paths** (as shown in GoRouter's "Full paths for routes" log). Relative names like `registration` won't match — use `'${Routes.login}/${Routes.registration}'`.
 - Uses `Talsec.instance.blockScreenCapture(enabled:)` under the hood.
 - Manual control: `ScreenProtectionService.instance.block()` / `.unblock()` for non-route scenarios.
+- Test with: `adb shell screencap -p /sdcard/test.png && adb pull /sdcard/test.png` — protected routes produce a black image.
 
 ## What NOT To Do
 

@@ -829,23 +829,33 @@ Route-based screen capture blocking using freeRASP's `blockScreenCapture`. Autom
 ### How It Works
 
 1. `ScreenProtectionObserver` listens to GoRouter's `routerDelegate` for route changes.
-2. On each navigation, it checks the current path against `ScreenProtectionService._protectedRoutes`.
-3. If the route (or a parent prefix) matches, screen capture is blocked via `Talsec.instance.blockScreenCapture(enabled: true)`.
-4. When navigating away from a protected route, capture is unblocked.
+2. On each navigation event, it reads the current location from `routeInformationProvider` (deferred to the next frame to ensure GoRouter's state is settled).
+3. `ScreenProtectionService` checks the path against two sets:
+   - **`_protectedRoutes`** — exact match only (e.g., `/profile` blocks `/profile` but NOT `/profile/edit`).
+   - **`_protectedRoutePrefixes`** — prefix match (e.g., `/payment` also blocks `/payment/confirm`).
+4. If matched, screen capture is blocked via `Talsec.instance.blockScreenCapture(enabled: true)`.
+5. When navigating away from a protected route, capture is unblocked automatically.
 
 ### Adding Protected Routes
 
-Edit `_protectedRoutes` in `lib/core/services/security/screen_protection_service.dart`:
+Edit `_protectedRoutes` and/or `_protectedRoutePrefixes` in `lib/core/services/security/screen_protection_service.dart`.
+
+> **Important:** Always use **full paths** as shown in GoRouter's "Full paths for routes" debug log.
+> Relative route names like `registration` won't match — use `'${Routes.login}/${Routes.registration}'` instead.
 
 ```dart
+/// Exact match only — child routes are NOT affected.
 static final Set<String> _protectedRoutes = {
-  '/payment',
-  '/otp-verification',
-  Routes.login,  // any route constant
+  Routes.profile,           // blocks /profile only
+  // '/otp-verification',
+};
+
+/// Prefix match — the route AND all its children are blocked.
+static final Set<String> _protectedRoutePrefixes = {
+  '${Routes.login}/${Routes.registration}',  // blocks /login/registration
+  // '/payment',                              // would block /payment/**
 };
 ```
-
-Prefix matching is supported — adding `/payment` also protects `/payment/confirm`, `/payment/details`, etc.
 
 ### Manual Control
 
@@ -862,6 +872,17 @@ await ScreenProtectionService.instance.unblock();
 final isBlocked = ScreenProtectionService.instance.isBlocked;
 ```
 
+### Testing Screenshot Protection
+
+Use `adb` to verify that screen capture is blocked on protected routes:
+
+```bash
+adb shell screencap -p /sdcard/test.png && adb pull /sdcard/test.png
+```
+
+- On **protected routes**: the pulled image will be a black screen.  
+- On **unprotected routes**: the pulled image will show the actual screen content.
+
 ### Architecture
 
 ```
@@ -870,10 +891,11 @@ lib/core/services/security/
 └── screen_protection_observer.dart  # Listens to GoRouter delegate changes
 ```
 
-The observer is attached in `router.dart`:
+The observer is created and attached in `router.dart`:
 ```dart
+final screenProtectionObserver = ScreenProtectionObserver();
 final router = GoRouter(...);
-ScreenProtectionObserver.attachTo(router);
+screenProtectionObserver.attachRouter(router);
 return router;
 ```
 
