@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:freerasp/freerasp.dart';
 
 import '../../config/flavor.dart';
+import '../../localization/l10n/app_localizations.dart';
 import '../../logger/log.dart';
 import '../../router/router.dart';
 import '../../widgets/security/threat_warning_page.dart';
@@ -105,7 +106,10 @@ class AppSecurityService {
   }
 
   void _handleThreat(ThreatType threat) {
-    Log.warning('Security threat detected: ${threat.name} — ${threat.title}');
+    final enL10n = lookupAppLocalizations(const Locale('en'));
+    Log.warning(
+      'Security threat detected: ${threat.name} — ${threat.title(enL10n)}',
+    );
 
     final navigator = rootNavigatorKey.currentState;
     if (navigator == null) return;
