@@ -56,7 +56,7 @@ class ThreatWarningPage extends StatelessWidget {
 
   Widget _buildTitle(BuildContext context) {
     return Text(
-      threat.title,
+      threat.title(context.locale),
       style: context.textStyle.headlineSmall.copyWith(
         fontWeight: FontWeight.w700,
         color: context.color.error,
@@ -67,7 +67,7 @@ class ThreatWarningPage extends StatelessWidget {
 
   Widget _buildMessage(BuildContext context) {
     return Text(
-      threat.message,
+      threat.message(context.locale),
       style: context.textStyle.bodyLarge.copyWith(
         color: context.color.text.secondary.withValues(alpha: 0.7),
         height: 1.5,
@@ -89,7 +89,7 @@ class ThreatWarningPage extends StatelessWidget {
           ),
           Gap(8.h),
           Text(
-            'This app cannot continue in this environment.\nPlease resolve the issue and restart.',
+            context.locale.threatBlockingFooter,
             style: context.textStyle.bodySmall.copyWith(
               color: context.color.text.tertiary.withValues(alpha: 0.5),
             ),
@@ -105,7 +105,7 @@ class ThreatWarningPage extends StatelessWidget {
               ),
               onPressed: () => exit(0),
               child: Text(
-                'Close App',
+                context.locale.threatCloseApp,
                 style: context.textStyle.labelLarge.copyWith(
                   color: context.color.onPrimary,
                 ),
@@ -132,7 +132,7 @@ class ThreatWarningPage extends StatelessWidget {
               ),
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
-                'I Understand',
+                context.locale.threatIUnderstand,
                 style: context.textStyle.labelLarge.copyWith(
                   color: context.color.onPrimary,
                 ),
@@ -141,7 +141,7 @@ class ThreatWarningPage extends StatelessWidget {
           ),
           Gap(8.h),
           Text(
-            'Proceeding may put your data at risk.',
+            context.locale.threatProceedWarning,
             style: context.textStyle.bodySmall.copyWith(
               color: context.color.text.tertiary.withValues(alpha: 0.5),
             ),

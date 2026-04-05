@@ -160,7 +160,8 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - **freeRASP** (`freerasp`) for runtime app self-protection (RASP).
 - `AppSecurityService` singleton in `lib/core/services/security/app_security_service.dart` — initialized via `AppInitializer` in `main()` before `runApp()`.
 - Per-flavor configuration: package names, bundle IDs, `isProd` flag driven by `F.isProd`.
-- `ThreatType` enum in `lib/core/services/security/threat_type.dart` — maps each freeRASP callback to a title, message, and blocking flag.
+- `ThreatType` enum in `lib/core/services/security/threat_type.dart` — maps each freeRASP callback to a blocking flag and localized title/message via `threat.title(l10n)` and `threat.message(l10n)`.
+- All threat UI strings are in ARB files (`threatAppIntegrityTitle`, `threatCloseApp`, etc.) — **never hardcode security strings**.
 - `ThreatWarningPage` in `lib/core/widgets/security/threat_warning_page.dart` — full-screen modal pushed via `rootNavigatorKey` when a threat is detected.
 - **Blocking threats** (root, hooks, app tampering, malware, debug, unofficial store) trap the user with no dismiss — only "Close App".
 - **Non-blocking threats** (passcode, VPN, dev mode, ADB, screenshot, etc.) show an "I Understand" dismiss button.

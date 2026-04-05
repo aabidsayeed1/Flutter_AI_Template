@@ -196,4 +196,135 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get passwordSpecialCharValidation =>
       'يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل';
+
+  @override
+  String get threatAppIntegrityTitle => 'سلامة التطبيق مخترقة';
+
+  @override
+  String get threatAppIntegrityMessage =>
+      'تم تعديل هذا التطبيق أو العبث به. لأمانك، يرجى تحميل النسخة الرسمية من متجر موثوق.';
+
+  @override
+  String get threatObfuscationTitle => 'مشكلة في إعدادات الأمان';
+
+  @override
+  String get threatObfuscationMessage =>
+      'إعدادات أمان التطبيق غير مهيأة بشكل صحيح. يرجى التواصل مع الدعم الفني.';
+
+  @override
+  String get threatDebugTitle => 'تم اكتشاف تصحيح الأخطاء';
+
+  @override
+  String get threatDebugMessage =>
+      'تم اكتشاف مصحح أخطاء متصل بالتطبيق. لأمانك، لا يمكن تشغيل التطبيق أثناء التصحيح.';
+
+  @override
+  String get threatDeviceBindingTitle => 'عدم تطابق الجهاز';
+
+  @override
+  String get threatDeviceBindingMessage =>
+      'تم نقل تثبيت هذا التطبيق إلى جهاز مختلف. يرجى إعادة تثبيت التطبيق.';
+
+  @override
+  String get threatDeviceIdTitle => 'معرّف الجهاز مخترق';
+
+  @override
+  String get threatDeviceIdMessage =>
+      'تم العبث بمعرّف الجهاز. لا يمكن للتطبيق التحقق من سلامة الجهاز.';
+
+  @override
+  String get threatHooksTitle => 'تم اكتشاف إطار عمل اعتراض';
+
+  @override
+  String get threatHooksMessage =>
+      'تم اكتشاف إطار عمل اعتراض (مثل Frida أو Xposed). لا يمكن تشغيل التطبيق في هذه البيئة.';
+
+  @override
+  String get threatPasscodeTitle => 'الجهاز غير مؤمّن';
+
+  @override
+  String get threatPasscodeMessage =>
+      'جهازك لا يحتوي على رمز مرور أو قفل بيومتري. يرجى تأمين جهازك لاستخدام هذا التطبيق.';
+
+  @override
+  String get threatPrivilegedAccessTitle => 'جهاز مروّت/مكسور الحماية';
+
+  @override
+  String get threatPrivilegedAccessMessage =>
+      'تم ترويت هذا الجهاز أو كسر حمايته. لا يمكن تشغيل التطبيق على أجهزة مخترقة لأمانك.';
+
+  @override
+  String get threatSecureHardwareTitle => 'العتاد الآمن غير متوفر';
+
+  @override
+  String get threatSecureHardwareMessage =>
+      'لا يحتوي هذا الجهاز على العتاد الآمن المطلوب. قد لا تعمل بعض ميزات الأمان بشكل صحيح.';
+
+  @override
+  String get threatSimulatorTitle => 'تم اكتشاف محاكي';
+
+  @override
+  String get threatSimulatorMessage =>
+      'هذا التطبيق يعمل على محاكي. يرجى استخدام جهاز حقيقي.';
+
+  @override
+  String get threatVpnTitle => 'تم اكتشاف VPN';
+
+  @override
+  String get threatVpnMessage =>
+      'تم اكتشاف اتصال VPN. يرجى قطع اتصال VPN للمتابعة.';
+
+  @override
+  String get threatDevModeTitle => 'وضع المطور مفعّل';
+
+  @override
+  String get threatDevModeMessage =>
+      'وضع المطور مفعّل على هذا الجهاز. يرجى تعطيله في إعدادات الجهاز للمتابعة.';
+
+  @override
+  String get threatAdbTitle => 'تصحيح USB مفعّل';
+
+  @override
+  String get threatAdbMessage =>
+      'تصحيح USB (ADB) مفعّل على هذا الجهاز. يرجى تعطيله في خيارات المطور للمتابعة.';
+
+  @override
+  String get threatUnofficialStoreTitle => 'مصدر تثبيت غير رسمي';
+
+  @override
+  String get threatUnofficialStoreMessage =>
+      'لم يتم تثبيت هذا التطبيق من متجر تطبيقات رسمي. يرجى تحميله من مصدر موثوق.';
+
+  @override
+  String get threatScreenshotTitle => 'تم اكتشاف لقطة شاشة';
+
+  @override
+  String get threatScreenshotMessage => 'تم التقاط لقطة شاشة للتطبيق.';
+
+  @override
+  String get threatScreenRecordingTitle => 'تم اكتشاف تسجيل الشاشة';
+
+  @override
+  String get threatScreenRecordingMessage =>
+      'تسجيل الشاشة نشط. قد يكون المحتوى الحساس معرضاً للخطر.';
+
+  @override
+  String get threatMalwareTitle => 'تم اكتشاف برنامج ضار';
+
+  @override
+  String get threatMalwareMessage =>
+      'تم اكتشاف تطبيق ضار محتمل على هذا الجهاز. يرجى إزالة التطبيقات المشبوهة.';
+
+  @override
+  String get threatBlockingFooter =>
+      'لا يمكن للتطبيق المتابعة في هذه البيئة.\nيرجى حل المشكلة وإعادة التشغيل.';
+
+  @override
+  String get threatCloseApp => 'إغلاق التطبيق';
+
+  @override
+  String get threatIUnderstand => 'أنا أفهم';
+
+  @override
+  String get threatProceedWarning => 'المتابعة قد تعرّض بياناتك للخطر.';
 }

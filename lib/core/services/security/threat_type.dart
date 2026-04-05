@@ -1,115 +1,70 @@
+import 'package:flutter_template_2025/core/localization/l10n/app_localizations.dart';
+
 /// Represents the types of security threats detected by freeRASP.
 enum ThreatType {
-  appIntegrity(
-    title: 'App Integrity Compromised',
-    message:
-        'This app has been modified or tampered with. For your security, please download the official version from a trusted store.',
-    icon: 'shield_warning',
-  ),
-  obfuscationIssues(
-    title: 'Security Configuration Issue',
-    message:
-        'The app\'s security configuration is not properly set up. Please contact support.',
-    icon: 'code_warning',
-  ),
-  debug(
-    title: 'Debugging Detected',
-    message:
-        'A debugger is attached to this app. For your security, the app cannot run while being debugged.',
-    icon: 'bug',
-  ),
-  deviceBinding(
-    title: 'Device Mismatch',
-    message:
-        'This app installation has been moved to a different device. Please reinstall the app.',
-    icon: 'device_warning',
-  ),
-  deviceId(
-    title: 'Device ID Compromised',
-    message:
-        'The device identifier has been tampered with. The app cannot verify the device integrity.',
-    icon: 'device_id',
-  ),
-  hooks(
-    title: 'Hooking Framework Detected',
-    message:
-        'A hooking framework (e.g., Frida, Xposed) has been detected. The app cannot run in this environment.',
-    icon: 'hook',
-  ),
-  passcode(
-    title: 'Device Not Secured',
-    message:
-        'Your device does not have a passcode or biometric lock set up. Please secure your device to use this app.',
-    icon: 'lock_open',
-  ),
-  privilegedAccess(
-    title: 'Rooted/Jailbroken Device',
-    message:
-        'This device has been rooted or jailbroken. The app cannot run on compromised devices for your security.',
-    icon: 'root',
-  ),
-  secureHardwareNotAvailable(
-    title: 'Secure Hardware Unavailable',
-    message:
-        'This device does not have the required secure hardware. Some security features may not work properly.',
-    icon: 'hardware',
-  ),
-  simulator(
-    title: 'Emulator/Simulator Detected',
-    message:
-        'This app is running on an emulator or simulator. Please use a real device.',
-    icon: 'simulator',
-  ),
-  systemVPN(
-    title: 'VPN Detected',
-    message:
-        'A system VPN connection has been detected. Please disconnect the VPN to continue.',
-    icon: 'vpn',
-  ),
-  devMode(
-    title: 'Developer Mode Enabled',
-    message:
-        'Developer mode is enabled on this device. Please disable it in your device settings to continue.',
-    icon: 'developer',
-  ),
-  adbEnabled(
-    title: 'USB Debugging Enabled',
-    message:
-        'USB debugging (ADB) is enabled on this device. Please disable it in Developer Options to continue.',
-    icon: 'usb',
-  ),
-  unofficialStore(
-    title: 'Unofficial Installation Source',
-    message:
-        'This app was not installed from an official app store. Please download it from a trusted source.',
-    icon: 'store',
-  ),
-  screenshot(
-    title: 'Screenshot Detected',
-    message: 'A screenshot of the app was captured.',
-    icon: 'screenshot',
-  ),
-  screenRecording(
-    title: 'Screen Recording Detected',
-    message: 'Screen recording is active. Sensitive content may be at risk.',
-    icon: 'screen_record',
-  ),
-  malware(
-    title: 'Malware Detected',
-    message:
-        'A potentially malicious application has been detected on this device. Please remove suspicious apps.',
-    icon: 'malware',
-  );
+  appIntegrity,
+  obfuscationIssues,
+  debug,
+  deviceBinding,
+  deviceId,
+  hooks,
+  passcode,
+  privilegedAccess,
+  secureHardwareNotAvailable,
+  simulator,
+  systemVPN,
+  devMode,
+  adbEnabled,
+  unofficialStore,
+  screenshot,
+  screenRecording,
+  malware;
 
-  const ThreatType({
-    required this.title,
-    required this.message,
-    required this.icon,
-  });
+  /// Localized title for this threat.
+  String title(AppLocalizations l10n) {
+    return switch (this) {
+      appIntegrity => l10n.threatAppIntegrityTitle,
+      obfuscationIssues => l10n.threatObfuscationTitle,
+      debug => l10n.threatDebugTitle,
+      deviceBinding => l10n.threatDeviceBindingTitle,
+      deviceId => l10n.threatDeviceIdTitle,
+      hooks => l10n.threatHooksTitle,
+      passcode => l10n.threatPasscodeTitle,
+      privilegedAccess => l10n.threatPrivilegedAccessTitle,
+      secureHardwareNotAvailable => l10n.threatSecureHardwareTitle,
+      simulator => l10n.threatSimulatorTitle,
+      systemVPN => l10n.threatVpnTitle,
+      devMode => l10n.threatDevModeTitle,
+      adbEnabled => l10n.threatAdbTitle,
+      unofficialStore => l10n.threatUnofficialStoreTitle,
+      screenshot => l10n.threatScreenshotTitle,
+      screenRecording => l10n.threatScreenRecordingTitle,
+      malware => l10n.threatMalwareTitle,
+    };
+  }
 
-  final String title;
-  final String message;
-  final String icon;
+  /// Localized message for this threat.
+  String message(AppLocalizations l10n) {
+    return switch (this) {
+      appIntegrity => l10n.threatAppIntegrityMessage,
+      obfuscationIssues => l10n.threatObfuscationMessage,
+      debug => l10n.threatDebugMessage,
+      deviceBinding => l10n.threatDeviceBindingMessage,
+      deviceId => l10n.threatDeviceIdMessage,
+      hooks => l10n.threatHooksMessage,
+      passcode => l10n.threatPasscodeMessage,
+      privilegedAccess => l10n.threatPrivilegedAccessMessage,
+      secureHardwareNotAvailable => l10n.threatSecureHardwareMessage,
+      simulator => l10n.threatSimulatorMessage,
+      systemVPN => l10n.threatVpnMessage,
+      devMode => l10n.threatDevModeMessage,
+      adbEnabled => l10n.threatAdbMessage,
+      unofficialStore => l10n.threatUnofficialStoreMessage,
+      screenshot => l10n.threatScreenshotMessage,
+      screenRecording => l10n.threatScreenRecordingMessage,
+      malware => l10n.threatMalwareMessage,
+    };
+  }
 
   /// Whether this threat should block the app completely.
   bool get isBlocking {

@@ -201,4 +201,135 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get passwordSpecialCharValidation =>
       'Password must contain at least one special character';
+
+  @override
+  String get threatAppIntegrityTitle => 'App Integrity Compromised';
+
+  @override
+  String get threatAppIntegrityMessage =>
+      'This app has been modified or tampered with. For your security, please download the official version from a trusted store.';
+
+  @override
+  String get threatObfuscationTitle => 'Security Configuration Issue';
+
+  @override
+  String get threatObfuscationMessage =>
+      'The app\'s security configuration is not properly set up. Please contact support.';
+
+  @override
+  String get threatDebugTitle => 'Debugging Detected';
+
+  @override
+  String get threatDebugMessage =>
+      'A debugger is attached to this app. For your security, the app cannot run while being debugged.';
+
+  @override
+  String get threatDeviceBindingTitle => 'Device Mismatch';
+
+  @override
+  String get threatDeviceBindingMessage =>
+      'This app installation has been moved to a different device. Please reinstall the app.';
+
+  @override
+  String get threatDeviceIdTitle => 'Device ID Compromised';
+
+  @override
+  String get threatDeviceIdMessage =>
+      'The device identifier has been tampered with. The app cannot verify the device integrity.';
+
+  @override
+  String get threatHooksTitle => 'Hooking Framework Detected';
+
+  @override
+  String get threatHooksMessage =>
+      'A hooking framework (e.g., Frida, Xposed) has been detected. The app cannot run in this environment.';
+
+  @override
+  String get threatPasscodeTitle => 'Device Not Secured';
+
+  @override
+  String get threatPasscodeMessage =>
+      'Your device does not have a passcode or biometric lock set up. Please secure your device to use this app.';
+
+  @override
+  String get threatPrivilegedAccessTitle => 'Rooted/Jailbroken Device';
+
+  @override
+  String get threatPrivilegedAccessMessage =>
+      'This device has been rooted or jailbroken. The app cannot run on compromised devices for your security.';
+
+  @override
+  String get threatSecureHardwareTitle => 'Secure Hardware Unavailable';
+
+  @override
+  String get threatSecureHardwareMessage =>
+      'This device does not have the required secure hardware. Some security features may not work properly.';
+
+  @override
+  String get threatSimulatorTitle => 'Emulator/Simulator Detected';
+
+  @override
+  String get threatSimulatorMessage =>
+      'This app is running on an emulator or simulator. Please use a real device.';
+
+  @override
+  String get threatVpnTitle => 'VPN Detected';
+
+  @override
+  String get threatVpnMessage =>
+      'A system VPN connection has been detected. Please disconnect the VPN to continue.';
+
+  @override
+  String get threatDevModeTitle => 'Developer Mode Enabled';
+
+  @override
+  String get threatDevModeMessage =>
+      'Developer mode is enabled on this device. Please disable it in your device settings to continue.';
+
+  @override
+  String get threatAdbTitle => 'USB Debugging Enabled';
+
+  @override
+  String get threatAdbMessage =>
+      'USB debugging (ADB) is enabled on this device. Please disable it in Developer Options to continue.';
+
+  @override
+  String get threatUnofficialStoreTitle => 'Unofficial Installation Source';
+
+  @override
+  String get threatUnofficialStoreMessage =>
+      'This app was not installed from an official app store. Please download it from a trusted source.';
+
+  @override
+  String get threatScreenshotTitle => 'Screenshot Detected';
+
+  @override
+  String get threatScreenshotMessage => 'A screenshot of the app was captured.';
+
+  @override
+  String get threatScreenRecordingTitle => 'Screen Recording Detected';
+
+  @override
+  String get threatScreenRecordingMessage =>
+      'Screen recording is active. Sensitive content may be at risk.';
+
+  @override
+  String get threatMalwareTitle => 'Malware Detected';
+
+  @override
+  String get threatMalwareMessage =>
+      'A potentially malicious application has been detected on this device. Please remove suspicious apps.';
+
+  @override
+  String get threatBlockingFooter =>
+      'This app cannot continue in this environment.\nPlease resolve the issue and restart.';
+
+  @override
+  String get threatCloseApp => 'Close App';
+
+  @override
+  String get threatIUnderstand => 'I Understand';
+
+  @override
+  String get threatProceedWarning => 'Proceeding may put your data at risk.';
 }

@@ -445,6 +445,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password must contain at least one special character'**
   String get passwordSpecialCharValidation;
+
+  /// No description provided for @threatAppIntegrityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'App Integrity Compromised'**
+  String get threatAppIntegrityTitle;
+
+  /// No description provided for @threatAppIntegrityMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This app has been modified or tampered with. For your security, please download the official version from a trusted store.'**
+  String get threatAppIntegrityMessage;
+
+  /// No description provided for @threatObfuscationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Security Configuration Issue'**
+  String get threatObfuscationTitle;
+
+  /// No description provided for @threatObfuscationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The app\'s security configuration is not properly set up. Please contact support.'**
+  String get threatObfuscationMessage;
+
+  /// No description provided for @threatDebugTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Debugging Detected'**
+  String get threatDebugTitle;
+
+  /// No description provided for @threatDebugMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A debugger is attached to this app. For your security, the app cannot run while being debugged.'**
+  String get threatDebugMessage;
+
+  /// No description provided for @threatDeviceBindingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Mismatch'**
+  String get threatDeviceBindingTitle;
+
+  /// No description provided for @threatDeviceBindingMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This app installation has been moved to a different device. Please reinstall the app.'**
+  String get threatDeviceBindingMessage;
+
+  /// No description provided for @threatDeviceIdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Device ID Compromised'**
+  String get threatDeviceIdTitle;
+
+  /// No description provided for @threatDeviceIdMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The device identifier has been tampered with. The app cannot verify the device integrity.'**
+  String get threatDeviceIdMessage;
+
+  /// No description provided for @threatHooksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hooking Framework Detected'**
+  String get threatHooksTitle;
+
+  /// No description provided for @threatHooksMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A hooking framework (e.g., Frida, Xposed) has been detected. The app cannot run in this environment.'**
+  String get threatHooksMessage;
+
+  /// No description provided for @threatPasscodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Not Secured'**
+  String get threatPasscodeTitle;
+
+  /// No description provided for @threatPasscodeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your device does not have a passcode or biometric lock set up. Please secure your device to use this app.'**
+  String get threatPasscodeMessage;
+
+  /// No description provided for @threatPrivilegedAccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooted/Jailbroken Device'**
+  String get threatPrivilegedAccessTitle;
+
+  /// No description provided for @threatPrivilegedAccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This device has been rooted or jailbroken. The app cannot run on compromised devices for your security.'**
+  String get threatPrivilegedAccessMessage;
+
+  /// No description provided for @threatSecureHardwareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure Hardware Unavailable'**
+  String get threatSecureHardwareTitle;
+
+  /// No description provided for @threatSecureHardwareMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This device does not have the required secure hardware. Some security features may not work properly.'**
+  String get threatSecureHardwareMessage;
+
+  /// No description provided for @threatSimulatorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Emulator/Simulator Detected'**
+  String get threatSimulatorTitle;
+
+  /// No description provided for @threatSimulatorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This app is running on an emulator or simulator. Please use a real device.'**
+  String get threatSimulatorMessage;
+
+  /// No description provided for @threatVpnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'VPN Detected'**
+  String get threatVpnTitle;
+
+  /// No description provided for @threatVpnMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A system VPN connection has been detected. Please disconnect the VPN to continue.'**
+  String get threatVpnMessage;
+
+  /// No description provided for @threatDevModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer Mode Enabled'**
+  String get threatDevModeTitle;
+
+  /// No description provided for @threatDevModeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer mode is enabled on this device. Please disable it in your device settings to continue.'**
+  String get threatDevModeMessage;
+
+  /// No description provided for @threatAdbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'USB Debugging Enabled'**
+  String get threatAdbTitle;
+
+  /// No description provided for @threatAdbMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'USB debugging (ADB) is enabled on this device. Please disable it in Developer Options to continue.'**
+  String get threatAdbMessage;
+
+  /// No description provided for @threatUnofficialStoreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unofficial Installation Source'**
+  String get threatUnofficialStoreTitle;
+
+  /// No description provided for @threatUnofficialStoreMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This app was not installed from an official app store. Please download it from a trusted source.'**
+  String get threatUnofficialStoreMessage;
+
+  /// No description provided for @threatScreenshotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Screenshot Detected'**
+  String get threatScreenshotTitle;
+
+  /// No description provided for @threatScreenshotMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A screenshot of the app was captured.'**
+  String get threatScreenshotMessage;
+
+  /// No description provided for @threatScreenRecordingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen Recording Detected'**
+  String get threatScreenRecordingTitle;
+
+  /// No description provided for @threatScreenRecordingMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen recording is active. Sensitive content may be at risk.'**
+  String get threatScreenRecordingMessage;
+
+  /// No description provided for @threatMalwareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Malware Detected'**
+  String get threatMalwareTitle;
+
+  /// No description provided for @threatMalwareMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A potentially malicious application has been detected on this device. Please remove suspicious apps.'**
+  String get threatMalwareMessage;
+
+  /// No description provided for @threatBlockingFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'This app cannot continue in this environment.\nPlease resolve the issue and restart.'**
+  String get threatBlockingFooter;
+
+  /// No description provided for @threatCloseApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Close App'**
+  String get threatCloseApp;
+
+  /// No description provided for @threatIUnderstand.
+  ///
+  /// In en, this message translates to:
+  /// **'I Understand'**
+  String get threatIUnderstand;
+
+  /// No description provided for @threatProceedWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Proceeding may put your data at risk.'**
+  String get threatProceedWarning;
 }
 
 class _AppLocalizationsDelegate
