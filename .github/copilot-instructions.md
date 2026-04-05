@@ -7,7 +7,7 @@ These are the rules and conventions for this Flutter project. Follow them strict
 ## Architecture
 
 - **Clean Architecture**: Presentation → Domain → Data. No shortcuts.
-- **No DataSource layer**: Repositories call API clients (Retrofit) and services (CacheService, Firebase) directly.
+- **Repositories call services directly**: API clients (Retrofit), CacheService, Firebase, etc.
 - **Record-based error handling**: Repositories return `(T?, Failure?)` tuples via the base `Repository.asyncGuard<T>()` method. Never throw exceptions from repositories.
 - **Use cases**: One public method per use case. Wraps a single repository call. Annotated `@injectable`.
 
@@ -170,9 +170,18 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - Debug-mode log box reminds developers to replace signing hash, iOS Team ID, and watcher email before production.
 - `AppInitializer` in `lib/core/config/app_initializer.dart` centralizes all third-party SDK initialization.
 
+## Screen Capture Protection
+
+- `ScreenProtectionService` singleton in `lib/core/services/security/screen_protection_service.dart` — blocks/unblocks screen capture per route.
+- `ScreenProtectionObserver` in `lib/core/services/security/screen_protection_observer.dart` — `NavigatorObserver` added to GoRouter `observers`.
+- Protected routes defined in `ScreenProtectionService._protectedRoutes` set. Add sensitive route paths there (e.g., `/payment`, `/otp`).
+- Supports exact match and prefix match: adding `/payment` also protects `/payment/confirm`.
+- Uses `Talsec.instance.blockScreenCapture(enabled:)` under the hood.
+- Manual control: `ScreenProtectionService.instance.block()` / `.unblock()` for non-route scenarios.
+
 ## What NOT To Do
 
-- Don't create DataSource classes between repository and API.
+- Don't create DataSource classes — repositories call services directly.
 - Don't throw exceptions from repositories — return `(T?, Failure?)`.
 - Don't use `Colors.*` or inline `Color(...)` — use `context.color.*`.
 - Don't use inline `TextStyle(...)` — use `context.textStyle.*`.

@@ -17,6 +17,7 @@ import '../../core/widgets/splash/splash_page.dart';
 import '../../core/widgets/app_startup/app_startup_widget.dart';
 import '../../core/widgets/navigation_shell.dart' show NavigationShell;
 import '../services/cache/cache_service.dart';
+import '../services/security/screen_protection_observer.dart';
 import 'routes.dart';
 
 part 'parts/authentication_routes.dart';
@@ -46,7 +47,7 @@ final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'Root');
 abstract class RouterModule {
   @singleton
   GoRouter provideRouter(AuthCubit authCubit, CacheService cacheService) {
-    return GoRouter(
+    final router = GoRouter(
       navigatorKey: rootNavigatorKey,
       refreshListenable: GoRouterRefreshStream(authCubit.stream.distinct()),
       debugLogDiagnostics: true,
@@ -113,5 +114,8 @@ abstract class RouterModule {
         _shellRoutes(),
       ],
     );
+
+    ScreenProtectionObserver.attachTo(router);
+    return router;
   }
 }

@@ -19,6 +19,7 @@ A production-ready Flutter template with **BLoC/Cubit** state management, **Clea
 - [Error Handling](#error-handling)
 - [Toast Notifications](#toast-notifications)
 - [App Security (freeRASP)](#app-security-freerasp)
+- [Screen Capture Protection](#screen-capture-protection)
 - [Creating a New Feature](#creating-a-new-feature)
 - [Code Generation](#code-generation)
 - [Flavors](#flavors)
@@ -56,12 +57,12 @@ dart run build_runner watch --delete-conflicting-outputs
 ├─────────────────────────────────────────────────────────┤
 │                       Data Layer                         │
 │    Repository Impl → API (Retrofit) → Models             │
-│    (No DataSource layer — repos call services directly)  │
+│    (Repos call services directly)                        │
 └─────────────────────────────────────────────────────────┘
 ```
 
 **Key decisions:**
-- **No DataSource abstraction** — repositories call API clients (Retrofit) and services (Firebase, CacheService) directly
+- **Repositories call services directly** — API clients (Retrofit), CacheService, Firebase, etc.
 - **Record-based error handling** — `(T?, Failure?)` tuples via `asyncGuard` in the base `Repository`
 - **Global `UserCubit`** — single source of truth for the logged-in user, lives in `core/user/`
 - **Freezed + enum status** for ALL state classes — consistent `state.copyWith(status: ...)` pattern
@@ -112,8 +113,10 @@ lib/
 │   │   ├── connectivity_service.dart  # Network monitoring (stub)
 │   │   ├── notification_service.dart  # Local notifications (stub)
 │   │   └── security/
-│   │       ├── app_security_service.dart  # freeRASP initialization + threat callbacks
-│   │       └── threat_type.dart           # ThreatType enum (title, message, isBlocking)
+│   │       ├── app_security_service.dart       # freeRASP initialization + threat callbacks
+│   │       ├── threat_type.dart                # ThreatType enum (title, message, isBlocking)
+│   │       ├── screen_protection_service.dart  # Route-based screen capture blocking
+│   │       └── screen_protection_observer.dart # GoRouter listener for auto block/unblock
 │   │
 │   ├── theme/
 │   │   ├── theme.dart                 # context.color, context.textStyle, context.lightTheme, context.darkTheme
@@ -819,6 +822,63 @@ Both files are in `.gitignore`. For a real project, generate your own keystore a
 
 ---
 
+## Screen Capture Protection
+
+Route-based screen capture blocking using freeRASP's `blockScreenCapture`. Automatically prevents screenshots and screen recording on sensitive pages.
+
+### How It Works
+
+1. `ScreenProtectionObserver` listens to GoRouter's `routerDelegate` for route changes.
+2. On each navigation, it checks the current path against `ScreenProtectionService._protectedRoutes`.
+3. If the route (or a parent prefix) matches, screen capture is blocked via `Talsec.instance.blockScreenCapture(enabled: true)`.
+4. When navigating away from a protected route, capture is unblocked.
+
+### Adding Protected Routes
+
+Edit `_protectedRoutes` in `lib/core/services/security/screen_protection_service.dart`:
+
+```dart
+static final Set<String> _protectedRoutes = {
+  '/payment',
+  '/otp-verification',
+  Routes.login,  // any route constant
+};
+```
+
+Prefix matching is supported — adding `/payment` also protects `/payment/confirm`, `/payment/details`, etc.
+
+### Manual Control
+
+For scenarios outside of routing (e.g., showing a sensitive dialog):
+
+```dart
+// Block
+await ScreenProtectionService.instance.block();
+
+// Unblock
+await ScreenProtectionService.instance.unblock();
+
+// Check status
+final isBlocked = ScreenProtectionService.instance.isBlocked;
+```
+
+### Architecture
+
+```
+lib/core/services/security/
+├── screen_protection_service.dart   # Singleton — manages block/unblock + protected routes
+└── screen_protection_observer.dart  # Listens to GoRouter delegate changes
+```
+
+The observer is attached in `router.dart`:
+```dart
+final router = GoRouter(...);
+ScreenProtectionObserver.attachTo(router);
+return router;
+```
+
+---
+
 ## Creating a New Feature
 
 ### Step 1: Create the Folder Structure
@@ -1204,7 +1264,7 @@ flutter build ios --flavor prod --dart-define=flavor=prod
 - **Don't use static `Colors.*`** — use `context.color.*` instead
 - **Don't use static `TextStyle(...)`** — use `context.textStyle.*` instead
 - **Don't hardcode strings** — add to `.arb` files and use `context.locale.*`
-- **Don't create DataSource classes** — repositories call APIs/services directly
+- **Don't create DataSource classes** — repositories call services directly
 - **Don't throw exceptions** from repositories — return `(T?, Failure?)` tuples
 - **Don't use `setState`** for business logic — use Cubit/Bloc
 - **Don't put business logic in widgets** — delegate to use cases
