@@ -18,6 +18,7 @@ A production-ready Flutter template with **BLoC/Cubit** state management, **Clea
 - [Localization](#localization)
 - [Error Handling](#error-handling)
 - [Toast Notifications](#toast-notifications)
+- [App Security (freeRASP)](#app-security-freerasp)
 - [Creating a New Feature](#creating-a-new-feature)
 - [Code Generation](#code-generation)
 - [Flavors](#flavors)
@@ -109,7 +110,10 @@ lib/
 │   │   ├── navigation_service.dart    # Global navigator key access
 │   │   ├── analytics_service.dart     # Analytics (stub)
 │   │   ├── connectivity_service.dart  # Network monitoring (stub)
-│   │   └── notification_service.dart  # Local notifications (stub)
+│   │   ├── notification_service.dart  # Local notifications (stub)
+│   │   └── security/
+│   │       ├── app_security_service.dart  # freeRASP initialization + threat callbacks
+│   │       └── threat_type.dart           # ThreatType enum (title, message, isBlocking)
 │   │
 │   ├── theme/
 │   │   ├── theme.dart                 # context.color, context.textStyle, context.lightTheme, context.darkTheme
@@ -162,7 +166,9 @@ lib/
 │   │   │   └── splash_page.dart       # Splash screen UI
 │   │   ├── navigation_shell.dart      # BottomNavigationBar shell
 │   │   ├── loading_indicator.dart     # Reusable loading spinner
-│   │   └── link_text.dart             # Tappable rich text
+│   │   ├── link_text.dart             # Tappable rich text
+│   │   └── security/
+│   │       └── threat_warning_page.dart   # Full-screen threat warning (blocking/non-blocking)
 │   │
 │   └── logger/
 │       └── log.dart                   # Log.debug(), Log.error(), Log.info(), etc.
@@ -716,6 +722,100 @@ BlocListener<AuthCubit, AuthState>(
 ```
 
 > **Never use `ScaffoldMessenger.showSnackBar`** — always use `context.showSuccess()`, `context.showError()`, etc.
+
+---
+
+## App Security (freeRASP)
+
+The template integrates **freeRASP** (`freerasp`) for runtime application self-protection (RASP), protecting against reverse engineering, tampering, rooted/jailbroken devices, hooking frameworks, and more.
+
+### Architecture
+
+```
+lib/core/
+├── services/security/
+│   ├── app_security_service.dart  # Singleton — configures & starts freeRASP
+│   └── threat_type.dart           # ThreatType enum with title, message, isBlocking
+└── widgets/security/
+    └── threat_warning_page.dart   # Full-screen modal for detected threats
+```
+
+### How It Works
+
+1. `AppInitializer.initialize()` is called in `main()` after DI, which calls `AppSecurityService.instance.initialize()`.
+2. It configures `TalsecConfig` with per-flavor package names, bundle IDs, and `isProd` from `F.isProd`.
+3. `ThreatCallback` is attached — each threat type maps to a `ThreatType` enum value.
+4. When a threat is detected, `ThreatWarningPage` is pushed as a full-screen modal over the current screen via `rootNavigatorKey`.
+
+### Threat Categories
+
+| Threat | Type | Behavior |
+|--------|------|----------|
+| Root/Jailbreak | Blocking | "Close App" only |
+| Hooking (Frida, etc.) | Blocking | "Close App" only |
+| App Tampering | Blocking | "Close App" only |
+| Debugger Attached | Blocking | "Close App" only |
+| Unofficial Store | Blocking | "Close App" only |
+| Malware Detected | Blocking | "Close App" only |
+| Passcode Not Set | Non-blocking | "I Understand" dismiss |
+| VPN Active | Non-blocking | "I Understand" dismiss |
+| Developer Mode | Non-blocking | "I Understand" dismiss |
+| ADB/USB Debugging | Non-blocking | "I Understand" dismiss |
+| Screenshot | Non-blocking | "I Understand" dismiss |
+| Screen Recording | Non-blocking | "I Understand" dismiss |
+| Emulator/Simulator | Non-blocking | "I Understand" dismiss |
+| Device Binding | Non-blocking | "I Understand" dismiss |
+
+### Configuration
+
+Per-flavor config is in `AppSecurityService`:
+
+```dart
+// Android package names per flavor
+'com.fluttertemplate2025.dev'  // dev
+'com.fluttertemplate2025.qa'   // qa
+'com.fluttertemplate2025.uat'  // uat
+'com.fluttertemplate2025'      // prod
+```
+
+### Before Production Release
+
+Three items must be updated in `app_security_service.dart`:
+
+1. **Android signing hash** — Replace `_debugSigningHash` with your release keystore's SHA-256 hash in Base64:
+   ```bash
+   # Get the SHA-256 fingerprint
+   keytool -list -v -keystore your-release.jks -storepass <password>
+
+   # Convert to Base64 (copy the SHA256 line)
+   echo "AB:CD:EF:..." | tr -d ':' | xxd -r -p | base64
+   ```
+   For Google Play App Signing: Play Console → Setup → App signing → SHA-256.
+
+2. **iOS Team ID** — Replace `M8AK35` placeholder with your Apple Developer Team ID from [developer.apple.com/account](https://developer.apple.com/account).
+
+3. **Watcher email** — Replace `security@yourcompany.com` with your real email for Talsec security reports.
+
+> In debug mode, a log box is printed at startup reminding developers about these items.
+
+### Template Keystore (Development Only)
+
+A debug keystore is included for development convenience:
+
+| File | Location |
+|------|----------|
+| Keystore | `android/app/template-keystore.jks` |
+| Key properties | `android/key.properties` |
+| Alias | `template-key` |
+| Store/Key password | `template123` |
+
+Both files are in `.gitignore`. For a real project, generate your own keystore and update `key.properties`.
+
+### Android Requirements
+
+- `minSdk` set to 23 in `android/app/build.gradle.kts` (required by freeRASP).
+- Gradle wrapper updated to 8.12.1.
+- Signing config loads from `android/key.properties`.
 
 ---
 

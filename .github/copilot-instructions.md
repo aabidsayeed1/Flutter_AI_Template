@@ -155,6 +155,20 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - Use `Formatters.formatDate()`, `Formatters.formatCurrency()` from `core/utils/formatters.dart`.
 - Use `AppConstants` from `core/utils/constants.dart` for magic numbers and regex patterns.
 
+## App Security (freeRASP)
+
+- **freeRASP** (`freerasp`) for runtime app self-protection (RASP).
+- `AppSecurityService` singleton in `lib/core/services/security/app_security_service.dart` — initialized via `AppInitializer` in `main()` before `runApp()`.
+- Per-flavor configuration: package names, bundle IDs, `isProd` flag driven by `F.isProd`.
+- `ThreatType` enum in `lib/core/services/security/threat_type.dart` — maps each freeRASP callback to a title, message, and blocking flag.
+- `ThreatWarningPage` in `lib/core/widgets/security/threat_warning_page.dart` — full-screen modal pushed via `rootNavigatorKey` when a threat is detected.
+- **Blocking threats** (root, hooks, app tampering, malware, debug, unofficial store) trap the user with no dismiss — only "Close App".
+- **Non-blocking threats** (passcode, VPN, dev mode, ADB, screenshot, etc.) show an "I Understand" dismiss button.
+- Android `minSdk` set to 23 (required by freeRASP).
+- Template debug keystore at `android/app/template-keystore.jks`, signing config in `android/key.properties`.
+- Debug-mode log box reminds developers to replace signing hash, iOS Team ID, and watcher email before production.
+- `AppInitializer` in `lib/core/config/app_initializer.dart` centralizes all third-party SDK initialization.
+
 ## What NOT To Do
 
 - Don't create DataSource classes between repository and API.

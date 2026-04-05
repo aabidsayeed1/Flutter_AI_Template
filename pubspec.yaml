@@ -29,6 +29,7 @@ dependencies:
   dart_mappable: ^4.6.1
   pretty_dio_logger: ^1.4.0
   toastification: ^3.0.3
+  freerasp: ^7.5.1
 
 dev_dependencies:
   injectable_generator: ^2.4.1

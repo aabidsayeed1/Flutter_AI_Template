@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:toastification/toastification.dart';
 
 import 'core/base/export.dart';
+import 'core/config/app_initializer.dart';
 import 'core/config/flavor.dart';
 import 'core/theme/theme_cubit.dart';
 
@@ -26,11 +26,8 @@ void main() async {
   // Initialize dependency injection
   await configureDependencies();
 
-  // Set preferred orientations (optional)
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // Initialize all third-party SDKs and services
+  await AppInitializer.initialize();
 
   runApp(const MyApp());
 }
