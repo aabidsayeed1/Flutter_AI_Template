@@ -11,12 +11,18 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
+import 'package:flutter_template_2025/core/connectivity/connectivity_cubit.dart'
+    as _i287;
 import 'package:flutter_template_2025/core/di/register_modules.dart' as _i549;
 import 'package:flutter_template_2025/core/localization/locale_cubit.dart'
     as _i450;
 import 'package:flutter_template_2025/core/router/router.dart' as _i454;
+import 'package:flutter_template_2025/core/services/app_route_observer.dart'
+    as _i173;
 import 'package:flutter_template_2025/core/services/cache/cache_service.dart'
     as _i37;
+import 'package:flutter_template_2025/core/services/connectivity_service.dart'
+    as _i140;
 import 'package:flutter_template_2025/core/services/navigation_service.dart'
     as _i725;
 import 'package:flutter_template_2025/core/theme/theme_cubit.dart' as _i507;
@@ -75,8 +81,15 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
+    gh.singleton<_i173.AppRouteObserver>(
+      () => routerModule.provideAppRouteObserver(),
+    );
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => registerModule.secureStorage,
+    );
+    gh.lazySingleton<_i140.ConnectivityService>(
+      () => _i140.ConnectivityService(),
+      dispose: (i) => i.dispose(),
     );
     gh.lazySingleton<_i725.NavigationService>(() => _i725.NavigationService());
     gh.lazySingleton<_i507.ThemeCubit>(() => _i507.ThemeCubit());
@@ -85,6 +98,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i460.SharedPreferences>(),
         gh<_i558.FlutterSecureStorage>(),
       ),
+    );
+    gh.lazySingleton<_i287.ConnectivityCubit>(
+      () => _i287.ConnectivityCubit(gh<_i140.ConnectivityService>()),
     );
     gh.lazySingleton<_i450.LocaleCubit>(
       () => _i450.LocaleCubit(gh<_i460.SharedPreferences>()),
@@ -144,6 +160,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => routerModule.provideRouter(
         gh<_i1052.AuthCubit>(),
         gh<_i37.CacheService>(),
+        gh<_i173.AppRouteObserver>(),
       ),
     );
     gh.lazySingleton<_i117.ProfileCubit>(

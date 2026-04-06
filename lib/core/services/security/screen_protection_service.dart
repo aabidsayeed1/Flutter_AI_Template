@@ -1,24 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:freerasp/freerasp.dart';
 
 import '../../logger/log.dart';
 import '../../router/routes.dart';
 
 /// Controls screen capture blocking based on the current route.
-///
-/// Certain sensitive pages (e.g., payment, OTP verification) should prevent
-/// screenshots and screen recording. This service manages that automatically
-/// when integrated with the router observer.
-///
-/// Usage:
-/// ```dart
-/// // The ScreenProtectionObserver handles this automatically, but you can
-/// // also control it manually:
-/// ScreenProtectionService.instance.updateForRoute('/payment');
-/// ```
 class ScreenProtectionService {
   ScreenProtectionService._();
 
   static final ScreenProtectionService instance = ScreenProtectionService._();
+
+  /// Start listening to a route notifier for automatic protection.
+  void listenTo(ValueNotifier<String> routeNotifier) {
+    routeNotifier.addListener(() => updateForRoute(routeNotifier.value));
+  }
 
   /// Routes where screen capture should be blocked (exact match only).
   ///

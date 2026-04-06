@@ -335,4 +335,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureUnderDevelopment => 'This feature is under development';
+
+  @override
+  String get noInternetConnection => 'No Internet Connection';
+
+  @override
+  String get noInternetMessage => 'Please check your connection and try again.';
+
+  @override
+  String get connectionRestored => 'Connection Restored';
+
+  @override
+  String get offlineMode => 'You are currently offline';
+
+  @override
+  String get retryConnection => 'Retry';
+
+  @override
+  String get goBack => 'Go Back';
+
+  @override
+  String get internetRequiredForFeature =>
+      'Internet connection is required to use this feature';
 }

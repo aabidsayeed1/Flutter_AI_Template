@@ -17,7 +17,8 @@ import '../../core/widgets/splash/splash_page.dart';
 import '../../core/widgets/app_startup/app_startup_widget.dart';
 import '../../core/widgets/navigation_shell.dart' show NavigationShell;
 import '../services/cache/cache_service.dart';
-import '../services/security/screen_protection_observer.dart';
+import '../services/app_route_observer.dart';
+import '../services/security/screen_protection_service.dart';
 import 'routes.dart';
 
 part 'parts/authentication_routes.dart';
@@ -46,9 +47,14 @@ final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'Root');
 @module
 abstract class RouterModule {
   @singleton
-  GoRouter provideRouter(AuthCubit authCubit, CacheService cacheService) {
-    final screenProtectionObserver = ScreenProtectionObserver();
+  AppRouteObserver provideAppRouteObserver() => AppRouteObserver();
 
+  @singleton
+  GoRouter provideRouter(
+    AuthCubit authCubit,
+    CacheService cacheService,
+    AppRouteObserver appRouteObserver,
+  ) {
     final router = GoRouter(
       navigatorKey: rootNavigatorKey,
       refreshListenable: GoRouterRefreshStream(authCubit.stream.distinct()),
@@ -117,7 +123,11 @@ abstract class RouterModule {
       ],
     );
 
-    screenProtectionObserver.attachRouter(router);
+    appRouteObserver.attachRouter(router);
+
+    // Services subscribe to the global route notifier
+    ScreenProtectionService.instance.listenTo(appRouteObserver.currentRoute);
+
     return router;
   }
 }

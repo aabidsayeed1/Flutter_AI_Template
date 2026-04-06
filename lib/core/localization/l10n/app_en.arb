@@ -122,5 +122,12 @@
   "threatCloseApp": "Close App",
   "threatIUnderstand": "I Understand",
   "threatProceedWarning": "Proceeding may put your data at risk.",
-  "featureUnderDevelopment": "This feature is under development"
+  "featureUnderDevelopment": "This feature is under development",
+  "noInternetConnection": "No Internet Connection",
+  "noInternetMessage": "Please check your connection and try again.",
+  "connectionRestored": "Connection Restored",
+  "offlineMode": "You are currently offline",
+  "retryConnection": "Retry",
+  "goBack": "Go Back",
+  "internetRequiredForFeature": "Internet connection is required to use this feature"
 }

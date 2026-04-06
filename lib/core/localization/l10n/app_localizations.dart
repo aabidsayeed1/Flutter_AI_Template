@@ -679,6 +679,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This feature is under development'**
   String get featureUnderDevelopment;
+
+  /// No description provided for @noInternetConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No Internet Connection'**
+  String get noInternetConnection;
+
+  /// No description provided for @noInternetMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your connection and try again.'**
+  String get noInternetMessage;
+
+  /// No description provided for @connectionRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Restored'**
+  String get connectionRestored;
+
+  /// No description provided for @offlineMode.
+  ///
+  /// In en, this message translates to:
+  /// **'You are currently offline'**
+  String get offlineMode;
+
+  /// No description provided for @retryConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryConnection;
+
+  /// No description provided for @goBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get goBack;
+
+  /// No description provided for @internetRequiredForFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Internet connection is required to use this feature'**
+  String get internetRequiredForFeature;
 }
 
 class _AppLocalizationsDelegate

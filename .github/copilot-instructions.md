@@ -177,11 +177,20 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - Debug-mode log box reminds developers to replace signing hash, iOS Team ID, and watcher email before production.
 - `AppInitializer` in `lib/core/config/app_initializer.dart` centralizes all third-party SDK initialization.
 
+## Route Observation (AppRouteObserver)
+
+- **`AppRouteObserver`** in `lib/core/services/app_route_observer.dart` is the **global single source of truth** for the current route.
+- Exposes `ValueNotifier<String> currentRoute` — services subscribe independently via `addListener`.
+- Registered as `@singleton` in DI via `RouterModule` in `router.dart`.
+- Attached to GoRouter via `appRouteObserver.attachRouter(router)` after construction.
+- Uses **300ms timer debounce** because `routerDelegate` fires multiple times per navigation — only the first `addPostFrameCallback` reads the correct pushed route.
+- **GoRouter caveat**: `routeInformationProvider.value.uri` is unreliable for pushed sub-routes outside `addPostFrameCallback`. The observer handles this automatically.
+- To add a new route-aware service: subscribe to `getIt<AppRouteObserver>().currentRoute.addListener(...)`. Do NOT modify `AppRouteObserver` itself.
+
 ## Screen Capture Protection
 
 - `ScreenProtectionService` singleton in `lib/core/services/security/screen_protection_service.dart` — blocks/unblocks screen capture per route.
-- `ScreenProtectionObserver` in `lib/core/services/security/screen_protection_observer.dart` — listens to GoRouter's `routerDelegate` and reads location from `routeInformationProvider`.
-- Observer is created in `router.dart`, then attached via `screenProtectionObserver.attachRouter(router)` after GoRouter construction.
+- Subscribes to `AppRouteObserver.currentRoute` via `listenTo(ValueNotifier<String>)` — set up in `router.dart`.
 - Two route sets in `ScreenProtectionService`:
   - `_protectedRoutes` — **exact match only**. `/profile` blocks `/profile` but NOT `/profile/edit`.
   - `_protectedRoutePrefixes` — **prefix match**. `/payment` also blocks `/payment/confirm`, `/payment/details`, etc.
@@ -189,6 +198,25 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - Uses `Talsec.instance.blockScreenCapture(enabled:)` under the hood.
 - Manual control: `ScreenProtectionService.instance.block()` / `.unblock()` for non-route scenarios.
 - Test with: `adb shell screencap -p /sdcard/test.png && adb pull /sdcard/test.png` — protected routes produce a black image.
+
+## Network Connectivity
+
+- **Dual-layer detection**: `connectivity_plus` (fast network-type check) + `internet_connection_checker_plus` (actual reachability).
+- `ConnectivityService` (`@lazySingleton`) in `lib/core/services/connectivity_service.dart` — central service.
+  - Enums: `ConnectivityStatus` (online/offline), `ConnectivityDisplayMode` (toast/banner/blocked/none).
+  - Route-based mode maps: `_routeModes` (exact match) and `_routeModePrefixes` (prefix match).
+  - `getRouteMode(String route)` resolves exact → prefix → `null` (use default).
+- `ConnectivityCubit` (`@lazySingleton`) in `lib/core/connectivity/connectivity_cubit.dart` — wraps `ConnectivityService.statusStream`.
+- `ConnectivityWrapper` in `lib/core/widgets/connectivity/connectivity_wrapper.dart` — wraps app content in `MaterialApp.router` builder.
+  - Subscribes to both `AppRouteObserver.currentRoute` and `ConnectivityCubit.stream`.
+  - **Toast mode**: shows error toast on disconnect, success toast on reconnect.
+  - **Banner mode**: shows `NoInternetBanner` (persistent slide-in banner via `BlocBuilder`).
+  - **Blocked mode**: shows non-dismissible `showModalBottomSheet` via `rootNavigatorKey` with "Go Back" and "Retry".
+  - **None mode**: no automatic UI feedback.
+  - Back button in blocked mode: `canPop() ? pop() : go(Routes.home)` — safe for both pushed routes and shell tabs.
+- `NoInternetBanner` in `lib/core/widgets/connectivity/no_internet_banner.dart` — wrapped in `Material` to avoid yellow underlines.
+- Localization keys: `noInternetConnection`, `noInternetMessage`, `connectionRestored`, `offlineMode`, `retryConnection`, `internetRequiredForFeature`, `goBack`.
+- **Adding a route mode**: add to `_routeModes` (exact) or `_routeModePrefixes` (prefix) in `ConnectivityService`. Use full paths.
 
 ## What NOT To Do
 
@@ -205,3 +233,5 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - Don't create singleton instances manually — use `@lazySingleton` + `getIt<T>()`.
 - Don't edit `.g.dart`, `.freezed.dart`, `.mapper.dart`, `.config.dart` files — they are generated.
 - Don't add features without running `build_runner` after annotating files.
+- Don't modify `AppRouteObserver` to add route-aware features — subscribe to `currentRoute` independently.
+- Don't read route location directly from GoRouter — use `getIt<AppRouteObserver>().currentRoute.value`.

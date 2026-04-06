@@ -20,6 +20,8 @@ A production-ready Flutter template with **BLoC/Cubit** state management, **Clea
 - [Toast Notifications](#toast-notifications)
 - [App Security (freeRASP)](#app-security-freerasp)
 - [Screen Capture Protection](#screen-capture-protection)
+- [Route Observation (AppRouteObserver)](#route-observation-approuteobserver)
+- [Network Connectivity](#network-connectivity)
 - [Creating a New Feature](#creating-a-new-feature)
 - [Code Generation](#code-generation)
 - [Flavors](#flavors)
@@ -89,6 +91,9 @@ lib/
 │   │   ├── flavor.dart                # Flavor enum (dev/qa/uat/prod) + F class with baseUrl, apiTimeout, feature flags
 │   │   └── app_config.dart            # Static app metadata (appName, packageName)
 │   │
+│   ├── connectivity/
+│   │   └── connectivity_cubit.dart    # @lazySingleton — wraps ConnectivityService.statusStream
+│   │
 │   ├── di/
 │   │   ├── injectable.dart            # GetIt instance + configureDependencies()
 │   │   ├── injectable.config.dart     # Generated — DO NOT EDIT
@@ -103,20 +108,20 @@ lib/
 │   │       └── shell_routes.dart      # StatefulShellRoute (bottom nav)
 │   │
 │   ├── services/
+│   │   ├── app_route_observer.dart    # Global route observer (ValueNotifier<String> currentRoute)
 │   │   ├── cache/
 │   │   │   ├── cache_service.dart     # CacheKey enum (with sensitive flag) + abstract CacheService
 │   │   │   └── shared_preference_service.dart  # Routes sensitive keys → FlutterSecureStorage, rest → SharedPreferences
+│   │   ├── connectivity_service.dart  # Dual-layer connectivity (connectivity_plus + internet_connection_checker_plus)
 │   │   ├── interceptor/
 │   │   │   └── token_manager.dart     # Dio interceptor: auth header, 401 refresh, queue
 │   │   ├── navigation_service.dart    # Global navigator key access
 │   │   ├── analytics_service.dart     # Analytics (stub)
-│   │   ├── connectivity_service.dart  # Network monitoring (stub)
 │   │   ├── notification_service.dart  # Local notifications (stub)
 │   │   └── security/
 │   │       ├── app_security_service.dart       # freeRASP initialization + threat callbacks
 │   │       ├── threat_type.dart                # ThreatType enum (title, message, isBlocking)
-│   │       ├── screen_protection_service.dart  # Route-based screen capture blocking
-│   │       └── screen_protection_observer.dart # GoRouter listener for auto block/unblock
+│   │       └── screen_protection_service.dart  # Route-based screen capture blocking
 │   │
 │   ├── theme/
 │   │   ├── theme.dart                 # context.color, context.textStyle, context.lightTheme, context.darkTheme
@@ -165,6 +170,9 @@ lib/
 │   │   ├── app_startup/
 │   │   │   ├── app_startup_widget.dart    # Shows SplashPage or error
 │   │   │   └── startup_error_widget.dart  # Error UI with retry
+│   │   ├── connectivity/
+│   │   │   ├── connectivity_wrapper.dart  # Route-aware connectivity UI (toast/banner/blocked/none)
+│   │   │   └── no_internet_banner.dart    # Persistent offline banner with retry
 │   │   ├── splash/
 │   │   │   └── splash_page.dart       # Splash screen UI
 │   │   ├── navigation_shell.dart      # BottomNavigationBar shell
@@ -829,13 +837,12 @@ Route-based screen capture blocking using freeRASP's `blockScreenCapture`. Autom
 
 ### How It Works
 
-1. `ScreenProtectionObserver` listens to GoRouter's `routerDelegate` for route changes.
-2. On each navigation event, it reads the current location from `routeInformationProvider` (deferred to the next frame to ensure GoRouter's state is settled).
-3. `ScreenProtectionService` checks the path against two sets:
+1. `ScreenProtectionService` subscribes to `AppRouteObserver.currentRoute` via `listenTo(ValueNotifier<String>)` — set up in `router.dart`.
+2. On each route change, it checks the path against two sets:
    - **`_protectedRoutes`** — exact match only (e.g., `/profile` blocks `/profile` but NOT `/profile/edit`).
    - **`_protectedRoutePrefixes`** — prefix match (e.g., `/payment` also blocks `/payment/confirm`).
-4. If matched, screen capture is blocked via `Talsec.instance.blockScreenCapture(enabled: true)`.
-5. When navigating away from a protected route, capture is unblocked automatically.
+3. If matched, screen capture is blocked via `Talsec.instance.blockScreenCapture(enabled: true)`.
+4. When navigating away from a protected route, capture is unblocked automatically.
 
 ### Adding Protected Routes
 
@@ -888,17 +895,138 @@ adb shell screencap -p /sdcard/test.png && adb pull /sdcard/test.png
 
 ```
 lib/core/services/security/
-├── screen_protection_service.dart   # Singleton — manages block/unblock + protected routes
-└── screen_protection_observer.dart  # Listens to GoRouter delegate changes
+└── screen_protection_service.dart   # Singleton — manages block/unblock + protected routes
 ```
 
-The observer is created and attached in `router.dart`:
+Subscribes to `AppRouteObserver` in `router.dart`:
 ```dart
-final screenProtectionObserver = ScreenProtectionObserver();
-final router = GoRouter(...);
-screenProtectionObserver.attachRouter(router);
-return router;
+ScreenProtectionService.instance.listenTo(appRouteObserver.currentRoute);
 ```
+
+---
+
+## Route Observation (AppRouteObserver)
+
+The **`AppRouteObserver`** is the global single source of truth for the current route. All route-aware services subscribe to it independently — no one modifies the observer itself.
+
+### Architecture
+
+```
+lib/core/services/
+└── app_route_observer.dart   # @singleton — ValueNotifier<String> currentRoute
+```
+
+### How It Works
+
+1. Registered as `@singleton` in DI via `RouterModule` in `router.dart`.
+2. Attached to GoRouter via `appRouteObserver.attachRouter(router)` after construction.
+3. Listens to `router.routerDelegate.addListener(...)` for navigation events.
+4. Uses `WidgetsBinding.instance.addPostFrameCallback` to read the route **after** GoRouter settles.
+5. **300ms timer debounce** — `routerDelegate` fires multiple times per navigation. Only the first `addPostFrameCallback` reads the correct pushed route; subsequent ones revert to the parent. The debounce ensures only the first notification per batch is processed.
+
+### GoRouter Caveat
+
+`routeInformationProvider.value.uri` is **unreliable for pushed sub-routes** outside of `addPostFrameCallback`. For example, after `context.push('/login/registration')`, reading the URI directly may return `/login` instead of `/login/registration`. The observer handles this automatically via the post-frame + debounce pattern.
+
+### Subscribing a New Service
+
+To add a route-aware feature, subscribe to the `currentRoute` notifier — do **NOT** modify `AppRouteObserver`:
+
+```dart
+// In your service:
+getIt<AppRouteObserver>().currentRoute.addListener(() {
+  final route = getIt<AppRouteObserver>().currentRoute.value;
+  // React to route change
+});
+```
+
+### Current Subscribers
+
+| Service | Purpose |
+|---------|---------|
+| `ScreenProtectionService` | Blocks/unblocks screen capture per route |
+| `ConnectivityWrapper` | Switches connectivity display mode per route |
+
+---
+
+## Network Connectivity
+
+Dual-layer real-time network detection with **route-based display modes**. Uses `connectivity_plus` for fast network-type detection and `internet_connection_checker_plus` for actual internet reachability verification.
+
+### Architecture
+
+```
+lib/core/
+├── services/
+│   └── connectivity_service.dart             # @lazySingleton — dual-layer detection + route mode maps
+├── connectivity/
+│   └── connectivity_cubit.dart               # @lazySingleton — exposes ConnectivityStatus to widget tree
+└── widgets/connectivity/
+    ├── connectivity_wrapper.dart             # Route-aware connectivity UI wrapper
+    └── no_internet_banner.dart               # Persistent offline banner with retry
+```
+
+### Display Modes
+
+Each route can have a different connectivity feedback mode:
+
+| Mode | Behavior | Use Case |
+|------|----------|----------|
+| `toast` | Error toast on disconnect, success toast on reconnect | Default — most pages |
+| `banner` | Persistent `NoInternetBanner` slides in above content | Content pages where user can browse offline |
+| `blocked` | Non-dismissible bottom sheet with "Go Back" and "Retry" | Critical pages (e.g., registration, payment) |
+| `none` | No automatic UI feedback — app handles manually | Pages with custom offline logic |
+
+### Configuring Route Modes
+
+Edit `_routeModes` (exact match) and `_routeModePrefixes` (prefix match) in `ConnectivityService`:
+
+```dart
+/// Exact match — only this route.
+static final Map<String, ConnectivityDisplayMode> _routeModes = {
+  Routes.profile: ConnectivityDisplayMode.blocked,
+};
+
+/// Prefix match — route and all children.
+static final Map<String, ConnectivityDisplayMode> _routeModePrefixes = {
+  '${Routes.login}/${Routes.registration}': ConnectivityDisplayMode.blocked,
+};
+```
+
+> **Important:** Use **full paths** as shown in GoRouter's debug log. Relative names won't match.
+
+### Usage
+
+`ConnectivityWrapper` is added in `main.dart`'s `MaterialApp.router` builder. No per-page setup needed — modes are resolved automatically from the route.
+
+```dart
+// Check connectivity programmatically
+final cubit = context.read<ConnectivityCubit>();
+final isOnline = cubit.isOnline;
+
+// Manual retry (e.g., retry button)
+await cubit.checkNow();
+```
+
+### Blocked Mode Details
+
+- Shows a `showModalBottomSheet` via `rootNavigatorKey` — sits above the navigator, no interference with GoRouter.
+- **Non-dismissible**: `isDismissible: false`, `enableDrag: false`.
+- **"Go Back"** button: `canPop() ? pop() : go(Routes.home)` — safe for both pushed routes and shell tabs.
+- **"Retry"** button: calls `ConnectivityCubit.checkNow()` — auto-dismisses sheet if connection restored.
+- Auto-shows when navigating to a blocked route while offline; auto-dismisses on reconnect.
+
+### Localization Keys
+
+| Key | EN | AR |
+|-----|----|----|
+| `noInternetConnection` | No Internet Connection | لا يوجد اتصال بالإنترنت |
+| `noInternetMessage` | Please check your internet connection and try again | يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى |
+| `connectionRestored` | Connection Restored | تم استعادة الاتصال |
+| `offlineMode` | You're offline. Some features may be unavailable. | أنت غير متصل. بعض الميزات قد لا تكون متاحة. |
+| `retryConnection` | Retry | إعادة المحاولة |
+| `internetRequiredForFeature` | Internet connection is required for this feature | الاتصال بالإنترنت مطلوب لهذه الميزة |
+| `goBack` | Go Back | الرجوع |
 
 ---
 

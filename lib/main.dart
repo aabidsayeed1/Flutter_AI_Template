@@ -4,7 +4,9 @@ import 'package:toastification/toastification.dart';
 import 'core/base/export.dart';
 import 'core/config/app_initializer.dart';
 import 'core/config/flavor.dart';
+import 'core/connectivity/connectivity_cubit.dart';
 import 'core/theme/theme_cubit.dart';
+import 'core/widgets/connectivity/connectivity_wrapper.dart';
 
 // This variable is automatically set by Flutter when running with --flavor
 // If not set, it defaults to 'dev'
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider.value(value: getIt<LocaleCubit>()),
           BlocProvider.value(value: getIt<ThemeCubit>()),
+          BlocProvider.value(value: getIt<ConnectivityCubit>()),
         ],
         child: BlocBuilder<ThemeCubit, ThemeMode>(
           bloc: getIt<ThemeCubit>(),
@@ -70,9 +73,14 @@ class MyApp extends StatelessWidget {
                       supportedLocales: AppLocalizations.supportedLocales,
                       routerConfig: getIt<GoRouter>(),
                       builder: (context, child) {
+                        Widget result = child ?? const SizedBox();
+
+                        // Global connectivity: route-aware mode resolution
+                        result = ConnectivityWrapper(child: result);
+
                         // Show flavor banner in debug mode
                         if (kDebugMode) {
-                          return Banner(
+                          result = Banner(
                             location: BannerLocation.topStart,
                             message: F.name.toUpperCase(),
                             color: _getFlavorColor(),
@@ -83,10 +91,10 @@ class MyApp extends StatelessWidget {
                               color: Colors.white,
                             ),
                             textDirection: TextDirection.ltr,
-                            child: child ?? const SizedBox(),
+                            child: result,
                           );
                         }
-                        return child ?? const SizedBox();
+                        return result;
                       },
                     );
                   },

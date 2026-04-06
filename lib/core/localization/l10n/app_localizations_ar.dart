@@ -330,4 +330,26 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get featureUnderDevelopment => 'هذه الميزة قيد التطوير';
+
+  @override
+  String get noInternetConnection => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get noInternetMessage => 'يرجى التحقق من اتصالك والمحاولة مرة أخرى.';
+
+  @override
+  String get connectionRestored => 'تم استعادة الاتصال';
+
+  @override
+  String get offlineMode => 'أنت غير متصل حالياً';
+
+  @override
+  String get retryConnection => 'إعادة المحاولة';
+
+  @override
+  String get goBack => 'الرجوع';
+
+  @override
+  String get internetRequiredForFeature =>
+      'يلزم اتصال بالإنترنت لاستخدام هذه الميزة';
 }

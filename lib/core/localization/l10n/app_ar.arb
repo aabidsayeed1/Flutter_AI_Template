@@ -122,5 +122,12 @@
   "threatCloseApp": "إغلاق التطبيق",
   "threatIUnderstand": "أنا أفهم",
   "threatProceedWarning": "المتابعة قد تعرّض بياناتك للخطر.",
-  "featureUnderDevelopment": "هذه الميزة قيد التطوير"
+  "featureUnderDevelopment": "هذه الميزة قيد التطوير",
+  "noInternetConnection": "لا يوجد اتصال بالإنترنت",
+  "noInternetMessage": "يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
+  "connectionRestored": "تم استعادة الاتصال",
+  "offlineMode": "أنت غير متصل حالياً",
+  "retryConnection": "إعادة المحاولة",
+  "goBack": "الرجوع",
+  "internetRequiredForFeature": "يلزم اتصال بالإنترنت لاستخدام هذه الميزة"
 }
