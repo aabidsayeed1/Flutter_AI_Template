@@ -30,6 +30,7 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   toastification: ^3.0.3
   freerasp: ^7.5.1
+  flutter_secure_storage: ^10.0.0
 
 dev_dependencies:
   injectable_generator: ^2.4.1

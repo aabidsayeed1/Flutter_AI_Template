@@ -83,8 +83,8 @@ final class AuthRepositoryApiImpl extends AuthRepository {
 
     return RememberMeEntity(
       enabled: true,
-      email: cacheService.get<String>(CacheKey.rememberedEmail),
-      password: cacheService.get<String>(CacheKey.rememberedPassword),
+      email: await cacheService.getSecure(CacheKey.rememberedEmail),
+      password: await cacheService.getSecure(CacheKey.rememberedPassword),
     );
   }
 }

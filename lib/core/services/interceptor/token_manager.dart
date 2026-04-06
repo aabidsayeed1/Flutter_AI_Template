@@ -157,11 +157,11 @@ class TokenManager extends Interceptor {
   }
 
   Future<String?> getAccessToken() async {
-    return cacheService.get(CacheKey.accessToken);
+    return cacheService.getSecure(CacheKey.accessToken);
   }
 
   Future<String?> getRefreshToken() async {
-    return cacheService.get(CacheKey.refreshToken);
+    return cacheService.getSecure(CacheKey.refreshToken);
   }
 }
 

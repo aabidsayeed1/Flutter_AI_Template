@@ -65,8 +65,8 @@ base class AuthRepositoryFirebaseImpl extends AuthRepository {
     if (!enabled) return const RememberMeEntity();
     return RememberMeEntity(
       enabled: true,
-      email: cacheService.get<String>(CacheKey.rememberedEmail),
-      password: cacheService.get<String>(CacheKey.rememberedPassword),
+      email: await cacheService.getSecure(CacheKey.rememberedEmail),
+      password: await cacheService.getSecure(CacheKey.rememberedPassword),
     );
   }
 }

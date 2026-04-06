@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,10 +20,14 @@ abstract class RegisterModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
-  // ─── CacheService ────────────────────────────────────────────────────
+  // ─── FlutterSecureStorage ─────────────────────────────────────────────
   @lazySingleton
-  CacheService cacheService(SharedPreferences prefs) =>
-      SharedPreferencesService(prefs);
+  FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
+  @lazySingleton
+  CacheService cacheService(
+    SharedPreferences prefs,
+    FlutterSecureStorage secureStorage,
+  ) => SharedPreferencesService(prefs, secureStorage);
 
   // ─── Dio ─────────────────────────────────────────────────────────────
   /// Main [Dio] instance used across the app.

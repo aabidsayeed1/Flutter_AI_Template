@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:flutter_template_2025/core/di/register_modules.dart' as _i549;
 import 'package:flutter_template_2025/core/localization/locale_cubit.dart'
     as _i450;
@@ -74,10 +75,16 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
+    gh.lazySingleton<_i558.FlutterSecureStorage>(
+      () => registerModule.secureStorage,
+    );
     gh.lazySingleton<_i725.NavigationService>(() => _i725.NavigationService());
     gh.lazySingleton<_i507.ThemeCubit>(() => _i507.ThemeCubit());
     gh.lazySingleton<_i37.CacheService>(
-      () => registerModule.cacheService(gh<_i460.SharedPreferences>()),
+      () => registerModule.cacheService(
+        gh<_i460.SharedPreferences>(),
+        gh<_i558.FlutterSecureStorage>(),
+      ),
     );
     gh.lazySingleton<_i450.LocaleCubit>(
       () => _i450.LocaleCubit(gh<_i460.SharedPreferences>()),

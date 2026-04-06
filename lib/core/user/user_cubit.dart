@@ -32,8 +32,8 @@ class UserCubit extends Cubit<UserState> {
   }
 
   /// Load user from cache (call on app start).
-  void loadFromCache() {
-    final json = _cacheService.get<String>(_keyUser);
+  Future<void> loadFromCache() async {
+    final json = await _cacheService.getSecure(_keyUser);
     if (json != null && json.isNotEmpty) {
       emit(
         state.copyWith(

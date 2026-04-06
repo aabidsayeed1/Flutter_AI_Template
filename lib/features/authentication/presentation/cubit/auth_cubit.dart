@@ -101,12 +101,12 @@ class AuthCubit extends Cubit<AuthState> {
   // ── RETRY ──────────────────────────────────────────────────────────────
   Future<void> retry() async {
     emit(state.copyWith(status: AuthStatus.unknown, error: null));
-    _checkAuthStatus();
+    await _checkAuthStatus();
   }
 
   // ── CHECK AUTH STATUS ON START ─────────────────────────────────────────
-  void _checkAuthStatus() {
-    userCubit.loadFromCache();
+  Future<void> _checkAuthStatus() async {
+    await userCubit.loadFromCache();
     if (userCubit.user != null) {
       emit(state.copyWith(status: AuthStatus.authenticated));
     } else {

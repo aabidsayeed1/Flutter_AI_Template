@@ -92,7 +92,7 @@ lib/
 │   ├── di/
 │   │   ├── injectable.dart            # GetIt instance + configureDependencies()
 │   │   ├── injectable.config.dart     # Generated — DO NOT EDIT
-│   │   └── register_modules.dart      # Manual DI: SharedPreferences → CacheService → Dio → Feature APIs
+│   │   └── register_modules.dart      # Manual DI: SharedPreferences + FlutterSecureStorage → CacheService → Dio → Feature APIs
 │   │
 │   ├── router/
 │   │   ├── router.dart                # GoRouter config + redirect logic + GoRouterRefreshStream
@@ -104,8 +104,8 @@ lib/
 │   │
 │   ├── services/
 │   │   ├── cache/
-│   │   │   ├── cache_service.dart     # CacheKey enum + abstract CacheService
-│   │   │   └── shared_preference_service.dart  # SharedPreferences implementation
+│   │   │   ├── cache_service.dart     # CacheKey enum (with sensitive flag) + abstract CacheService
+│   │   │   └── shared_preference_service.dart  # Routes sensitive keys → FlutterSecureStorage, rest → SharedPreferences
 │   │   ├── interceptor/
 │   │   │   └── token_manager.dart     # Dio interceptor: auth header, 401 refresh, queue
 │   │   ├── navigation_service.dart    # Global navigator key access
@@ -430,8 +430,9 @@ class FeatureEvent with _$FeatureEvent {
 ### Registration Chain
 
 ```
-SharedPreferences (@preResolve)
-    └─► CacheService (@lazySingleton)
+SharedPreferences (@preResolve) ── non-sensitive data (flags, prefs)
+FlutterSecureStorage (@lazySingleton) ── sensitive data (tokens, credentials, user)
+    └─► CacheService (@lazySingleton) ── routes keys by CacheKey.sensitive flag
         └─► Dio (@lazySingleton) ── uses F.baseUrl, F.apiTimeout
         │   ├── TokenManager interceptor (uses CacheService + rootNavigatorKey)
         │   └── PrettyDioLogger (debug only)

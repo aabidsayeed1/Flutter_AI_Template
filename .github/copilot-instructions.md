@@ -128,10 +128,17 @@ These are the rules and conventions for this Flutter project. Follow them strict
 
 ## Cache & Persistence
 
-- `CacheService` abstraction over `SharedPreferences`.
-- Keys defined in `CacheKey` enum: `accessToken`, `refreshToken`, `isOnBoardingCompleted`, `isLoggedIn`, `rememberMe`, `rememberedEmail`, `rememberedPassword`, `language`, `user`.
-- Usage: `cacheService.save<bool>(CacheKey.isLoggedIn, true)`, `cacheService.get<String>(CacheKey.accessToken)`.
-- To add a cache key: add to `CacheKey` enum in `cache_service.dart`.
+- `CacheService` abstraction with **two-tier storage**:
+  - **Sensitive keys** → `FlutterSecureStorage` (Android Keystore / iOS Keychain).
+  - **Non-sensitive keys** → `SharedPreferences`.
+- `CacheKey` enum has a `sensitive` flag: `CacheKey.accessToken(sensitive: true)`.
+- **Sensitive keys**: `accessToken`, `refreshToken`, `rememberedEmail`, `rememberedPassword`, `user`.
+- **Non-sensitive keys**: `isOnBoardingCompleted`, `isLoggedIn`, `rememberMe`, `language`.
+- `save()` auto-routes to the correct storage based on `key.sensitive`.
+- `get<T>()` — synchronous, **only for non-sensitive keys**. Throws if called with a sensitive key.
+- `getSecure()` — async, for **sensitive keys**. Returns `Future<String?>`.
+- To add a cache key: add to `CacheKey` enum with `sensitive: true/false` in `cache_service.dart`.
+- `FlutterSecureStorage` configured with `AndroidOptions(encryptedSharedPreferences: true)` in `register_modules.dart`.
 
 ## Logger
 
