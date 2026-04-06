@@ -673,6 +673,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Proceeding may put your data at risk.'**
   String get threatProceedWarning;
+
+  /// No description provided for @featureUnderDevelopment.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is under development'**
+  String get featureUnderDevelopment;
 }
 
 class _AppLocalizationsDelegate

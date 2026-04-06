@@ -332,4 +332,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get threatProceedWarning => 'Proceeding may put your data at risk.';
+
+  @override
+  String get featureUnderDevelopment => 'This feature is under development';
 }

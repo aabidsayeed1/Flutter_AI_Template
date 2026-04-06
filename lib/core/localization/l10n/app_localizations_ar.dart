@@ -327,4 +327,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get threatProceedWarning => 'المتابعة قد تعرّض بياناتك للخطر.';
+
+  @override
+  String get featureUnderDevelopment => 'هذه الميزة قيد التطوير';
 }

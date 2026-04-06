@@ -121,5 +121,6 @@
   "threatBlockingFooter": "This app cannot continue in this environment.\nPlease resolve the issue and restart.",
   "threatCloseApp": "Close App",
   "threatIUnderstand": "I Understand",
-  "threatProceedWarning": "Proceeding may put your data at risk."
+  "threatProceedWarning": "Proceeding may put your data at risk.",
+  "featureUnderDevelopment": "This feature is under development"
 }

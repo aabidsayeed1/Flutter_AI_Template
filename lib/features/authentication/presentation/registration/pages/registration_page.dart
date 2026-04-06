@@ -2,6 +2,7 @@ import 'package:flutter_template_2025/core/base/export.dart';
 import 'package:flutter_template_2025/core/widgets/link_text.dart';
 
 import '../../../../../core/router/routes.dart';
+import '../../../../../core/utils/app_toast.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -41,7 +42,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
             const SizedBox(height: 32),
             FilledButton(
               onPressed: () {
-                throw UnimplementedError();
+                context.showWarning(
+                  title: context.locale.featureUnderDevelopment,
+                );
               },
               child: Text(context.locale.continueAction),
             ),

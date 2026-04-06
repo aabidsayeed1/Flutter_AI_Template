@@ -121,5 +121,6 @@
   "threatBlockingFooter": "لا يمكن للتطبيق المتابعة في هذه البيئة.\nيرجى حل المشكلة وإعادة التشغيل.",
   "threatCloseApp": "إغلاق التطبيق",
   "threatIUnderstand": "أنا أفهم",
-  "threatProceedWarning": "المتابعة قد تعرّض بياناتك للخطر."
+  "threatProceedWarning": "المتابعة قد تعرّض بياناتك للخطر.",
+  "featureUnderDevelopment": "هذه الميزة قيد التطوير"
 }
