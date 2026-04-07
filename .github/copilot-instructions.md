@@ -82,6 +82,29 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - Adding a string: add to `app_en.arb` → add to `app_ar.arb` → run `flutter gen-l10n`.
 - `LocaleCubit` handles locale switching — `getIt<LocaleCubit>().switchLocale()`.
 
+
+## Universal Image Widget
+
+- **AppImage**: Use `AppImage` for all image display (network, asset, SVG, file). Handles shimmer, error fallback, hero animation, shape (circle, rounded, square, custom), and advanced cache/rendering options. Exposes all `CachedNetworkImage` advanced properties (memory/disk cache, cache key, cache manager, filter quality, alignment, repeat, HTTP headers, color blending, etc.).
+- **Location**: `lib/core/widgets/app_image.dart`
+- **Usage**:
+  ```dart
+  AppImage(
+    src: 'https://example.com/image.jpg',
+    width: 100.w,
+    height: 100.w,
+    shape: AppImageShape.circle,
+    heroTag: 'profile-pic',
+    placeholder: (context, url) => Shimmer(...),
+    errorWidget: (context, url, error) => Icon(Icons.error),
+    memCacheWidth: 300,
+    maxWidthDiskCache: 600,
+    // ...other advanced options
+  )
+  ```
+- **Always use AppImage** instead of `Image.network`, `Image.asset`, `SvgPicture`, or direct `CachedNetworkImage`.
+- **Testbed**: See multiple usage examples in `profile_page.dart`.
+
 ## File & Folder Conventions
 
 - **Feature folder structure**: `data/` (models, repositories, services/network), `domain/` (entities, repositories, use_cases), `presentation/` (cubit or bloc, pages, widgets).

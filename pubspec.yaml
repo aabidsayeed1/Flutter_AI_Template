@@ -33,6 +33,9 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   connectivity_plus: ^6.1.4
   internet_connection_checker_plus: ^2.7.1
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
+  flutter_svg: ^2.0.10
 
 dev_dependencies:
   injectable_generator: ^2.4.1

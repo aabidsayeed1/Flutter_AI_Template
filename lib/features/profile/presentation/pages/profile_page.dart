@@ -4,6 +4,7 @@ import 'package:flutter_template_2025/core/user/user_cubit.dart';
 import 'package:flutter_template_2025/features/authentication/presentation/cubit/auth_cubit.dart';
 import 'package:gap/gap.dart';
 import 'instagram_profile_page.dart';
+import 'package:flutter_template_2025/core/widgets/app_image.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -22,6 +23,14 @@ class ProfilePage extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Profile picture using AppImage (dummy network image for testing)
+                  AppImage(
+                    src: 'https://i.pravatar.cc/300',
+                    width: 96,
+                    height: 96,
+                    shape: AppImageShape.circle,
+                    heroTag: 'profile_avatar',
+                  ),
                   Text(user?.fullName ?? ''),
                   Text(user?.email ?? ''),
                   Gap(20),

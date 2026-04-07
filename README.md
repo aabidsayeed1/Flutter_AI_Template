@@ -303,7 +303,42 @@ GoRouter initialLocation: "/" → AppStartupWidget
     /reset-password-success → ResetPasswordSuccessPage
 /home                      → HomePage (Shell tab 1)
   /home/profile            → ProfilePage (nested under home)
-/profile                   → ProfilePage (Shell tab 2)
+  /profile                   → ProfilePage (Shell tab 2)
+
+---
+
+## Universal Image Widget
+
+### AppImage (core/widgets/app_image.dart)
+
+**AppImage** is the universal widget for displaying images from any source (network, asset, SVG, file). It supports:
+- Network, asset, SVG, and file images
+- Shimmer loading, error fallback, and hero animation
+- Shape: circle, rounded, square, or custom border radius
+- Advanced cache and rendering controls (memCacheWidth, maxWidthDiskCache, cacheKey, filterQuality, alignment, repeat, HTTP headers, color blending, etc.)
+- All advanced `CachedNetworkImage` options are exposed for pro-level control
+
+**Usage Example:**
+```dart
+AppImage(
+  src: 'https://example.com/image.jpg',
+  width: 100.w,
+  height: 100.w,
+  shape: AppImageShape.circle,
+  heroTag: 'profile-pic',
+  placeholder: (context, url) => Shimmer(...),
+  errorWidget: (context, url, error) => Icon(Icons.error),
+  memCacheWidth: 300,
+  maxWidthDiskCache: 600,
+  // ...other advanced options
+)
+```
+
+**Best Practices:**
+- Always use `AppImage` for all image display in the app (never use `Image.network`, `Image.asset`, `SvgPicture`, or direct `CachedNetworkImage`).
+- For comprehensive usage and test cases, see `profile_page.dart`.
+
+---
 ```
 
 ### Adding a New Route
