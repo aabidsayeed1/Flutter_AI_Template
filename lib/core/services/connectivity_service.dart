@@ -84,8 +84,15 @@ class ConnectivityService {
 
   // ── Lifecycle ──────────────────────────────────────────────────────
 
-  void _init() {
+  void _init() async {
+    bool firstConnectivityEventHandled = false;
     _connectivitySub = _connectivity.onConnectivityChanged.listen((results) {
+      Log.info('Connectivity changed: $results');
+      // On iOS, the first event can be [none] even if online. Ignore it.
+      if (!firstConnectivityEventHandled) {
+        firstConnectivityEventHandled = true;
+        return;
+      }
       final hasNetwork = !results.contains(ConnectivityResult.none);
       if (!hasNetwork) {
         _updateStatus(ConnectivityStatus.offline);
