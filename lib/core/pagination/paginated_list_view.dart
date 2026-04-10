@@ -1,8 +1,8 @@
-import 'package:flutter_template_2025/core/base/paginated_cubit.dart';
-import 'package:flutter_template_2025/core/base/paginated_bloc_adapter.dart';
+import 'package:flutter_template_2025/core/pagination/paginated_cubit.dart';
+import 'package:flutter_template_2025/core/pagination/paginated_controller.dart';
 import 'package:flutter_template_2025/core/logger/log.dart';
 
-import '../base/export.dart';
+import 'package:flutter_template_2025/core/base/export.dart';
 
 /// A generic paginated list view that works with [PaginatedCubit].
 class PaginatedListView<T> extends StatefulWidget {
@@ -17,7 +17,7 @@ class PaginatedListView<T> extends StatefulWidget {
     this.onLoadInitial,
     this.onLoadMore,
     this.onRefresh,
-    this.adapter,
+    this.controller,
     this.onRetry,
   });
 
@@ -29,10 +29,10 @@ class PaginatedListView<T> extends StatefulWidget {
   final bool enablePullToRefresh;
   final double loadMoreThreshold;
 
-  /// Optional adapter that exposes imperative methods for Bloc-backed
-  /// paginated flows. If provided, the adapter will be preferred over
+  /// Optional controller that exposes imperative methods for Bloc-backed
+  /// paginated flows. If provided, the controller will be preferred over
   /// individual callbacks (`onLoadInitial`, `onLoadMore`, etc.).
-  final PaginatedBlocAdapter<T>? adapter;
+  final PaginatedController<T>? controller;
 
   // Optional callbacks for non-Cubit implementations (e.g. Bloc).
   final Future<void> Function()? onLoadInitial;
@@ -55,8 +55,8 @@ class _PaginatedListViewState<T> extends State<PaginatedListView<T>> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final status = widget.bloc.state.status;
       if (status == PaginatedStatus.initial) {
-        if (widget.adapter != null) {
-          widget.adapter!.loadInitial();
+        if (widget.controller != null) {
+          widget.controller!.loadInitial();
         } else if (widget.onLoadInitial != null) {
           widget.onLoadInitial!();
         } else if (widget.bloc is PaginatedCubit<T>) {
@@ -79,8 +79,8 @@ class _PaginatedListViewState<T> extends State<PaginatedListView<T>> {
     final max = _controller.position.maxScrollExtent;
     final pixels = _controller.position.pixels;
     if (max - pixels <= threshold) {
-      if (widget.adapter != null) {
-        widget.adapter!.loadMore();
+      if (widget.controller != null) {
+        widget.controller!.loadMore();
       } else if (widget.onLoadMore != null) {
         widget.onLoadMore!();
       } else if (widget.bloc is PaginatedCubit<T>) {
@@ -132,8 +132,8 @@ class _PaginatedListViewState<T> extends State<PaginatedListView<T>> {
                       Gap(16.r),
                       ElevatedButton.icon(
                         onPressed: () {
-                          if (widget.adapter != null) {
-                            widget.adapter!.retry();
+                          if (widget.controller != null) {
+                            widget.controller!.retry();
                           } else if (widget.onRetry != null) {
                             widget.onRetry!.call();
                           } else if (widget.bloc is PaginatedCubit<T>) {
@@ -254,8 +254,8 @@ class _PaginatedListViewState<T> extends State<PaginatedListView<T>> {
                             ),
                           ElevatedButton.icon(
                             onPressed: () {
-                              if (widget.adapter != null) {
-                                widget.adapter!.retry();
+                              if (widget.controller != null) {
+                                widget.controller!.retry();
                               } else if (widget.onRetry != null) {
                                 widget.onRetry!.call();
                               } else if (widget.bloc is PaginatedCubit<T>) {
@@ -301,7 +301,8 @@ class _PaginatedListViewState<T> extends State<PaginatedListView<T>> {
         if (widget.enablePullToRefresh) {
           listView = RefreshIndicator(
             onRefresh: () {
-              if (widget.adapter != null) return widget.adapter!.refresh();
+              if (widget.controller != null)
+                return widget.controller!.refresh();
               if (widget.onRefresh != null) return widget.onRefresh!();
               if (widget.bloc is PaginatedCubit<T>) {
                 return (widget.bloc as PaginatedCubit<T>).refresh();

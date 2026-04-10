@@ -1,4 +1,4 @@
-/// Core module index - Central exports for all core utilities and services
+// Core module index - Central exports for all core utilities and services
 export 'base/index.dart';
 export 'config/index.dart';
 export 'context_extensions/context_extensions.dart';
@@ -12,3 +12,4 @@ export 'services/index.dart';
 export 'theme/theme.dart';
 export 'utils/index.dart';
 export 'widgets/index.dart';
+export 'pagination/index.dart';

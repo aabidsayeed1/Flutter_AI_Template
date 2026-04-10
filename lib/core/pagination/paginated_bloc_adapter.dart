@@ -1,6 +1,7 @@
-import 'package:flutter_template_2025/core/base/paginated_cubit.dart';
+import 'package:flutter_template_2025/core/pagination/paginated_cubit.dart';
 import 'package:flutter_template_2025/core/base/export.dart';
 import 'package:flutter_template_2025/core/logger/log.dart';
+import 'package:flutter_template_2025/core/pagination/paginated_controller.dart';
 
 /// Adapter helper to bridge a `Bloc` that exposes `PaginatedState<T>` to
 /// imperative methods used by UI widgets (loadInitial/loadMore/refresh/retry).
@@ -9,7 +10,7 @@ import 'package:flutter_template_2025/core/logger/log.dart';
 /// `add(...)` the appropriate events for the target `Bloc`. This keeps the
 /// adapter generic and library-agnostic while reducing boilerplate at call
 /// sites.
-class PaginatedBlocAdapter<T> {
+class PaginatedBlocAdapter<T> implements PaginatedController<T> {
   final BlocBase<PaginatedState<T>> bloc;
   final void Function() _addLoadInitial;
   final void Function() _addLoadMore;
@@ -29,6 +30,7 @@ class PaginatedBlocAdapter<T> {
 
   /// Dispatches the provided load-initial event and waits until the
   /// bloc's `status` changes from the previous value.
+  @override
   Future<void> loadInitial() {
     Log.debug(
       'PaginatedBlocAdapter.loadInitial() called (page=${bloc.state.page})',
@@ -42,6 +44,7 @@ class PaginatedBlocAdapter<T> {
 
   /// Dispatches the provided load-more event and waits until the bloc's
   /// `page` advances or a load-more error is set on the state.
+  @override
   Future<void> loadMore() {
     Log.debug(
       'PaginatedBlocAdapter.loadMore() called (page=${bloc.state.page})',
@@ -55,6 +58,7 @@ class PaginatedBlocAdapter<T> {
 
   /// Dispatches the provided refresh event and waits until `isRefreshing`
   /// becomes false again.
+  @override
   Future<void> refresh() {
     Log.debug(
       'PaginatedBlocAdapter.refresh() called (page=${bloc.state.page})',
@@ -66,6 +70,7 @@ class PaginatedBlocAdapter<T> {
   }
 
   /// Fire-and-forget retry helper.
+  @override
   void retry() {
     Log.debug('PaginatedBlocAdapter.retry() called');
     _addRetry?.call();

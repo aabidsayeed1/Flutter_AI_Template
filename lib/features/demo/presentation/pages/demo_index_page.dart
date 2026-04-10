@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_template_2025/core/logger/log.dart';
 import 'package:flutter_template_2025/core/base/export.dart';
-import 'package:flutter_template_2025/core/widgets/paginated_list_view.dart';
-import 'package:flutter_template_2025/core/base/paginated_cubit.dart';
-import 'package:flutter_template_2025/core/base/paginated_bloc_adapter.dart';
+import 'package:flutter_template_2025/core/pagination/index.dart';
 
 // (shared cubit is stored as a static field on the page state)
 
@@ -47,12 +45,12 @@ class _DemoPaginatedPageState extends State<DemoPaginatedPage> {
 
   PaginatedCubit<String> get _cubit => _sharedDemoCubit;
 
-  late final PaginatedBlocAdapter<String> _adapter;
+  late final PaginatedController<String> _controller;
 
   @override
   void initState() {
     super.initState();
-    _adapter = PaginatedBlocAdapter.fromCubit(_sharedDemoCubit);
+    _controller = PaginatedBlocAdapter.fromCubit(_sharedDemoCubit);
   }
 
   @override
@@ -99,7 +97,7 @@ class _DemoPaginatedPageState extends State<DemoPaginatedPage> {
         Expanded(
           child: PaginatedListView<String>(
             bloc: _cubit,
-            adapter: _adapter,
+            controller: _controller,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             separatorBuilder: (ctx, idx) => const SizedBox(height: 12),
             itemBuilder: (ctx, item, index) => Card(
@@ -393,12 +391,12 @@ class _DemoPaginatedBlocPageState extends State<DemoPaginatedBlocPage> {
 
   _DemoStringPaginatedBloc get _bloc => _sharedDemoBloc;
 
-  late final PaginatedBlocAdapter<String> _adapter;
+  late final PaginatedController<String> _controller;
 
   @override
   void initState() {
     super.initState();
-    _adapter = PaginatedBlocAdapter<String>(
+    _controller = PaginatedBlocAdapter<String>(
       bloc: _bloc,
       addLoadInitial: () => _bloc.add(_LoadInitialEvent()),
       addLoadMore: () => _bloc.add(_LoadMoreEvent()),
@@ -454,7 +452,7 @@ class _DemoPaginatedBlocPageState extends State<DemoPaginatedBlocPage> {
         Expanded(
           child: PaginatedListView<String>(
             bloc: _bloc,
-            adapter: _adapter,
+            controller: _controller,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             separatorBuilder: (ctx, idx) => const SizedBox(height: 12),
             itemBuilder: (ctx, item, index) => Card(
