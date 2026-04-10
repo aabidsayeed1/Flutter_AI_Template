@@ -13,4 +13,5 @@ class Routes {
   static const String home = '/home';
   static const String profile = '/profile';
   static const String profile1 = '/profile1';
+  static const String demo = '/demo';
 }

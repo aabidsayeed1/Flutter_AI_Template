@@ -13,6 +13,7 @@ import '../../features/authentication/presentation/registration/pages/registrati
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/demo/presentation/pages/demo_index_page.dart';
 import '../../core/widgets/splash/splash_page.dart';
 import '../../core/widgets/app_startup/app_startup_widget.dart';
 import '../../core/widgets/navigation_shell.dart' show NavigationShell;
@@ -119,6 +120,12 @@ abstract class RouterModule {
         ),
         ..._onboardingRoutes(),
         ..._authenticationRoutes(),
+        GoRoute(
+          path: Routes.demo,
+          name: Routes.demo,
+          pageBuilder: (context, state) =>
+              const MaterialPage(child: DemoIndexPage()),
+        ),
         _shellRoutes(),
       ],
     );

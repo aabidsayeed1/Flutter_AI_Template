@@ -3,6 +3,7 @@ import 'package:flutter_template_2025/core/base/export.dart';
 import 'package:flutter_template_2025/core/user/user_cubit.dart';
 import 'package:flutter_template_2025/features/authentication/presentation/cubit/auth_cubit.dart';
 import 'package:gap/gap.dart';
+import '../../../../core/index.dart';
 import 'instagram_profile_page.dart';
 import 'package:flutter_template_2025/core/widgets/app_image.dart';
 
@@ -51,6 +52,11 @@ class ProfilePage extends StatelessWidget {
                       );
                     },
                     child: Text('Instagram Profile Page'),
+                  ),
+                  Gap(8),
+                  FilledButton(
+                    onPressed: () => context.push(Routes.demo),
+                    child: const Text('Open Demos'),
                   ),
                 ],
               );
