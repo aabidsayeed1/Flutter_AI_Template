@@ -1,3 +1,4 @@
+
 # Flutter BLoC Clean Architecture Template (2025)
 
 A production-ready Flutter template with **BLoC/Cubit** state management, **Clean Architecture**, **get_it + injectable** dependency injection, **GoRouter** navigation, **Retrofit + Dio** networking, multi-flavor support, and a complete theme system with light/dark mode.
@@ -11,6 +12,8 @@ A production-ready Flutter template with **BLoC/Cubit** state management, **Clea
 - [Folder Structure](#folder-structure)
 - [App Startup Flow](#app-startup-flow)
 - [Router & Navigation](#router--navigation)
+- [Universal Image Widget](#universal-image-widget)
+- [Pagination](#pagination)
 - [State Management](#state-management)
 - [Dependency Injection](#dependency-injection)
 - [Networking (Dio + Retrofit)](#networking-dio--retrofit)
@@ -53,6 +56,7 @@ dart run build_runner watch --delete-conflicting-outputs
 ┌─────────────────────────────────────────────────────────┐
 │                    Presentation Layer                     │
 │  Pages → Widgets → Cubit/Bloc → State (freezed + enum)  │
+## Dependency Injection
 ├─────────────────────────────────────────────────────────┤
 │                      Domain Layer                        │
 │         Use Cases → Repository (abstract) → Entities     │
@@ -165,6 +169,12 @@ lib/
 │   │   ├── formatters.dart            # Formatters.formatDate, formatCurrency, etc.
 │   │   ├── helpers.dart               # Helpers.executeWithRetry, debounce, throttle
 │   │   └── enums.dart                 # Shared enums (LoadingStatus, SortOrder, etc.)
+│   │
+│   ├── pagination/
+│   │   ├── paginated_cubit.dart       # PaginatedCubit, PaginatedState, PaginatedResult
+│   │   ├── paginated_list_view.dart   # Generic paginated list UI widget
+│   │   ├── paginated_bloc_adapter.dart# Adapter: Bloc -> PaginatedController
+│   │   └── paginated_controller.dart  # Interface for controller API
 │   │
 │   ├── widgets/
 │   │   ├── app_startup/
@@ -304,7 +314,7 @@ GoRouter initialLocation: "/" → AppStartupWidget
 /home                      → HomePage (Shell tab 1)
   /home/profile            → ProfilePage (nested under home)
   /profile                   → ProfilePage (Shell tab 2)
-
+```
 ---
 
 ## Universal Image Widget
@@ -339,7 +349,63 @@ AppImage(
 - For comprehensive usage and test cases, see `profile_page.dart`.
 
 ---
+
+## Pagination
+
+### Pagination (core/pagination/)
+
+`Pagination` is a reusable subsystem for feature lists that need incremental loading, refreshing, and load-more retry UX. It provides a consistent, production-ready surface for both Cubit and Bloc flows.
+
+Key components:
+
+- **Core primitives:** `PaginatedCubit<T>`, `PaginatedState<T>`, and `PaginatedResult<T>` implement the paging logic and failure handling.
+- **Imperative controller:** `PaginatedController<T>` exposes `loadInitial()`, `loadMore()`, `refresh()`, and `retry()` so UI widgets can drive pagination imperatively.
+- **Adapter:** `PaginatedBlocAdapter<T>` bridges Blocs/Cubits to the `PaginatedController` interface and includes `PaginatedBlocAdapter.fromCubit(...)` for convenience.
+- **UI widget:** `PaginatedListView<T>` — a ready-made list widget with skeleton placeholders, pull-to-refresh (prepend), safe-area-aware footer, loading-more indicator, and footer retry UX.
+
+### Usage Example
+
+```dart
+import 'package:flutter_template_2025/core/pagination/index.dart';
+import 'package:flutter_template_2025/core/base/export.dart';
+
+class ItemsPage extends StatefulWidget {
+  const ItemsPage({super.key});
+  @override
+  State<ItemsPage> createState() => _ItemsPageState();
+}
+
+class _ItemsPageState extends State<ItemsPage> {
+  late final PaginatedController<Item> _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    final cubit = getIt<ItemsPaginatedCubit>();
+    _controller = PaginatedBlocAdapter.fromCubit(cubit);
+    _controller.loadInitial();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PaginatedListView<Item>(
+      bloc: getIt<ItemsPaginatedCubit>(),
+      controller: _controller,
+      itemBuilder: (ctx, item, idx) => ItemTile(item: item),
+      separatorBuilder: (ctx, idx) => const Divider(),
+    );
+  }
+}
 ```
+
+### Best Practices
+
+- **Prefer `PaginatedController`**: pass a `controller` to `PaginatedListView` instead of wiring many callbacks — it reduces boilerplate and unifies Cubit/Bloc usage.
+- **Use `PaginatedBlocAdapter.fromCubit`** to adapt your `PaginatedCubit` (or Bloc) quickly.
+- **Keep UI stateless**: let the Cubit/Bloc own paging state and emit `PaginatedState<T>`; `PaginatedListView` renders consistently.
+- **Test failure states**: simulate load-more errors in demos/tests to verify footer retry behavior.
+
+See `lib/core/pagination/` for the implementation and `lib/features/demo/presentation/pages/demo_index_page.dart` for examples.
 
 ### Adding a New Route
 

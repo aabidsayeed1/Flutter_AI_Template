@@ -241,6 +241,12 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - Localization keys: `noInternetConnection`, `noInternetMessage`, `connectionRestored`, `offlineMode`, `retryConnection`, `internetRequiredForFeature`, `goBack`.
 - **Adding a route mode**: add to `_routeModes` (exact) or `_routeModePrefixes` (prefix) in `ConnectivityService`. Use full paths.
 
+## Pagination
+
+- **Location:** `lib/core/pagination/` contains `paginated_cubit.dart`, `paginated_list_view.dart`, `paginated_bloc_adapter.dart`, and `paginated_controller.dart`.
+- **Controller API:** Prefer the `PaginatedController<T>` surface in UI widgets (`controller:`). Use `PaginatedBlocAdapter.fromCubit(cubit)` to adapt a `PaginatedCubit`, or construct `PaginatedBlocAdapter` for Bloc-based flows.
+- **Barrel import:** `import 'package:flutter_template_2025/core/pagination/index.dart';`
+
 ## What NOT To Do
 
 - Don't create DataSource classes — repositories call services directly.
