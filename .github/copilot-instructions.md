@@ -246,7 +246,39 @@ These are the rules and conventions for this Flutter project. Follow them strict
 - **Location:** `lib/core/pagination/` contains `paginated_cubit.dart`, `paginated_list_view.dart`, `paginated_bloc_adapter.dart`, and `paginated_controller.dart`.
 - **Controller API:** Prefer the `PaginatedController<T>` surface in UI widgets (`controller:`). Use `PaginatedBlocAdapter.fromCubit(cubit)` to adapt a `PaginatedCubit`, or construct `PaginatedBlocAdapter` for Bloc-based flows.
 - **Barrel import:** `import 'package:flutter_template_2025/core/pagination/index.dart';`
+## Permission Handler
 
+- **Service:** Use the `PermissionService` singleton (DI) for all permission logic. Never call permission_handler directly in your feature logic.
+- **UI:** Always use the reusable `showPermissionRequestBottomSheet` for requesting permissions. This ensures rationale, denied, and permanently denied flows are handled consistently and localized.
+- **How to request a permission in your feature:**
+  1. Import:
+     ```dart
+     import 'package:permission_handler/permission_handler.dart' as ph;
+     import 'package:flutter_template_2025/core/widgets/permission/permission_request_bottom_sheet.dart';
+     ```
+  2. Call in your widget:
+     ```dart
+     await showPermissionRequestBottomSheet(
+       context: context,
+       permission: ph.Permission.camera, // or .photos, .location, etc.
+       rationaleTitle: context.locale.permissionRationaleTitle,
+       rationaleMessage: context.locale.permissionRationaleMessage,
+       deniedMessage: context.locale.permissionDeniedMessage,
+       permanentlyDeniedMessage: context.locale.permissionPermanentlyDeniedMessage,
+       grantButtonText: context.locale.grantPermission,
+       settingsButtonText: context.locale.openSettings,
+       cancelButtonText: context.locale.cancel,
+       onGranted: () => context.showSuccess(title: 'Permission granted!'),
+       onDenied: null, // Only if you want custom logic
+     );
+     ```
+  3. If you add a new permission, update AndroidManifest.xml, Info.plist, and Podfile macros.
+- **Supported permissions:** Camera, Photos, Location, and any permission supported by permission_handler.
+- **Best practices:**
+  - Never request permissions directly in business logic; always use the service and bottom sheet.
+  - Always provide localized rationale and error messages.
+  - Never request permissions not described in Info.plist/AndroidManifest.xml.
+  - See `permission_example_page.dart` for a usage example.
 ## What NOT To Do
 
 - Don't create DataSource classes — repositories call services directly.

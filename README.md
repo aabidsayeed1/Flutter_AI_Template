@@ -5,6 +5,7 @@ A production-ready Flutter template with **BLoC/Cubit** state management, **Clea
 
 ---
 
+
 ## Table of Contents
 
 - [Quick Start](#quick-start)
@@ -14,6 +15,7 @@ A production-ready Flutter template with **BLoC/Cubit** state management, **Clea
 - [Router & Navigation](#router--navigation)
 - [Universal Image Widget](#universal-image-widget)
 - [Pagination](#pagination)
+- [Permission Handler](#permission-handler)
 - [State Management](#state-management)
 - [Dependency Injection](#dependency-injection)
 - [Networking (Dio + Retrofit)](#networking-dio--retrofit)
@@ -406,7 +408,49 @@ class _ItemsPageState extends State<ItemsPage> {
 - **Test failure states**: simulate load-more errors in demos/tests to verify footer retry behavior.
 
 See `lib/core/pagination/` for the implementation and `lib/features/demo/presentation/pages/demo_index_page.dart` for examples.
+## Permission Handler
 
+This template provides a robust, production-ready permission handler system for both Android and iOS, following clean architecture and best practices.
+
+- **Service:** `PermissionService` (DI singleton) abstracts permission logic for testability and platform differences.
+- **UI:** Reusable, localized bottom sheet (`showPermissionRequestBottomSheet`) for requesting permissions with rationale, denied, and permanently denied flows.
+- **Platform config:** All required permissions and usage descriptions are set up in AndroidManifest.xml and Info.plist. iOS Podfile macros are configured for only the permissions you use.
+
+### How to Request a Permission in Your Feature
+
+1. **Import the bottom sheet and permission_handler:**
+  ```dart
+  import 'package:permission_handler/permission_handler.dart' as ph;
+  import 'package:flutter_template_2025/core/widgets/permission/permission_request_bottom_sheet.dart';
+  ```
+2. **Call the bottom sheet from your UI:**
+  ```dart
+  await showPermissionRequestBottomSheet(
+    context: context,
+    permission: ph.Permission.camera, // or .photos, .location, etc.
+    rationaleTitle: context.locale.permissionRationaleTitle,
+    rationaleMessage: context.locale.permissionRationaleMessage,
+    deniedMessage: context.locale.permissionDeniedMessage,
+    permanentlyDeniedMessage: context.locale.permissionPermanentlyDeniedMessage,
+    grantButtonText: context.locale.grantPermission,
+    settingsButtonText: context.locale.openSettings,
+    cancelButtonText: context.locale.cancel,
+    onGranted: () => context.showSuccess(title: 'Permission granted!'),
+    onDenied: null, // Only needed if you want custom logic
+  );
+  ```
+3. **Add any new permission to AndroidManifest.xml, Info.plist, and Podfile macros if needed.**
+
+**See `lib/features/demo/presentation/pages/permission_example_page.dart` for a complete usage example.**
+
+**Supported permissions:** Camera, Photos, Location (foreground/background), and more. The system is ready for any permission supported by the permission_handler package.
+
+**Best practices:**
+- Always use the provided bottom sheet for a consistent UX.
+- Never request permissions you haven’t described in Info.plist/AndroidManifest.xml.
+- Use localized rationale and error messages.
+
+----
 ### Adding a New Route
 
 1. Add the path constant in `lib/core/router/routes.dart`
