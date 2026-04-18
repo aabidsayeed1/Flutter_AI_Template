@@ -3,6 +3,8 @@ import 'package:flutter_template_2025/core/logger/log.dart';
 import 'package:flutter_template_2025/core/base/export.dart';
 import 'package:flutter_template_2025/core/pagination/index.dart';
 
+import 'permission_example_page.dart';
+
 // (shared cubit is stored as a static field on the page state)
 
 /// Demo index page hosting multiple demo pages/components.
@@ -14,6 +16,12 @@ class DemoIndexPage extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const PermissionExamplePage()),
+          ),
+          child: const Icon(Icons.security),
+        ),
         appBar: AppBar(
           title: const Text('Demos'),
           bottom: const TabBar(

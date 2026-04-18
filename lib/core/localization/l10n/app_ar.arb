@@ -129,5 +129,14 @@
   "offlineMode": "أنت غير متصل حالياً",
   "retryConnection": "إعادة المحاولة",
   "goBack": "الرجوع",
-  "internetRequiredForFeature": "يلزم اتصال بالإنترنت لاستخدام هذه الميزة"
+  "internetRequiredForFeature": "يلزم اتصال بالإنترنت لاستخدام هذه الميزة",
+  "permissionRationaleTitle": "مطلوب إذن",
+  "permissionRationaleMessage": "تتطلب هذه الميزة إذنًا للمتابعة. يرجى منح الإذن.",
+  "permissionDeniedTitle": "تم رفض الإذن",
+  "permissionDeniedMessage": "لقد رفضت الإذن. يرجى منحه لاستخدام هذه الميزة.",
+  "permissionPermanentlyDeniedTitle": "تم رفض الإذن بشكل دائم",
+  "permissionPermanentlyDeniedMessage": "لقد رفضت هذا الإذن بشكل دائم. يرجى فتح الإعدادات لمنحه.",
+  "grantPermission": "منح الإذن",
+  "openSettings": "فتح الإعدادات",
+  "cancel": "إلغاء"
 }

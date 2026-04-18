@@ -357,4 +357,35 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get internetRequiredForFeature =>
       'Internet connection is required to use this feature';
+
+  @override
+  String get permissionRationaleTitle => 'Permission Required';
+
+  @override
+  String get permissionRationaleMessage =>
+      'This feature requires permission to continue. Please grant the permission.';
+
+  @override
+  String get permissionDeniedTitle => 'Permission Denied';
+
+  @override
+  String get permissionDeniedMessage =>
+      'You denied the permission. Please grant it to use this feature.';
+
+  @override
+  String get permissionPermanentlyDeniedTitle =>
+      'Permission Permanently Denied';
+
+  @override
+  String get permissionPermanentlyDeniedMessage =>
+      'You have permanently denied this permission. Please open settings to grant it.';
+
+  @override
+  String get grantPermission => 'Grant Permission';
+
+  @override
+  String get openSettings => 'Open Settings';
+
+  @override
+  String get cancel => 'Cancel';
 }

@@ -352,4 +352,34 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get internetRequiredForFeature =>
       'يلزم اتصال بالإنترنت لاستخدام هذه الميزة';
+
+  @override
+  String get permissionRationaleTitle => 'مطلوب إذن';
+
+  @override
+  String get permissionRationaleMessage =>
+      'تتطلب هذه الميزة إذنًا للمتابعة. يرجى منح الإذن.';
+
+  @override
+  String get permissionDeniedTitle => 'تم رفض الإذن';
+
+  @override
+  String get permissionDeniedMessage =>
+      'لقد رفضت الإذن. يرجى منحه لاستخدام هذه الميزة.';
+
+  @override
+  String get permissionPermanentlyDeniedTitle => 'تم رفض الإذن بشكل دائم';
+
+  @override
+  String get permissionPermanentlyDeniedMessage =>
+      'لقد رفضت هذا الإذن بشكل دائم. يرجى فتح الإعدادات لمنحه.';
+
+  @override
+  String get grantPermission => 'منح الإذن';
+
+  @override
+  String get openSettings => 'فتح الإعدادات';
+
+  @override
+  String get cancel => 'إلغاء';
 }

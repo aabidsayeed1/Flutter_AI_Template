@@ -721,6 +721,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Internet connection is required to use this feature'**
   String get internetRequiredForFeature;
+
+  /// No description provided for @permissionRationaleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Required'**
+  String get permissionRationaleTitle;
+
+  /// No description provided for @permissionRationaleMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature requires permission to continue. Please grant the permission.'**
+  String get permissionRationaleMessage;
+
+  /// No description provided for @permissionDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Denied'**
+  String get permissionDeniedTitle;
+
+  /// No description provided for @permissionDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You denied the permission. Please grant it to use this feature.'**
+  String get permissionDeniedMessage;
+
+  /// No description provided for @permissionPermanentlyDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Permanently Denied'**
+  String get permissionPermanentlyDeniedTitle;
+
+  /// No description provided for @permissionPermanentlyDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You have permanently denied this permission. Please open settings to grant it.'**
+  String get permissionPermanentlyDeniedMessage;
+
+  /// No description provided for @grantPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Grant Permission'**
+  String get grantPermission;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get openSettings;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

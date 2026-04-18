@@ -25,6 +25,8 @@ import 'package:flutter_template_2025/core/services/connectivity_service.dart'
     as _i140;
 import 'package:flutter_template_2025/core/services/navigation_service.dart'
     as _i725;
+import 'package:flutter_template_2025/core/services/permission_service.dart'
+    as _i894;
 import 'package:flutter_template_2025/core/theme/theme_cubit.dart' as _i507;
 import 'package:flutter_template_2025/core/user/user_cubit.dart' as _i267;
 import 'package:flutter_template_2025/features/authentication/data/repositories/auth_repository_api_impl.dart'
@@ -93,6 +95,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i725.NavigationService>(() => _i725.NavigationService());
     gh.lazySingleton<_i507.ThemeCubit>(() => _i507.ThemeCubit());
+    gh.lazySingleton<_i894.PermissionService>(
+      () => _i894.PermissionServiceImpl(),
+    );
     gh.lazySingleton<_i37.CacheService>(
       () => registerModule.cacheService(
         gh<_i460.SharedPreferences>(),
@@ -156,15 +161,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i681.RememberMeUseCase>(),
       ),
     );
+    gh.lazySingleton<_i117.ProfileCubit>(
+      () => _i117.ProfileCubit(gh<_i530.GetProfileUseCase>()),
+    );
     gh.singleton<_i583.GoRouter>(
       () => routerModule.provideRouter(
         gh<_i1052.AuthCubit>(),
         gh<_i37.CacheService>(),
         gh<_i173.AppRouteObserver>(),
       ),
-    );
-    gh.lazySingleton<_i117.ProfileCubit>(
-      () => _i117.ProfileCubit(gh<_i530.GetProfileUseCase>()),
     );
     gh.factory<_i968.GetHomeItemsUseCase>(
       () => _i968.GetHomeItemsUseCase(gh<_i61.HomeRepository>()),

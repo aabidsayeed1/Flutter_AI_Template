@@ -129,5 +129,14 @@
   "offlineMode": "You are currently offline",
   "retryConnection": "Retry",
   "goBack": "Go Back",
-  "internetRequiredForFeature": "Internet connection is required to use this feature"
+  "internetRequiredForFeature": "Internet connection is required to use this feature",
+  "permissionRationaleTitle": "Permission Required",
+  "permissionRationaleMessage": "This feature requires permission to continue. Please grant the permission.",
+  "permissionDeniedTitle": "Permission Denied",
+  "permissionDeniedMessage": "You denied the permission. Please grant it to use this feature.",
+  "permissionPermanentlyDeniedTitle": "Permission Permanently Denied",
+  "permissionPermanentlyDeniedMessage": "You have permanently denied this permission. Please open settings to grant it.",
+  "grantPermission": "Grant Permission",
+  "openSettings": "Open Settings",
+  "cancel": "Cancel"
 }
