@@ -2,6 +2,8 @@ import 'package:flutter/services.dart';
 
 import '../logger/log.dart';
 import '../services/security/app_security_service.dart';
+import '../services/update/app_update_service.dart';
+import '../services/app_info_service.dart';
 
 /// Centralizes all app-level initialization.
 ///
@@ -28,6 +30,9 @@ class AppInitializer {
   static Future<void> initialize() async {
     await _initOrientations();
     await _safeInit('Security (freeRASP)', _initSecurity);
+    await _safeInit('App Update', _initAppUpdate);
+    await _safeInit('App Info', _initAppInfo);
+
     // Future initializations go here:
     // await _safeInit('Firebase', _initFirebase);
     // await _safeInit('Analytics', _initAnalytics);
@@ -65,5 +70,15 @@ class AppInitializer {
   /// Initialize freeRASP app security monitoring.
   static Future<void> _initSecurity() async {
     await AppSecurityService.instance.initialize();
+  }
+
+  /// Initialize app update/maintenance logic.
+  static Future<void> _initAppUpdate() async {
+    await AppUpdateService.instance.initialize();
+  }
+
+  /// Initialize app/package info singleton.
+  static Future<void> _initAppInfo() async {
+    await AppInfoService.instance.initialize();
   }
 }

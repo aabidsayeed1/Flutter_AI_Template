@@ -20,6 +20,9 @@ import '../../core/widgets/navigation_shell.dart' show NavigationShell;
 import '../services/cache/cache_service.dart';
 import '../services/app_route_observer.dart';
 import '../services/security/screen_protection_service.dart';
+import '../services/update/app_update_service.dart';
+import '../services/app_info_service.dart';
+import '../services/update/app_update_ui_service.dart';
 import 'routes.dart';
 
 part 'parts/authentication_routes.dart';
@@ -61,6 +64,25 @@ abstract class RouterModule {
       refreshListenable: GoRouterRefreshStream(authCubit.stream.distinct()),
       debugLogDiagnostics: true,
       initialLocation: Routes.initial,
+      onEnter: (context, current, next, router) async {
+        // 🚫 App update/maintenance/feature block guard
+        final currentVersion = AppInfoService.instance.version;
+        final route = next.uri.path;
+        if (rootNavigatorKey.currentState?.context != null) {
+          AppUpdateUIService.showIfNeeded(
+            rootNavigatorKey.currentState!.context,
+            route,
+          );
+        }
+        if (AppUpdateService.instance.shouldBlockNavigation(
+          route,
+          currentVersion,
+        )) {
+          // Block navigation
+          return const Block.stop();
+        }
+        return const Allow();
+      },
       redirect: (context, state) {
         final auth = authCubit.state;
         final goingTo = state.uri.path;
@@ -107,7 +129,6 @@ abstract class RouterModule {
                 goingTo == Routes.splash)) {
           return Routes.home;
         }
-
         return null;
       },
       routes: [

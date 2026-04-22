@@ -382,4 +382,44 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cancel => 'إلغاء';
+
+  @override
+  String get forceUpdateTitle => 'تحديث مطلوب';
+
+  @override
+  String get forceUpdateMessage =>
+      'يتوفر إصدار جديد من التطبيق. يرجى التحديث للمتابعة.';
+
+  @override
+  String get updateNow => 'تحديث الآن';
+
+  @override
+  String get maintenanceTitle => 'صيانة';
+
+  @override
+  String get maintenanceMessage => 'هذه الميزة غير متوفرة مؤقتًا بسبب الصيانة.';
+
+  @override
+  String get featureBlockedTitle => 'الميزة محجوبة';
+
+  @override
+  String get featureBlockedMessage =>
+      'لاستخدام هذه الميزة، يرجى تحديث التطبيق إلى آخر إصدار.';
+
+  @override
+  String get homeUpdateTitle => 'تحديث متوفر';
+
+  @override
+  String get homeUpdateMessage =>
+      'يتوفر تحديث جديد. للحصول على أفضل تجربة، يرجى تحديث التطبيق.';
+
+  @override
+  String get close => 'إغلاق';
+
+  @override
+  String get redirectFailedTitle => 'فشل إعادة التوجيه';
+
+  @override
+  String get redirectFailedMessage =>
+      'تعذر فتح متجر التطبيقات. يرجى المحاولة مرة أخرى لاحقًا أو التحديث يدويًا.';
 }

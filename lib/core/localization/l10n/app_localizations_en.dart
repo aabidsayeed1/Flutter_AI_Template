@@ -388,4 +388,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get forceUpdateTitle => 'Update Required';
+
+  @override
+  String get forceUpdateMessage =>
+      'A new version of the app is available. Please update to continue.';
+
+  @override
+  String get updateNow => 'Update Now';
+
+  @override
+  String get maintenanceTitle => 'Maintenance Mode';
+
+  @override
+  String get maintenanceMessage =>
+      'The app is currently under maintenance. Please try again later.';
+
+  @override
+  String get featureBlockedTitle => 'Feature Blocked';
+
+  @override
+  String get featureBlockedMessage =>
+      'To use this feature, please update the app to the latest version.';
+
+  @override
+  String get homeUpdateTitle => 'Update Available';
+
+  @override
+  String get homeUpdateMessage =>
+      'A new update is available. For the best experience, please update the app.';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get redirectFailedTitle => 'Redirect Failed';
+
+  @override
+  String get redirectFailedMessage =>
+      'Could not open the app store. Please try again later or update manually.';
 }

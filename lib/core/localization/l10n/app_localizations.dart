@@ -775,6 +775,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @forceUpdateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Required'**
+  String get forceUpdateTitle;
+
+  /// No description provided for @forceUpdateMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version of the app is available. Please update to continue.'**
+  String get forceUpdateMessage;
+
+  /// No description provided for @updateNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Now'**
+  String get updateNow;
+
+  /// No description provided for @maintenanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance Mode'**
+  String get maintenanceTitle;
+
+  /// No description provided for @maintenanceMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The app is currently under maintenance. Please try again later.'**
+  String get maintenanceMessage;
+
+  /// No description provided for @featureBlockedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature Blocked'**
+  String get featureBlockedTitle;
+
+  /// No description provided for @featureBlockedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'To use this feature, please update the app to the latest version.'**
+  String get featureBlockedMessage;
+
+  /// No description provided for @homeUpdateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Available'**
+  String get homeUpdateTitle;
+
+  /// No description provided for @homeUpdateMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A new update is available. For the best experience, please update the app.'**
+  String get homeUpdateMessage;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @redirectFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Redirect Failed'**
+  String get redirectFailedTitle;
+
+  /// No description provided for @redirectFailedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the app store. Please try again later or update manually.'**
+  String get redirectFailedMessage;
 }
 
 class _AppLocalizationsDelegate

@@ -15,7 +15,8 @@ enum CacheKey {
   isOnBoardingCompleted,
   isLoggedIn,
   rememberMe,
-  language;
+  language,
+  homeUpdateDismissedVersion;
 
   const CacheKey({this.sensitive = false});
 

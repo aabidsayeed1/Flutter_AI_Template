@@ -138,5 +138,17 @@
   "permissionPermanentlyDeniedMessage": "لقد رفضت هذا الإذن بشكل دائم. يرجى فتح الإعدادات لمنحه.",
   "grantPermission": "منح الإذن",
   "openSettings": "فتح الإعدادات",
-  "cancel": "إلغاء"
+  "cancel": "إلغاء",
+  "forceUpdateTitle": "تحديث مطلوب",
+  "forceUpdateMessage": "يتوفر إصدار جديد من التطبيق. يرجى التحديث للمتابعة.",
+  "updateNow": "تحديث الآن",
+  "maintenanceTitle": "صيانة",
+  "maintenanceMessage": "هذه الميزة غير متوفرة مؤقتًا بسبب الصيانة.",
+  "featureBlockedTitle": "الميزة محجوبة",
+  "featureBlockedMessage": "لاستخدام هذه الميزة، يرجى تحديث التطبيق إلى آخر إصدار.",
+  "homeUpdateTitle": "تحديث متوفر",
+  "homeUpdateMessage": "يتوفر تحديث جديد. للحصول على أفضل تجربة، يرجى تحديث التطبيق.",
+  "close": "إغلاق",
+  "redirectFailedTitle": "فشل إعادة التوجيه",
+  "redirectFailedMessage": "تعذر فتح متجر التطبيقات. يرجى المحاولة مرة أخرى لاحقًا أو التحديث يدويًا."
 }
