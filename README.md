@@ -27,6 +27,8 @@ A production-ready Flutter template with **BLoC/Cubit** state management, **Clea
 - [Screen Capture Protection](#screen-capture-protection)
 - [Route Observation (AppRouteObserver)](#route-observation-approuteobserver)
 - [Network Connectivity](#network-connectivity)
+- [Update Services](#update-services)
+- [AppInfoService](#appinfoservice)
 - [Creating a New Feature](#creating-a-new-feature)
 - [Code Generation](#code-generation)
 - [Flavors](#flavors)
@@ -1174,6 +1176,98 @@ await cubit.checkNow();
 | `goBack` | Go Back | الرجوع |
 
 ---
+## Update Services
+
+The template provides a robust, centralized system for handling **force update**, **maintenance mode**, and **feature-blocked** flows, with route-based blocking and modular, localized UI overlays.
+
+### Core Components
+
+- **AppUpdateService**: Singleton that manages update/maintenance/feature-blocked logic, version targeting, and state.
+- **AppUpdateUIService**: Singleton that centralizes all update/maintenance/feature-blocked UI overlays and bottom sheets. Handles persistent dismissal logic for the home update prompt.
+- **Bottom Sheets**:
+  - `HomeUpdateBottomSheet`: Shown for optional updates on the home page. Dismissible; will not reappear for the same version once dismissed.
+  - `ForceUpdateBottomSheet`: Shown for mandatory (force) updates. Non-dismissible; user must update to proceed.
+  - `MaintenanceBottomSheet`: Shown when the app is in maintenance mode. Non-dismissible; user cannot proceed until maintenance ends.
+  - `FeatureBlockedBottomSheet`: Shown when a specific feature/route is blocked (e.g., by remote config or version targeting).
+
+### How It Works
+
+1. **Route Guarding**: GoRouter's `onEnter` checks with `AppUpdateUIService` before allowing navigation. Blocked routes are prevented at the router level.
+2. **Overlay Display**: The correct bottom sheet is shown based on the current app state (update required, maintenance, feature blocked, etc.).
+3. **Persistent Dismissal**: The home update prompt (optional update) is only shown once per version. If dismissed, it will not reappear until the app version changes.
+4. **Localization**: All overlay UI is fully localized via ARB files. Never hardcode strings.
+
+### Usage
+
+- **Force Update**: Configure remote config or backend to require a minimum app version. The `ForceUpdateBottomSheet` will block the user until they update.
+- **Maintenance Mode**: Enable maintenance mode remotely. The `MaintenanceBottomSheet` will block all navigation until maintenance ends.
+- **Feature Blocked**: Block specific features/routes by version, user, or remote config. The `FeatureBlockedBottomSheet` will be shown and navigation will be prevented.
+- **Home Update Prompt**: For optional updates, the `HomeUpdateBottomSheet` is shown on the home page. If dismissed, it will not reappear for the same version.
+
+**All logic is centralized in `AppUpdateUIService` and is fully testable and modular.**
+
+#### Example: Forcing an Update
+
+1. Set the minimum required version in your remote config or backend.
+2. On app startup or navigation, `AppUpdateService` checks the current version against the minimum.
+3. If the app is outdated, `AppUpdateUIService` shows the `ForceUpdateBottomSheet` and blocks navigation.
+
+#### Example: Maintenance Mode
+
+1. Enable maintenance mode remotely.
+2. `AppUpdateService` detects maintenance mode and triggers the `MaintenanceBottomSheet` overlay.
+3. All navigation is blocked until maintenance ends.
+
+#### Example: Feature Blocked
+
+1. Block a specific route/feature via remote config.
+2. `AppUpdateService` detects the block and triggers the `FeatureBlockedBottomSheet` overlay for that route.
+3. Navigation to the blocked route is prevented.
+
+#### Example: Home Update Prompt (Optional Update)
+
+1. If an optional update is available, `HomeUpdateBottomSheet` is shown on the home page.
+2. If the user dismisses the prompt, the dismissed version is saved in `CacheService` and the prompt will not reappear for that version.
+3. When the app version changes, the prompt may be shown again for the new version.
+
+**See:**
+- `lib/core/services/update/app_update_service.dart`
+- `lib/core/services/update/app_update_ui_service.dart`
+- `lib/core/widgets/update/home_update_bottom_sheet.dart`
+- `lib/core/widgets/update/force_update_bottom_sheet.dart`
+- `lib/core/widgets/update/maintenance_bottom_sheet.dart`
+- `lib/core/widgets/update/feature_blocked_bottom_sheet.dart`
+
+---
+
+## AppInfoService
+
+`AppInfoService` is a singleton utility for accessing app version and package info at runtime. It wraps the `package_info_plus` package and is initialized at app startup.
+
+### Usage
+
+1. **Initialization:**
+  Call `await AppInfoService.instance.initialize();` once at app startup (before using getters).
+
+2. **Accessing Info:**
+  - `AppInfoService.instance.version` — App version (e.g., "1.2.3")
+  - `AppInfoService.instance.buildNumber` — Build number (e.g., "42")
+  - `AppInfoService.instance.androidAppId` — Android package name
+  - `AppInfoService.instance.iOSAppId` — iOS bundle identifier
+  - `AppInfoService.instance.packageInfo` — Full `PackageInfo` object
+
+### Example
+
+```dart
+// In main.dart or app initializer
+await AppInfoService.instance.initialize();
+
+// Anywhere in the app
+final version = AppInfoService.instance.version;
+final build = AppInfoService.instance.buildNumber;
+```
+
+**See:** `lib/core/services/app_info_service.dart`
 
 ## Creating a New Feature
 
