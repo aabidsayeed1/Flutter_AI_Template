@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:toastification/toastification.dart';
-
 import 'core/base/export.dart';
 import 'core/config/app_initializer.dart';
 import 'core/config/flavor.dart';
 import 'core/connectivity/connectivity_cubit.dart';
+import 'core/services/update/app_update_ui_service.dart';
 import 'core/theme/theme_cubit.dart';
 import 'core/widgets/connectivity/connectivity_wrapper.dart';
 
@@ -73,11 +73,11 @@ class MyApp extends StatelessWidget {
                       supportedLocales: AppLocalizations.supportedLocales,
                       routerConfig: getIt<GoRouter>(),
                       builder: (context, child) {
+                        // Check for force update on app start
+                        AppUpdateUIService.checkForceUpdate();
                         Widget result = child ?? const SizedBox();
-
                         // Global connectivity: route-aware mode resolution
                         result = ConnectivityWrapper(child: result);
-
                         // Show flavor banner in debug mode
                         if (kDebugMode) {
                           result = Banner(
@@ -94,6 +94,7 @@ class MyApp extends StatelessWidget {
                             child: result,
                           );
                         }
+
                         return result;
                       },
                     );

@@ -3,14 +3,26 @@ import 'package:flutter_template_2025/core/services/app_info_service.dart';
 import 'package:flutter_template_2025/core/services/update/app_update_service.dart';
 import 'package:flutter_template_2025/core/widgets/update/feature_blocked_bottom_sheet.dart';
 import 'package:flutter_template_2025/core/widgets/update/home_update_bottom_sheet.dart';
-
-import '../../di/injectable.dart';
+import '../../index.dart';
 import '../../widgets/update/force_update_bottom_sheet.dart';
 import '../../widgets/update/maintenance_bottom_sheet.dart';
 import '../cache/cache_service.dart';
 
 class AppUpdateUIService {
   static bool _bottomSheetOpen = false;
+  static void checkForceUpdate() {
+    final currentVersion = AppInfoService.instance.version;
+    final updateService = AppUpdateService.instance;
+
+    if (updateService.isAnyForceUpdate(currentVersion)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final context = NavigationService().currentContext;
+        if (context != null) {
+          _showForceUpdateSheet(context);
+        }
+      });
+    }
+  }
 
   static void showIfNeeded(BuildContext context, String route) {
     final currentVersion = AppInfoService.instance.version;
