@@ -17,6 +17,8 @@ import 'package:flutter_template_2025/core/di/register_modules.dart' as _i549;
 import 'package:flutter_template_2025/core/localization/locale_cubit.dart'
     as _i450;
 import 'package:flutter_template_2025/core/router/router.dart' as _i454;
+import 'package:flutter_template_2025/core/services/app_lifecycle_service.dart'
+    as _i321;
 import 'package:flutter_template_2025/core/services/app_route_observer.dart'
     as _i173;
 import 'package:flutter_template_2025/core/services/cache/cache_service.dart'
@@ -88,6 +90,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => registerModule.secureStorage,
+    );
+    gh.lazySingleton<_i321.AppLifecycleService>(
+      () => _i321.AppLifecycleService(),
+      dispose: (i) => i.dispose(),
     );
     gh.lazySingleton<_i140.ConnectivityService>(
       () => _i140.ConnectivityService(),
@@ -164,18 +170,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i117.ProfileCubit>(
       () => _i117.ProfileCubit(gh<_i530.GetProfileUseCase>()),
     );
+    gh.factory<_i968.GetHomeItemsUseCase>(
+      () => _i968.GetHomeItemsUseCase(gh<_i61.HomeRepository>()),
+    );
+    gh.factory<_i731.HomeBloc>(
+      () => _i731.HomeBloc(gh<_i968.GetHomeItemsUseCase>()),
+    );
     gh.singleton<_i583.GoRouter>(
       () => routerModule.provideRouter(
         gh<_i1052.AuthCubit>(),
         gh<_i37.CacheService>(),
         gh<_i173.AppRouteObserver>(),
       ),
-    );
-    gh.factory<_i968.GetHomeItemsUseCase>(
-      () => _i968.GetHomeItemsUseCase(gh<_i61.HomeRepository>()),
-    );
-    gh.factory<_i731.HomeBloc>(
-      () => _i731.HomeBloc(gh<_i968.GetHomeItemsUseCase>()),
     );
     return this;
   }

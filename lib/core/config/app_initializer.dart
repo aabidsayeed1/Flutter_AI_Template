@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 
+import '../di/injectable.dart';
 import '../logger/log.dart';
+import '../services/app_lifecycle_service.dart';
 import '../services/security/app_security_service.dart';
 import '../services/update/app_update_service.dart';
 import '../services/app_info_service.dart';
@@ -29,6 +31,7 @@ class AppInitializer {
   /// registrations are available for services that need them.
   static Future<void> initialize() async {
     await _initOrientations();
+    await _safeInit('Lifecycle Observer', _initLifecycleObserver);
     await _safeInit('Security (freeRASP)', _initSecurity);
     await _safeInit('App Update', _initAppUpdate);
     await _safeInit('App Info', _initAppInfo);
@@ -70,6 +73,11 @@ class AppInitializer {
   /// Initialize freeRASP app security monitoring.
   static Future<void> _initSecurity() async {
     await AppSecurityService.instance.initialize();
+  }
+
+  /// Initialize global app lifecycle observer service.
+  static Future<void> _initLifecycleObserver() async {
+    getIt<AppLifecycleService>().initialize();
   }
 
   /// Initialize app update/maintenance logic.
