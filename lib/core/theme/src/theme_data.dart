@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../extensions/extensions.dart';
+import '../theme_tokens_extension.dart';
 
 part 'part/app_bar_theme.dart';
 part 'part/bottom_navigation_bar_theme_data.dart';
@@ -13,7 +14,11 @@ class $LightThemeData with ThemeExtensions {
   ThemeData call() {
     return ThemeData(
       brightness: Brightness.light,
-      extensions: <ThemeExtension<dynamic>>[lightColor, lightTextStyle],
+      extensions: <ThemeExtension<dynamic>>[
+        lightColor,
+        lightTextStyle,
+        AppThemeTokensExtension.light,
+      ],
       colorScheme: ColorScheme.light(primary: lightColor.primary),
       appBarTheme: _AppBarLightTheme()(),
       bottomNavigationBarTheme: _BottomNavigationBarLightThemeData()(),
@@ -24,9 +29,7 @@ class $LightThemeData with ThemeExtensions {
       iconTheme: IconThemeData(color: lightColor.border),
       inputDecorationTheme: _InputDecorationLightTheme()(),
       checkboxTheme: _CheckboxTheme()(),
-      progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: lightColor.primary,
-      ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(color: lightColor.primary),
       scaffoldBackgroundColor: lightColor.scaffoldBackground,
     );
   }
@@ -36,7 +39,7 @@ class $DarkThemeData with ThemeExtensions {
   ThemeData call() {
     return ThemeData(
       brightness: Brightness.dark,
-      extensions: <ThemeExtension<dynamic>>[darkColor, darkTextStyle],
+      extensions: <ThemeExtension<dynamic>>[darkColor, darkTextStyle, AppThemeTokensExtension.dark],
       colorScheme: ColorScheme.dark(primary: darkColor.primary),
       appBarTheme: _AppBarDarkTheme()(),
       bottomNavigationBarTheme: _BottomNavigationBarDarkThemeData()(),
@@ -47,9 +50,7 @@ class $DarkThemeData with ThemeExtensions {
       iconTheme: IconThemeData(color: darkColor.border),
       inputDecorationTheme: _InputDecorationDarkTheme()(),
       checkboxTheme: _CheckboxTheme()(),
-      progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: darkColor.onPrimary,
-      ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(color: darkColor.onPrimary),
       scaffoldBackgroundColor: darkColor.scaffoldBackground,
     );
   }
