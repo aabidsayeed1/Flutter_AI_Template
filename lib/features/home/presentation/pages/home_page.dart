@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.color.scaffoldBackground,
+      backgroundColor: context.colors.scaffold,
       body: CustomScrollView(
         slivers: [
           _buildSliverAppBar(context),
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
   /// The title scrolls away, but the search bar stays pinned at the top.
   SliverAppBar _buildSliverAppBar(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: context.color.scaffoldBackground,
+      backgroundColor: context.colors.scaffold,
       elevation: 0,
       floating: true,
       pinned: true,
@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
       expandedHeight: 120.h,
       title: Text(
         context.locale.home,
-        style: context.textStyle.headlineMedium.copyWith(
+        style: context.typo.h2.copyWith(
           fontWeight: FontWeight.bold,
         ),
       ),

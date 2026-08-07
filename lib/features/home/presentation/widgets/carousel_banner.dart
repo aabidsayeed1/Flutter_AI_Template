@@ -105,8 +105,8 @@ class _CarouselBannerState extends State<CarouselBanner> {
             _DotsIndicator(
               count: CarouselBanner._banners.length,
               activeIndex: _currentIndex,
-              activeColor: context.color.primary,
-              inactiveColor: context.color.primary.withValues(alpha: 0.2),
+              activeColor: context.colors.primary,
+              inactiveColor: context.colors.primary.withValues(alpha: 0.2),
             ),
           ],
         )
@@ -136,7 +136,7 @@ class _DotsIndicator extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: context.color.backgroundLight,
+        color: context.colors.surface,
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(

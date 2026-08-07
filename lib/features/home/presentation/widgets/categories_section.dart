@@ -27,18 +27,18 @@ class CategoryChip extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  context.color.primary.withValues(alpha: 0.1),
-                  context.color.secondary.withValues(alpha: 0.1),
+                  context.colors.primary.withValues(alpha: 0.1),
+                  context.colors.secondary.withValues(alpha: 0.1),
                 ],
               ),
               borderRadius: BorderRadius.circular(20.r),
               border: Border.all(
-                color: context.color.primary.withValues(alpha: 0.2),
+                color: context.colors.primary.withValues(alpha: 0.2),
                 width: 1.5.w,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: context.color.primary.withValues(alpha: 0.1),
+                  color: context.colors.primary.withValues(alpha: 0.1),
                   blurRadius: 10.r,
                   offset: Offset(0, 4.h),
                 ),
@@ -50,16 +50,16 @@ class CategoryChip extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: context.color.primary.withValues(alpha: 0.1),
+                    color: context.colors.primary.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(icon, color: context.color.primary, size: 32.sp),
+                  child: Icon(icon, color: context.colors.primary, size: 32.sp),
                 ),
                 Gap(8.h),
                 Text(
                   label,
                   style: TextStyle(
-                    color: context.color.text.primary,
+                    color: context.colors.textPrimary,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w600,
                   ),
@@ -111,7 +111,7 @@ class CategoriesSection extends StatelessWidget {
         children: [
           Text(
                 'Categories',
-                style: context.textStyle.headlineMedium.copyWith(
+                style: context.typo.h2.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               )

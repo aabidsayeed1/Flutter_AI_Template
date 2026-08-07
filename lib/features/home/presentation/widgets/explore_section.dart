@@ -136,7 +136,7 @@ class ExploreSection extends StatelessWidget {
         children: [
           Text(
                 'Explore',
-                style: context.textStyle.headlineMedium.copyWith(
+                style: context.typo.h2.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               )

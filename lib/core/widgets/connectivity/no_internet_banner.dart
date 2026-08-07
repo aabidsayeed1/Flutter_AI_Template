@@ -21,7 +21,7 @@ class NoInternetBanner extends StatelessWidget {
           },
           child: status == ConnectivityStatus.offline
               ? Material(
-                  color: context.color.error,
+                  color: context.colors.error,
                   child: Container(
                     key: const ValueKey('offline-banner'),
                     width: double.infinity,
@@ -42,7 +42,7 @@ class NoInternetBanner extends StatelessWidget {
                           Expanded(
                             child: Text(
                               context.locale.offlineMode,
-                              style: context.textStyle.bodySmall.copyWith(
+                              style: context.typo.bodySmall.copyWith(
                                 color: Colors.white,
                               ),
                             ),
@@ -53,7 +53,7 @@ class NoInternetBanner extends StatelessWidget {
                             },
                             child: Text(
                               context.locale.retryConnection,
-                              style: context.textStyle.bodySmall.copyWith(
+                              style: context.typo.bodySmall.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
                               ),

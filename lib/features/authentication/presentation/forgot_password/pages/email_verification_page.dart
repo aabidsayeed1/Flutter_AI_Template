@@ -25,7 +25,7 @@ class EmailVerificationPage extends StatelessWidget {
                       const SizedBox(height: 24),
                       Text(
                         context.locale.checkYourMail,
-                        style: context.textStyle.headlineSmall.copyWith(
+                        style: context.typo.h3.copyWith(
                           fontSize: 24,
                         ),
                       ),
@@ -33,9 +33,9 @@ class EmailVerificationPage extends StatelessWidget {
                       Text(
                         context.locale.enterVerificationCode,
                         textAlign: TextAlign.center,
-                        style: context.textStyle.bodyMedium.copyWith(
+                        style: context.typo.body.copyWith(
                           fontWeight: FontWeight.w500,
-                          color: context.color.text.secondary,
+                          color: context.colors.textSecondary,
                         ),
                       ),
                       const SizedBox(height: 32),

@@ -88,9 +88,9 @@ Future<void> showPermissionRequestBottomSheet({
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(rationaleTitle, style: context.textStyle.headlineSmall),
+          Text(rationaleTitle, style: context.typo.h3),
           Gap(16),
-          Text(rationaleMessage, style: context.textStyle.bodyMedium),
+          Text(rationaleMessage, style: context.typo.body),
           Gap(32),
           Row(
             children: [
@@ -105,7 +105,7 @@ Future<void> showPermissionRequestBottomSheet({
                         grantButtonText ?? context.locale.grantPermission,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: context.textStyle.button.primary.copyWith(
+                        style: context.typo.button.copyWith(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w600,
                         ),

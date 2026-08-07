@@ -47,19 +47,19 @@ class ThreatWarningPage extends StatelessWidget {
       width: 96.w,
       height: 96.w,
       decoration: BoxDecoration(
-        color: context.color.error.withValues(alpha: 0.1),
+        color: context.colors.error.withValues(alpha: 0.1),
         shape: BoxShape.circle,
       ),
-      child: Icon(_getIconData(), size: 48.sp, color: context.color.error),
+      child: Icon(_getIconData(), size: 48.sp, color: context.colors.error),
     );
   }
 
   Widget _buildTitle(BuildContext context) {
     return Text(
       threat.title(context.locale),
-      style: context.textStyle.headlineSmall.copyWith(
+      style: context.typo.h3.copyWith(
         fontWeight: FontWeight.w700,
-        color: context.color.error,
+        color: context.colors.error,
       ),
       textAlign: TextAlign.center,
     );
@@ -68,8 +68,8 @@ class ThreatWarningPage extends StatelessWidget {
   Widget _buildMessage(BuildContext context) {
     return Text(
       threat.message(context.locale),
-      style: context.textStyle.bodyLarge.copyWith(
-        color: context.color.text.secondary.withValues(alpha: 0.7),
+      style: context.typo.bodyLarge.copyWith(
+        color: context.colors.textSecondary.withValues(alpha: 0.7),
         height: 1.5,
       ),
       textAlign: TextAlign.center,
@@ -85,13 +85,13 @@ class ThreatWarningPage extends StatelessWidget {
           Icon(
             Icons.block_rounded,
             size: 20.sp,
-            color: context.color.text.tertiary.withValues(alpha: 0.4),
+            color: context.colors.textTertiary.withValues(alpha: 0.4),
           ),
           Gap(8.h),
           Text(
             context.locale.threatBlockingFooter,
-            style: context.textStyle.bodySmall.copyWith(
-              color: context.color.text.tertiary.withValues(alpha: 0.5),
+            style: context.typo.bodySmall.copyWith(
+              color: context.colors.textTertiary.withValues(alpha: 0.5),
             ),
             textAlign: TextAlign.center,
           ),
@@ -101,13 +101,13 @@ class ThreatWarningPage extends StatelessWidget {
             height: 48.h,
             child: FilledButton(
               style: FilledButton.styleFrom(
-                backgroundColor: context.color.error,
+                backgroundColor: context.colors.error,
               ),
               onPressed: () => exit(0),
               child: Text(
                 context.locale.threatCloseApp,
-                style: context.textStyle.labelLarge.copyWith(
-                  color: context.color.onPrimary,
+                style: context.typo.label.copyWith(
+                  color: context.colors.textOnPrimary,
                 ),
               ),
             ),
@@ -128,13 +128,13 @@ class ThreatWarningPage extends StatelessWidget {
             height: 48.h,
             child: FilledButton(
               style: FilledButton.styleFrom(
-                backgroundColor: context.color.error,
+                backgroundColor: context.colors.error,
               ),
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
                 context.locale.threatIUnderstand,
-                style: context.textStyle.labelLarge.copyWith(
-                  color: context.color.onPrimary,
+                style: context.typo.label.copyWith(
+                  color: context.colors.textOnPrimary,
                 ),
               ),
             ),
@@ -142,8 +142,8 @@ class ThreatWarningPage extends StatelessWidget {
           Gap(8.h),
           Text(
             context.locale.threatProceedWarning,
-            style: context.textStyle.bodySmall.copyWith(
-              color: context.color.text.tertiary.withValues(alpha: 0.5),
+            style: context.typo.bodySmall.copyWith(
+              color: context.colors.textTertiary.withValues(alpha: 0.5),
             ),
             textAlign: TextAlign.center,
           ),

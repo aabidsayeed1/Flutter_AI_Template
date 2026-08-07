@@ -121,13 +121,13 @@ class _PaginatedListViewState<T> extends State<PaginatedListView<T>> {
                       Icon(
                         Icons.error_outline,
                         size: 48.sp,
-                        color: context.color.error,
+                        color: context.colors.error,
                       ),
                       Gap(12.r),
                       Text(
                         msg ?? 'Something went wrong',
                         textAlign: TextAlign.center,
-                        style: context.textStyle.bodyLarge,
+                        style: context.typo.bodyLarge,
                       ),
                       Gap(16.r),
                       ElevatedButton.icon(
@@ -195,7 +195,7 @@ class _PaginatedListViewState<T> extends State<PaginatedListView<T>> {
                           Gap(12.w),
                           Text(
                             'Loading more...',
-                            style: context.textStyle.bodyMedium,
+                            style: context.typo.body,
                           ),
                         ],
                       ),

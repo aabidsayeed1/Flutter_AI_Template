@@ -12,11 +12,11 @@ class LanguageSwitcherWidget extends StatelessWidget {
           icon: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.language, color: context.color.primary),
+              Icon(Icons.language, color: context.colors.primary),
               const SizedBox(width: 4),
               Text(
                 context.locale.getLanguageName(state.languageCode),
-                style: context.textStyle.bodyMedium,
+                style: context.typo.body,
               ),
               const Icon(Icons.arrow_drop_down),
             ],

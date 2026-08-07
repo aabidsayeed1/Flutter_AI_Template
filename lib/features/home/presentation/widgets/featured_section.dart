@@ -126,7 +126,7 @@ class FeaturedSection extends StatelessWidget {
         children: [
           Text(
                 context.locale.featured,
-                style: context.textStyle.headlineMedium.copyWith(
+                style: context.typo.h2.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               )

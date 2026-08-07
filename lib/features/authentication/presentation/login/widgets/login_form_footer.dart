@@ -11,7 +11,7 @@ class _FormFooter extends StatelessWidget {
       style: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
-        color: context.color.text.secondary,
+        color: context.colors.textSecondary,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

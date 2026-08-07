@@ -32,7 +32,7 @@ class OnboardingPage extends StatelessWidget {
                             Text(
                               item.title,
                               textAlign: TextAlign.center,
-                              style: context.textStyle.headlineSmall.copyWith(
+                              style: context.typo.h3.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -59,7 +59,7 @@ class OnboardingPage extends StatelessWidget {
                       child: Icon(
                         Icons.circle,
                         size: 8,
-                        color: context.color.pageView.active,
+                        color: context.colors.primary,
                       ),
                     );
                   }).toList(),
@@ -102,13 +102,13 @@ class _OnboardingListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(Icons.circle, size: 6, color: context.color.text.tertiary),
+          Icon(Icons.circle, size: 6, color: context.colors.textTertiary),
           const SizedBox(width: 8),
           Expanded(
             child: Baseline(
               baseline: 8,
               baselineType: TextBaseline.alphabetic,
-              child: Text(title, style: context.textStyle.bodyMedium),
+              child: Text(title, style: context.typo.body),
             ),
           ),
         ],

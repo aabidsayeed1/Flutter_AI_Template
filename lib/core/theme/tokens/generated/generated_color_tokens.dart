@@ -1,171 +1,360 @@
 import 'package:flutter/material.dart';
 
-abstract class GeneratedColorTokensBase {
-  const GeneratedColorTokensBase();
-
+abstract class GeneratedThemeColorTokens {
+  const GeneratedThemeColorTokens();
   Color get primary;
+  Color get primaryLight;
+  Color get primaryDark;
   Color get secondary;
-  Color get accent;
+  Color get secondaryLight;
   Color get surface;
+  Color get surfaceVariant;
+  Color get surfaceElevated;
   Color get background;
-  Color get scaffoldBackground;
-  Color get onPrimary;
+  Color get scaffold;
+  Color get card;
+  Color get cardBorder;
   Color get textPrimary;
   Color get textSecondary;
   Color get textTertiary;
-  Color get border;
-  Color get icon;
-  Color get success;
+  Color get textOnPrimary;
+  Color get textLink;
+  Color get textDisabled;
   Color get error;
+  Color get errorLight;
+  Color get success;
+  Color get successLight;
   Color get warning;
+  Color get warningLight;
   Color get info;
-  Color get disabled;
-  Color get active;
-  Color get inactive;
-  Color get appBarBackground;
-  Color get appBarIcon;
-  Color get appBarSurfaceTint;
-  Color get appBarTitle;
-  Color get bottomNavSelected;
-  Color get bottomNavUnselected;
-  Color get pageViewActive;
-  Color get pageViewInactive;
-  Color get backgroundLight;
-  Color get backgroundDark;
-  Color get textPrimaryLight;
-  Color get textPrimaryDark;
+  Color get infoLight;
+  Color get icon;
+  Color get iconActive;
+  Color get inputBackground;
+  Color get inputBorder;
+  Color get inputFocus;
+  Color get placeholder;
+  Color get buttonPrimary;
+  Color get buttonSecondary;
+  Color get buttonDanger;
+  Color get buttonDisabled;
+  Color get divider;
+  Color get border;
+  Color get statusOnline;
+  Color get statusBusy;
+  Color get statusOffline;
+  Color get overlay;
+  Color get shadow;
+  Color get navBar;
+  Color get navBarActive;
+  Color get navBarInactive;
+  Color get chipBackground;
+  Color get chipText;
+  Color get avatarBackground;
 }
 
-class GeneratedLightColorTokens extends GeneratedColorTokensBase {
+class GeneratedLightColorTokens extends GeneratedThemeColorTokens {
   const GeneratedLightColorTokens();
-
   @override
-  Color get primary => const Color(0xFF0066FF);
+  Color get primary => const Color(0xff2563EB);
   @override
-  Color get secondary => const Color(0xFFFFA000);
+  Color get primaryLight => const Color(0xffDBEAFE);
   @override
-  Color get accent => const Color(0xFF00C853);
+  Color get primaryDark => const Color(0xff1D4ED8);
   @override
-  Color get surface => const Color(0xFFFFFFFF);
+  Color get secondary => const Color(0xff7C3AED);
   @override
-  Color get background => const Color(0xFFFFFFFF);
+  Color get secondaryLight => const Color(0xffEDE9FE);
   @override
-  Color get scaffoldBackground => const Color(0xFFF2F8FF);
+  Color get surface => const Color(0xffFFFFFF);
   @override
-  Color get onPrimary => const Color(0xFFFFFFFF);
+  Color get surfaceVariant => const Color(0xffF1F5F9);
   @override
-  Color get textPrimary => const Color(0xFF313137);
+  Color get surfaceElevated => const Color(0xffFFFFFF);
   @override
-  Color get textSecondary => const Color(0xFF75757C);
+  Color get background => const Color(0xffF8FAFC);
   @override
-  Color get textTertiary => const Color(0xFFBABABD);
+  Color get scaffold => const Color(0xffF8FAFC);
   @override
-  Color get border => const Color(0xFFBABABD);
+  Color get card => const Color(0xffFFFFFF);
   @override
-  Color get icon => const Color(0xFFFFFFFF);
+  Color get cardBorder => const Color(0xffE2E8F0);
   @override
-  Color get success => const Color(0xFF008000);
+  Color get textPrimary => const Color(0xff111827);
   @override
-  Color get error => const Color(0xFFFF0000);
+  Color get textSecondary => const Color(0xff6B7280);
   @override
-  Color get warning => const Color(0xFFFFFF00);
+  Color get textTertiary => const Color(0xff94A3B8);
   @override
-  Color get info => const Color(0xFF0066FF);
+  Color get textOnPrimary => const Color(0xffFFFFFF);
   @override
-  Color get disabled => const Color(0xFFBABABD);
+  Color get textLink => const Color(0xff2563EB);
   @override
-  Color get active => const Color(0xFF0066FF);
+  Color get textDisabled => const Color(0xffCBD5E1);
   @override
-  Color get inactive => const Color(0xFFD5DCE4);
+  Color get error => const Color(0xffDC2626);
   @override
-  Color get appBarBackground => const Color(0xFFFFFFFF);
+  Color get errorLight => const Color(0xffFEE2E2);
   @override
-  Color get appBarIcon => const Color(0xFF121212);
+  Color get success => const Color(0xff16A34A);
   @override
-  Color get appBarSurfaceTint => const Color(0xFFFFFFFF);
+  Color get successLight => const Color(0xffDCFCE7);
   @override
-  Color get appBarTitle => const Color(0xFF313137);
+  Color get warning => const Color(0xffF59E0B);
   @override
-  Color get bottomNavSelected => const Color(0xFF0066FF);
+  Color get warningLight => const Color(0xffFEF3C7);
   @override
-  Color get bottomNavUnselected => const Color(0xFFBABABD);
+  Color get info => const Color(0xff0891B2);
   @override
-  Color get pageViewActive => const Color(0xFF0066FF);
+  Color get infoLight => const Color(0xffCFFAFE);
   @override
-  Color get pageViewInactive => const Color(0xFFBABABD);
+  Color get icon => const Color(0xff64748B);
   @override
-  Color get backgroundLight => const Color(0xFFFFFFFF);
+  Color get iconActive => const Color(0xff2563EB);
   @override
-  Color get backgroundDark => const Color(0xFF121212);
+  Color get inputBackground => const Color(0xffF8FAFC);
   @override
-  Color get textPrimaryLight => const Color(0xFF000000);
+  Color get inputBorder => const Color(0xffCBD5E1);
   @override
-  Color get textPrimaryDark => const Color(0xFFFFFFFF);
+  Color get inputFocus => const Color(0xff2563EB);
+  @override
+  Color get placeholder => const Color(0xff94A3B8);
+  @override
+  Color get buttonPrimary => const Color(0xff2563EB);
+  @override
+  Color get buttonSecondary => const Color(0xffF1F5F9);
+  @override
+  Color get buttonDanger => const Color(0xffDC2626);
+  @override
+  Color get buttonDisabled => const Color(0xffE2E8F0);
+  @override
+  Color get divider => const Color(0xffE2E8F0);
+  @override
+  Color get border => const Color(0xffCBD5E1);
+  @override
+  Color get statusOnline => const Color(0xff16A34A);
+  @override
+  Color get statusBusy => const Color(0xffF59E0B);
+  @override
+  Color get statusOffline => const Color(0xff94A3B8);
+  @override
+  Color get overlay => const Color(0xff0F172A);
+  @override
+  Color get shadow => const Color(0xff0F172A);
+  @override
+  Color get navBar => const Color(0xffFFFFFF);
+  @override
+  Color get navBarActive => const Color(0xff2563EB);
+  @override
+  Color get navBarInactive => const Color(0xff94A3B8);
+  @override
+  Color get chipBackground => const Color(0xffEFF6FF);
+  @override
+  Color get chipText => const Color(0xff2563EB);
+  @override
+  Color get avatarBackground => const Color(0xffDBEAFE);
 }
 
-class GeneratedDarkColorTokens extends GeneratedColorTokensBase {
+class GeneratedDarkColorTokens extends GeneratedThemeColorTokens {
   const GeneratedDarkColorTokens();
+  @override
+  Color get primary => const Color(0xff60A5FA);
+  @override
+  Color get primaryLight => const Color(0xff1E3A5F);
+  @override
+  Color get primaryDark => const Color(0xff93C5FD);
+  @override
+  Color get secondary => const Color(0xffA78BFA);
+  @override
+  Color get secondaryLight => const Color(0xff2E1065);
+  @override
+  Color get surface => const Color(0xff1F2937);
+  @override
+  Color get surfaceVariant => const Color(0xff374151);
+  @override
+  Color get surfaceElevated => const Color(0xff283548);
+  @override
+  Color get background => const Color(0xff111827);
+  @override
+  Color get scaffold => const Color(0xff0F172A);
+  @override
+  Color get card => const Color(0xff1F2937);
+  @override
+  Color get cardBorder => const Color(0xff374151);
+  @override
+  Color get textPrimary => const Color(0xffFFFFFF);
+  @override
+  Color get textSecondary => const Color(0xff9CA3AF);
+  @override
+  Color get textTertiary => const Color(0xff6B7280);
+  @override
+  Color get textOnPrimary => const Color(0xff0F172A);
+  @override
+  Color get textLink => const Color(0xff60A5FA);
+  @override
+  Color get textDisabled => const Color(0xff4B5563);
+  @override
+  Color get error => const Color(0xffF87171);
+  @override
+  Color get errorLight => const Color(0xff450A0A);
+  @override
+  Color get success => const Color(0xff4ADE80);
+  @override
+  Color get successLight => const Color(0xff14532D);
+  @override
+  Color get warning => const Color(0xffFBBF24);
+  @override
+  Color get warningLight => const Color(0xff451A03);
+  @override
+  Color get info => const Color(0xff22D3EE);
+  @override
+  Color get infoLight => const Color(0xff164E63);
+  @override
+  Color get icon => const Color(0xff9CA3AF);
+  @override
+  Color get iconActive => const Color(0xff60A5FA);
+  @override
+  Color get inputBackground => const Color(0xff1F2937);
+  @override
+  Color get inputBorder => const Color(0xff4B5563);
+  @override
+  Color get inputFocus => const Color(0xff60A5FA);
+  @override
+  Color get placeholder => const Color(0xff6B7280);
+  @override
+  Color get buttonPrimary => const Color(0xff60A5FA);
+  @override
+  Color get buttonSecondary => const Color(0xff374151);
+  @override
+  Color get buttonDanger => const Color(0xffF87171);
+  @override
+  Color get buttonDisabled => const Color(0xff374151);
+  @override
+  Color get divider => const Color(0xff4B5563);
+  @override
+  Color get border => const Color(0xff6B7280);
+  @override
+  Color get statusOnline => const Color(0xff4ADE80);
+  @override
+  Color get statusBusy => const Color(0xffFBBF24);
+  @override
+  Color get statusOffline => const Color(0xff6B7280);
+  @override
+  Color get overlay => const Color(0xff000000);
+  @override
+  Color get shadow => const Color(0xff000000);
+  @override
+  Color get navBar => const Color(0xff111827);
+  @override
+  Color get navBarActive => const Color(0xff60A5FA);
+  @override
+  Color get navBarInactive => const Color(0xff6B7280);
+  @override
+  Color get chipBackground => const Color(0xff1E3A5F);
+  @override
+  Color get chipText => const Color(0xff60A5FA);
+  @override
+  Color get avatarBackground => const Color(0xff1E3A5F);
+}
 
+class GeneratedAuroraColorTokens extends GeneratedThemeColorTokens {
+  const GeneratedAuroraColorTokens();
   @override
-  Color get primary => const Color(0xFF0066FF);
+  Color get primary => const Color(0xff0EA5E9);
   @override
-  Color get secondary => const Color(0xFFFFA000);
+  Color get primaryLight => const Color(0xffE0F2FE);
   @override
-  Color get accent => const Color(0xFF00C853);
+  Color get primaryDark => const Color(0xff0284C7);
   @override
-  Color get surface => const Color(0xFF121212);
+  Color get secondary => const Color(0xff06B6D4);
   @override
-  Color get background => const Color(0xFF121212);
+  Color get secondaryLight => const Color(0xffCFFAFE);
   @override
-  Color get scaffoldBackground => const Color(0xFF1B1B1B);
+  Color get surface => const Color(0xffF0FDFF);
   @override
-  Color get onPrimary => const Color(0xFF000000);
+  Color get surfaceVariant => const Color(0xffE0F7FA);
   @override
-  Color get textPrimary => const Color(0xFFFFFFFF);
+  Color get surfaceElevated => const Color(0xffF8FDFF);
   @override
-  Color get textSecondary => const Color(0xFFBABABD);
+  Color get background => const Color(0xffECFEFF);
   @override
-  Color get textTertiary => const Color(0xFFBABABD);
+  Color get scaffold => const Color(0xffECFEFF);
   @override
-  Color get border => const Color(0xFFD5DCE4);
+  Color get card => const Color(0xffFFFFFF);
   @override
-  Color get icon => const Color(0xFFFFFFFF);
+  Color get cardBorder => const Color(0xffBAE6FD);
   @override
-  Color get success => const Color(0xFF008000);
+  Color get textPrimary => const Color(0xff0F172A);
   @override
-  Color get error => const Color(0xFFFF0000);
+  Color get textSecondary => const Color(0xff334155);
   @override
-  Color get warning => const Color(0xFFFFFF00);
+  Color get textTertiary => const Color(0xff64748B);
   @override
-  Color get info => const Color(0xFF0066FF);
+  Color get textOnPrimary => const Color(0xffFFFFFF);
   @override
-  Color get disabled => const Color(0xFFBABABD);
+  Color get textLink => const Color(0xff0EA5E9);
   @override
-  Color get active => const Color(0xFF0066FF);
+  Color get textDisabled => const Color(0xff94A3B8);
   @override
-  Color get inactive => const Color(0xFFD5DCE4);
+  Color get error => const Color(0xffE11D48);
   @override
-  Color get appBarBackground => const Color(0xFF1B1B1B);
+  Color get errorLight => const Color(0xffFFE4E6);
   @override
-  Color get appBarIcon => const Color(0xFFFFFFFF);
+  Color get success => const Color(0xff059669);
   @override
-  Color get appBarSurfaceTint => const Color(0xFF1B1B1B);
+  Color get successLight => const Color(0xffD1FAE5);
   @override
-  Color get appBarTitle => const Color(0xFFFFFFFF);
+  Color get warning => const Color(0xffD97706);
   @override
-  Color get bottomNavSelected => const Color(0xFF0066FF);
+  Color get warningLight => const Color(0xffFEF9C3);
   @override
-  Color get bottomNavUnselected => const Color(0xFFBABABD);
+  Color get info => const Color(0xff0E7490);
   @override
-  Color get pageViewActive => const Color(0xFF0066FF);
+  Color get infoLight => const Color(0xffE0F2FE);
   @override
-  Color get pageViewInactive => const Color(0xFFBABABD);
+  Color get icon => const Color(0xff475569);
   @override
-  Color get backgroundLight => const Color(0xFFFFFFFF);
+  Color get iconActive => const Color(0xff0EA5E9);
   @override
-  Color get backgroundDark => const Color(0xFF121212);
+  Color get inputBackground => const Color(0xffF0FDFF);
   @override
-  Color get textPrimaryLight => const Color(0xFF000000);
+  Color get inputBorder => const Color(0xff7DD3FC);
   @override
-  Color get textPrimaryDark => const Color(0xFFFFFFFF);
+  Color get inputFocus => const Color(0xff0EA5E9);
+  @override
+  Color get placeholder => const Color(0xff64748B);
+  @override
+  Color get buttonPrimary => const Color(0xff0EA5E9);
+  @override
+  Color get buttonSecondary => const Color(0xffE0F2FE);
+  @override
+  Color get buttonDanger => const Color(0xffE11D48);
+  @override
+  Color get buttonDisabled => const Color(0xffCBD5E1);
+  @override
+  Color get divider => const Color(0xffCBD5E1);
+  @override
+  Color get border => const Color(0xff7DD3FC);
+  @override
+  Color get statusOnline => const Color(0xff059669);
+  @override
+  Color get statusBusy => const Color(0xffD97706);
+  @override
+  Color get statusOffline => const Color(0xff64748B);
+  @override
+  Color get overlay => const Color(0xff0F172A);
+  @override
+  Color get shadow => const Color(0xff0F172A);
+  @override
+  Color get navBar => const Color(0xffF0FDFF);
+  @override
+  Color get navBarActive => const Color(0xff0EA5E9);
+  @override
+  Color get navBarInactive => const Color(0xff64748B);
+  @override
+  Color get chipBackground => const Color(0xffE0F2FE);
+  @override
+  Color get chipText => const Color(0xff0EA5E9);
+  @override
+  Color get avatarBackground => const Color(0xffCFFAFE);
 }
