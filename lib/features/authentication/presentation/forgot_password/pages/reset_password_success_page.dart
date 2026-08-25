@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_template_2025/core/base/export.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../../../../core/theme/theme.dart';
 
 class ResetPasswordSuccessPage extends StatelessWidget {
   const ResetPasswordSuccessPage({super.key});
@@ -26,20 +22,20 @@ class ResetPasswordSuccessPage extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: context.color.primary.withValues(alpha: .25),
+                          color: context.colors.primary.withValues(alpha: .25),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           Icons.check,
                           size: 100,
-                          color: context.color.primary,
+                          color: context.colors.primary,
                         ),
                       ),
                       const SizedBox(height: 24),
                       Text(
                         context.locale.passwordChangeSuccess,
                         textAlign: TextAlign.center,
-                        style: context.textStyle.headlineSmall.copyWith(
+                        style: context.typo.h3.copyWith(
                           fontSize: 24,
                         ),
                       ),
@@ -47,9 +43,9 @@ class ResetPasswordSuccessPage extends StatelessWidget {
                       Text(
                         context.locale.yourPasswordChanged,
                         textAlign: TextAlign.center,
-                        style: context.textStyle.bodyMedium.copyWith(
+                        style: context.typo.body.copyWith(
                           fontWeight: FontWeight.w500,
-                          color: context.color.text.secondary,
+                          color: context.colors.textSecondary,
                         ),
                       ),
                       const SizedBox(height: 32),

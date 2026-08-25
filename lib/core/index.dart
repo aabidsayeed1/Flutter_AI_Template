@@ -9,7 +9,7 @@ export 'localization/locale_cubit.dart';
 export 'localization/l10n/app_localizations.dart';
 export 'router/routes.dart';
 export 'services/index.dart';
-export 'theme/theme.dart';
+export 'theme/app_theme.dart';
 export 'utils/index.dart';
 export 'widgets/index.dart';
 export 'pagination/index.dart';

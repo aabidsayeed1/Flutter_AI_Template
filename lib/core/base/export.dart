@@ -1,5 +1,5 @@
 export 'package:flutter/material.dart';
-export '../theme/theme.dart';
+export '../theme/app_theme.dart';
 export '../localization/locale_cubit.dart';
 export '../context_extensions/context_extensions.dart';
 export '../context_extensions/object_extensions.dart';

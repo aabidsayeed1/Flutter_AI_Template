@@ -72,7 +72,7 @@ class _DemoPaginatedPageState extends State<DemoPaginatedPage> {
               Expanded(
                 child: Text(
                   'Cubit Demo',
-                  style: context.textStyle.headlineSmall,
+                  style: context.typo.h3,
                 ),
               ),
               Flexible(
@@ -132,7 +132,7 @@ class _DemoPaginatedPageState extends State<DemoPaginatedPage> {
                         child: Center(
                           child: Text(
                             '${index + 1}',
-                            style: context.textStyle.bodyMedium?.copyWith(
+                            style: context.typo.body.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -143,11 +143,11 @@ class _DemoPaginatedPageState extends State<DemoPaginatedPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(item, style: context.textStyle.bodyLarge),
+                            Text(item, style: context.typo.bodyLarge),
                             const SizedBox(height: 6),
                             Text(
                               'A neat 2026-style card item',
-                              style: context.textStyle.bodySmall?.copyWith(
+                              style: context.typo.bodySmall.copyWith(
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.onSurface.withOpacity(0.6),
@@ -424,7 +424,7 @@ class _DemoPaginatedBlocPageState extends State<DemoPaginatedBlocPage> {
               Expanded(
                 child: Text(
                   'Bloc Demo',
-                  style: context.textStyle.headlineSmall,
+                  style: context.typo.h3,
                 ),
               ),
 
@@ -487,7 +487,7 @@ class _DemoPaginatedBlocPageState extends State<DemoPaginatedBlocPage> {
                         child: Center(
                           child: Text(
                             '${index + 1}',
-                            style: context.textStyle.bodyMedium?.copyWith(
+                            style: context.typo.body.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -498,11 +498,11 @@ class _DemoPaginatedBlocPageState extends State<DemoPaginatedBlocPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(item, style: context.textStyle.bodyLarge),
+                            Text(item, style: context.typo.bodyLarge),
                             const SizedBox(height: 6),
                             Text(
                               'A neat 2026-style card item (Bloc)',
-                              style: context.textStyle.bodySmall?.copyWith(
+                              style: context.typo.bodySmall.copyWith(
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.onSurface.withOpacity(0.6),

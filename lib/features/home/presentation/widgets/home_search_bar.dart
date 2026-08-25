@@ -16,11 +16,11 @@ class HomeSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
           decoration: BoxDecoration(
-            color: context.color.backgroundLight,
+            color: context.colors.surface,
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
-                color: context.color.primary.withValues(alpha: 0.1),
+                color: context.colors.primary.withValues(alpha: 0.1),
                 blurRadius: 10.r,
                 offset: Offset(0, 4.h),
               ),
@@ -31,19 +31,19 @@ class HomeSearchBar extends StatelessWidget {
             decoration: InputDecoration(
               hintText: context.locale.search,
               hintStyle: TextStyle(
-                color: context.color.textSecondary,
+                color: context.colors.textSecondary,
                 fontSize: 14.sp,
               ),
               prefixIcon: Icon(
                 Icons.search,
-                color: context.color.primary,
+                color: context.colors.primary,
                 size: 22.sp,
               ),
               suffixIcon: GestureDetector(
                 onTap: onFilterTap,
                 child: Icon(
                   Icons.tune,
-                  color: context.color.textSecondary,
+                  color: context.colors.textSecondary,
                   size: 22.sp,
                 ),
               ),

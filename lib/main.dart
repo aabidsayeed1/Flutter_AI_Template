@@ -53,15 +53,15 @@ class MyApp extends StatelessWidget {
               bloc: getIt<LocaleCubit>(),
               builder: (context, locale) {
                 return ScreenUtilInit(
-                  designSize: const Size(375, 812),
+                  designSize: AppDesignSizes.mobile,
                   minTextAdapt: true,
                   splitScreenMode: true,
                   builder: (context, child) {
                     return MaterialApp.router(
                       title: F.title,
                       debugShowCheckedModeBanner: false,
-                      theme: context.lightTheme,
-                      darkTheme: context.darkTheme,
+                      theme: AppTheme.light,
+                      darkTheme: AppTheme.dark,
                       themeMode: themeMode,
                       locale: locale,
                       localizationsDelegates: const [

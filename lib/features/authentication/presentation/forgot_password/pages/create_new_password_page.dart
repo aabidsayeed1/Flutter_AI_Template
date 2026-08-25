@@ -21,14 +21,14 @@ class CreateNewPasswordPage extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text(
                   context.locale.createNewPassword,
-                  style: context.textStyle.headlineSmall.copyWith(fontSize: 24),
+                  style: context.typo.h3.copyWith(fontSize: 24),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   context.locale.createNewPasswordHint,
-                  style: context.textStyle.bodyMedium.copyWith(
+                  style: context.typo.body.copyWith(
                     fontWeight: FontWeight.w500,
-                    color: context.color.text.secondary,
+                    color: context.colors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 32),

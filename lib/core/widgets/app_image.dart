@@ -228,13 +228,13 @@ class AppImage extends StatelessWidget {
 
   Widget _shimmer(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: context.color.scaffoldBackground,
-      highlightColor: context.color.disabled,
+      baseColor: context.colors.scaffold,
+      highlightColor: context.colors.textDisabled,
       child: Container(
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: context.color.scaffoldBackground,
+          color: context.colors.scaffold,
           borderRadius: BorderRadius.circular(
             shape == AppImageShape.circle
                 ? (width ?? height ?? 40) / 2
@@ -254,7 +254,7 @@ class AppImage extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: context.color.scaffoldBackground,
+        color: context.colors.scaffold,
         borderRadius: BorderRadius.circular(
           shape == AppImageShape.circle
               ? (width ?? height ?? 40) / 2
@@ -267,7 +267,7 @@ class AppImage extends StatelessWidget {
       ),
       child: Icon(
         Icons.broken_image_rounded,
-        color: context.color.error,
+        color: context.colors.error,
         size: (width ?? height ?? 40) * 0.6,
       ),
     );

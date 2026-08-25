@@ -187,7 +187,7 @@ class _BlockedBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: context.color.scaffoldBackground,
+        color: context.colors.scaffold,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
       ),
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
@@ -200,7 +200,7 @@ class _BlockedBottomSheet extends StatelessWidget {
               width: 40.w,
               height: 4.h,
               decoration: BoxDecoration(
-                color: context.color.disabled,
+                color: context.colors.textDisabled,
                 borderRadius: BorderRadius.circular(2.r),
               ),
             ),
@@ -212,18 +212,18 @@ class _BlockedBottomSheet extends StatelessWidget {
                 Icon(
                   Icons.wifi_off_rounded,
                   size: 56.sp,
-                  color: context.color.error,
+                  color: context.colors.error,
                 ),
                 Gap(16.h),
                 Text(
                   context.locale.noInternetConnection,
-                  style: context.textStyle.headlineSmall,
+                  style: context.typo.h3,
                   textAlign: TextAlign.center,
                 ),
                 Gap(8.h),
                 Text(
                   context.locale.noInternetMessage,
-                  style: context.textStyle.bodyMedium,
+                  style: context.typo.body,
                   textAlign: TextAlign.center,
                 ),
                 Gap(24.h),

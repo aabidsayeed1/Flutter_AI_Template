@@ -13,7 +13,7 @@ class FeatureBlockedBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: context.color.scaffoldBackground,
+        color: context.colors.scaffold,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
       ),
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
@@ -26,7 +26,7 @@ class FeatureBlockedBottomSheet extends StatelessWidget {
               width: 40.w,
               height: 4.h,
               decoration: BoxDecoration(
-                color: context.color.disabled,
+                color: context.colors.textDisabled,
                 borderRadius: BorderRadius.circular(2.r),
               ),
             ),
@@ -35,17 +35,17 @@ class FeatureBlockedBottomSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
             child: Column(
               children: [
-                Icon(Icons.block, size: 56.sp, color: context.color.error),
+                Icon(Icons.block, size: 56.sp, color: context.colors.error),
                 Gap(16.h),
                 Text(
                   info.updateTitle ?? context.locale.featureBlockedTitle,
-                  style: context.textStyle.headlineSmall,
+                  style: context.typo.h3,
                   textAlign: TextAlign.center,
                 ),
                 Gap(8.h),
                 Text(
                   info.updateMessage ?? context.locale.featureBlockedMessage,
-                  style: context.textStyle.bodyMedium,
+                  style: context.typo.body,
                   textAlign: TextAlign.center,
                 ),
                 Gap(24.h),
